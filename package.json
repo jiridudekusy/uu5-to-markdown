@@ -1,0 +1,49 @@
+{
+  "name": "uu5-to-markdown",
+  "version": "0.1.4",
+  "description": "Coverts uu5tring to markdown. It supports plugins.",
+  "main": "lib/uu5-to-markdown.js",
+  "scripts": {
+    "build": "npm run test && npm rum browserTest && npm run integrationTest && webpack --env dev && webpack --env build",
+    "dev": "webpack --progress --colors --watch --env dev",
+    "start": "webpack-dev-server",
+    "test": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js",
+    "integrationTest": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/integration-tests.spec.js",
+    "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js",
+    "browserTest": "mochify --transform babelify --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jiridudekusy/uu5-to-markdown.git"
+  },
+  "keywords": [
+    "uu5"
+  ],
+  "author": "Jiří Dudek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jiridudekusy/uu5-to-markdown/issues"
+  },
+  "homepage": "https://github.com/jiridudekusy/uu5-to-markdown",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.12.0",
+    "eslint-loader": "^1.9.0",
+    "mocha": "^4.0.1",
+    "mochify": "^5.0.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.7",
+    "yargs": "^10.0.3",
+    "xmldom": "0.1.27"
+  },
+  "dependencies": {
+    "collapse-whitespace": "1.1.6"
+  }
+}

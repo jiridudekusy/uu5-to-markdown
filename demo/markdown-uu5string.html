@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
+  <title>Component Demo</title>
+
+  <link type="text/css" rel="stylesheet" href="https://cdn.plus4u.net/libs/materialdesignicons/2.0.46/css/materialdesignicons.min.css">
+  <script src="https://cdn.plus4u.net/libs/systemjs/0.19.47/system.js"></script>
+
+  <script>
+    SystemJS.config({
+      "paths": {
+        "systemjs": "https://cdn.plus4u.net/libs/systemjs/0.19.47/system.js",
+        "react": "https://cdn.plus4u.net/libs/react/16.0.0/react.min.js",
+        "react-dom": "https://cdn.plus4u.net/libs/react-dom/16.0.0/react-dom.min.js",
+        "jquery": "https://cdn.plus4u.net/libs/jquery/3.2.1/jquery-3.2.1.min.js",
+        "bootstrap": "https://cdn.plus4u.net/libs/bootstrap/3.3.7/js/bootstrap.min.js",
+        "uu5g04": "https://cdn.plus4u.net/uu-uu5g04/1.0.0/uu5g04.min.js",
+        "uu5g04-bricks": "https://cdn.plus4u.net/uu-uu5g04/1.0.0/uu5g04-bricks.min.js",
+        "uu5g04-forms": "https://cdn.plus4u.net/uu-uu5g04/1.0.0/uu5g04-forms.min.js",
+        "uu_plus4u5g01": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01.min.js",
+        "uu_plus4u5g01-app": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01-app.min.js",
+        "uu_plus4u5g01-bricks": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01-bricks.min.js",
+        "uu_plus4u5g01-dockit": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01-dockit.min.js",
+        "uu_plus4u5g01-uubmldraw": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01-uubmldraw.min.js",
+        "uu5codekitg01": "https://cdn.plus4u.net/uu-uu5codekitg01/1.0.0/uu5codekitg01.min.js",
+        "uu_appg01_core": "https://cdn.plus4u.net/uu-appg01-core/3.0.0/uu_appg01_core.min.js",
+        "uu_appg01": "https://cdn.plus4u.net/uu-appg01/3.0.0/uu_appg01-base.min.js",
+        "uu_oidcg01": "https://cdn.plus4u.net/uu-oidcg01/3.0.0/uu_oidcg01.min.js",
+        "uu_dockitg01-bricks": "https://cdn.plus4u.net/uu-dockitg01-bricks/0.0.0/uu_dockitg01-bricks.js",
+        "create-react-class": "https://cdn.plus4u.net/libs/create-react-class/15.6.0/create-react-class.min.js",
+        "prop-types": "https://cdn.plus4u.net/libs/prop-types/15.6.0/prop-types.min.js",
+        "uuappdesignkitg01": "https://cdn.plus4u.net/uu-uuappdesignkitg01/1.0.0/uuappdesignkitg01.min.js",
+
+        "uu5-to-markdown": "/lib/uu5-to-markdown.js"
+      },
+      // TODO probably wrong. It should be possible just to remove xmldom dependency from the uu5-to-markdown
+      "map":{
+        "xmldom": '@empty'
+      }
+
+    });
+
+  </script>
+</head>
+<body>
+<div id="renderHere"></div>
+
+<script src="https://cdn.plus4u.net/uu-appg01-template/1.0.0/in-browser-transpilation.min.js"></script>
+<script type="text/babel">
+  import React from "react";
+  import createReactClass from "create-react-class";
+  import ReactDOM from "react-dom";
+  import * as UU5 from "uu5g04";
+  import "uu5g04-bricks";
+  import CodeKit from "uu5codekitg01";
+  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
+
+  let md = `Ace (Ajax.org Cloud9 Editor)
+============================
+
+_Note_: The new site at http://ace.c9.io contains all the info below along with an embedding guide and all the other resources you need to get started with Ace.
+
+Ace is a standalone code editor written in JavaScript. Our goal is to create a browser based editor that matches and extends the features, usability and performance of existing native editors such as TextMate, Vim or Eclipse. It can be easily embedded in any web page or JavaScript application. Ace is developed as the primary editor for [Cloud9 IDE](https://c9.io/) and the successor of the Mozilla Skywriter (Bespin) Project.
+
+Features
+--------
+
+* Syntax highlighting for over 120 languages (TextMate/Sublime/_.tmlanguage_ files can be imported)
+* Over 20 themes (TextMate/Sublime/_.tmtheme_ files can be imported)
+* Automatic indent and outdent
+* An optional command line
+* Handles huge documents (at last check, 4,000,000 lines is the upper limit)
+* Fully customizable key bindings including vim and Emacs modes
+* Search and replace with regular expressions
+* Highlight matching parentheses
+* Toggle between soft tabs and real tabs
+* Displays hidden characters
+* Drag and drop text using the mouse
+* Line wrapping
+* Code folding
+* Multiple cursors and selections
+* Live syntax checker (currently JavaScript/CoffeeScript/CSS/XQuery)
+* Cut, copy, and paste functionality
+
+Take Ace for a spin!
+--------------------
+
+Check out the Ace live [demo](http://ace.c9.io/build/kitchen-sink.html) or get a [Cloud9 IDE account](https://c9.io/) to experience Ace while editing one of your own GitHub projects.
+
+If you want, you can use Ace as a textarea replacement thanks to the [Ace Bookmarklet](http://ajaxorg.github.io/ace/build/demo/bookmarklet/index.html).
+`;
+
+  var Page = createReactClass({
+      getInitialState() {
+        this._mdr = new CodeKit.MarkdownRenderer('full', {
+          html: true,
+          xHtmlOut: true,
+          typographer: true,
+          highlight: true,
+          headerLevel: 2
+        });
+        this.mdValue = md;
+        this._uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitPlugin());
+        return {
+          mode: "md"
+        }
+      },
+
+      onChangeMD(text) {
+        console.log("onChangeMD")
+        this.mdValue = text.value
+      },
+
+      onChangeUU5(text) {
+        console.log("onChangeUU5")
+        this.uu5Value = text.value
+      },
+
+      _setMode(mode) {
+        if (this.state.mode !== mode) {
+          if (mode === "md" && this.uu5Value) {
+            this.mdValue = this._uu5toMarkdown.toMarkdown(this.uu5Value);
+            this.uu5Value = null;
+          }
+          this.setState({
+            mode: mode
+          });
+        }
+      },
+
+      _isMode(mode) {
+        return this.state.mode === mode;
+      },
+
+      render() {
+        let r = "";
+        if (this.state.mode !== "md") {
+          if (this.uu5Value) {
+            r = this.uu5Value;
+          } else {
+            r = this._mdr.render(this.mdValue);
+          }
+        }
+        return [
+          <UU5.Bricks.Row>
+            <UU5.Bricks.ButtonSwitch
+              ref_={item => this._mdSwitch = item}
+              switchedOn={this._isMode("md")}
+              props={{
+                onClick: () => {
+                  this._setMode("md");
+                }
+              }}
+              onProps={{
+                colorSchema: "success"
+              }}>
+              Markdown
+            </UU5.Bricks.ButtonSwitch>
+            <UU5.Bricks.ButtonSwitch
+              ref_={item => this._previewSwitch = item}
+              switchedOn={this._isMode("preview")}
+              props={{
+                onClick: () => {
+                  this._setMode("preview");
+                }
+              }} onProps={{
+              colorSchema: "success"
+            }}>
+              Preview
+            </UU5.Bricks.ButtonSwitch>
+            <UU5.Bricks.ButtonSwitch
+              ref_={item => this._uu5Switch = item}
+              switchedOn={this._isMode("uu5")}
+              props={{
+                onClick: () => {
+                  this._setMode("uu5");
+                }
+              }}
+              onProps={{
+                colorSchema: "success"
+              }}>
+              UU5
+            </UU5.Bricks.ButtonSwitch>
+          </UU5.Bricks.Row>,
+          <UU5.Bricks.Row>
+            <UU5.Bricks.Section level="1"
+                                header="Markdown Editor" hidden={!this._isMode("md")}>
+              <CodeKit.MarkdownEditor
+                value={this.mdValue}
+                focus
+                onChange={this.onChangeMD}
+              />
+            </UU5.Bricks.Section>
+
+            <UU5.Bricks.Section level="1"
+                                header="uu5string Viewer" hidden={!this._isMode("uu5")}>
+              <UU5.CodeKit.Uu5StringEditor
+                value={r}
+                format="pretty"
+                onChange={this.onChangeUU5}
+              />
+
+            </UU5.Bricks.Section>
+            <UU5.Bricks.Section level="1" header="Preview" hidden={!this._isMode("preview")}>
+
+              <UU5.Bricks.Div content={r}/>
+            </UU5.Bricks.Section>
+
+
+          </UU5.Bricks.Row>
+        ];
+      }
+    }
+  );
+
+  // SystemJS loader allows detecting which modules are already loaded, but it works
+  // only after the whole loading operation ended => use setTimeout as this functinality
+  // is used in UU5 for detecting presence of uu_oidcg01
+  setTimeout(function () {
+    ReactDOM.render(<Page/>, document.getElementById('renderHere'));
+  }, 0);
+</script>
+</body>
+</html>

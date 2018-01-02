@@ -1,0 +1,47 @@
+<uu5string/>
+
+    <UU5.Bricks.Section header="Data Providers">
+      <UU5.Bricks.P>
+        The following data are exchanged for the tendering and clearing phase:
+      </UU5.Bricks.P>
+      <Plus4U5.UuBmlDraw.Image code="uuBMLDataReporting"/>
+    </UU5.Bricks.Section>
+
+    <UU5.Bricks.Section header="Data Consumers">
+      <UU5.Bricks.P>
+        The following data are exchanged for results verification & distribution phase, and pre-settlement phase:
+      </UU5.Bricks.P>
+     <Plus4U5.UuBmlDraw.Image code="uuBMLDataReporting2"/>
+    </UU5.Bricks.Section>
+
+    <UU5.Bricks.Section header="Systems">
+      <UU5.Bricks.P>
+          Categories of integrated systems:
+      </UU5.Bricks.P>
+      <UU5.Bricks.Ul>
+       <UU5.Bricks.Li>[A] Data Providers</UU5.Bricks.Li>
+       <UU5.Bricks.Li>[B] Data Consumers </UU5.Bricks.Li>
+       <UU5.Bricks.Li>[C] Integrated TERRE Sub-systems </UU5.Bricks.Li>
+      </UU5.Bricks.Ul>
+      <Plus4U5.UuBmlDraw.Image code="uuBMLExternalSystems"/>
+      <UU5.Bricks.P>TSO is an organization that may have several systems for different business processes.</UU5.Bricks.P>
+      <Plus4U5.UuBmlDraw.Image code="uuBMLExternalSystemsTSOs"/>
+    </UU5.Bricks.Section>
+
+    <UU5.Bricks.Section header="Data Flows">
+      <UU5.Bricks.P>
+          Categories of data flows are as follows:
+      </UU5.Bricks.P>
+      <UU5.Bricks.Ul>
+       <UU5.Bricks.Li>Tendering Data Flows (inputs submitting)</UU5.Bricks.Li>
+       <UU5.Bricks.Li>Clearing Data Flows</UU5.Bricks.Li>
+       <UU5.Bricks.Li>Results Verification & Distribution </UU5.Bricks.Li>
+       <UU5.Bricks.Li>Transparency Data Flows</UU5.Bricks.Li>
+       <UU5.Bricks.Li>Settlement Data Flows</UU5.Bricks.Li>
+      </UU5.Bricks.Ul>
+      Sequence Flow Diagram:
+     <Plus4U5.UuBmlDraw.Image code="uuBMLExternalCommunication"/>
+     <UU5.Bricks.P>Note: ENTSO-E Acknowledgement Messages is standard part of data communication with data providers / consumers and therefore it is not explicitly highlighted in the picture.</UU5.Bricks.P>
+    </UU5.Bricks.Section>
+
+

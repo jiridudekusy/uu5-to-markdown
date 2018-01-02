@@ -1,0 +1,345 @@
+<uu5string/><UU5.Bricks.Header level="2">Core Concepts</UU5.Bricks.Header>
+<UU5.Bricks.P>Standing data are generally data, which, from the application point of view, remain mostly unchanged and are highly reusable. Standing data are divided into two groups: <UU5.Bricks.Strong>reference and master data</UU5.Bricks.Strong>.</UU5.Bricks.P>
+<UU5.Bricks.P><UU5.Bricks.Strong><UU5.Bricks.Em>Reference data</UU5.Bricks.Em></UU5.Bricks.Strong> gain in value when they are widely re-used and widely referenced. Typically, they do not change overly much in terms of definition, apart from occasional revisions.
+Reference data are often defined by standards organizations, such as country codes as defined in ISO 3166-1 (a good example of reference data are currency codes, country codes,…).</UU5.Bricks.P>
+<UU5.Bricks.P><UU5.Bricks.Strong><UU5.Bricks.Em>Master data</UU5.Bricks.Em></UU5.Bricks.Strong> on the other hand represent key business entities needed by the application, such as customer (e.g., for customers: number, name, address, and date of account creation). In contrast, reference data usually consist only of a list of permissible values and attached textual descriptions. A further difference between reference data and master data is that a change to the reference data values may require an associated change in business process to support the change; a change in master data will always be managed as part of existing business processes (i.e. commands).</UU5.Bricks.P>
+<UU5.Bricks.Header level="3">Supported Functionality</UU5.Bricks.Header>
+<Plus4U5.UuBmlDraw.Image className="center" code="sdmHlcFeatures"></Plus4U5.UuBmlDraw.Image>
+<UU5.Bricks.P><UU5.Bricks.Em>Standing Data Management</UU5.Bricks.Em> component will provide these features:</UU5.Bricks.P>
+<UU5.Bricks.Ul>
+<UU5.Bricks.Li>Abstract object constructs supporting basic, combined and extended standing data with support for additional attributes (different business types such as number, text, datetime, boolean, binary, color etc.)</UU5.Bricks.Li>
+<UU5.Bricks.Li>API for standard CRUD operations (GUI is not part of this iteration)</UU5.Bricks.Li>
+<UU5.Bricks.Li>Validations of attributes - mandatory/optional, minimum/maximum value for numbers, minimum/maximum length, date/time etc.</UU5.Bricks.Li>
+<UU5.Bricks.Li>Ordering of the records, with support for overriding default behaviour.</UU5.Bricks.Li>
+<UU5.Bricks.Li>Hierarchy - support of linking the standing data together using the parent-child relation (1:N) or by combining of two or more standing data together (combined standing data, representing M:N relation)</UU5.Bricks.Li>
+<UU5.Bricks.Li>Time validity from/to for effectively dated standing data, including unlimited validity, reference integrity of relation between standing data records (e.g. the validity of child record must not exceed the validity of the corresponding parent record)</UU5.Bricks.Li>
+<UU5.Bricks.Li>Standard commands to import/export standing data and means to simply use this data at the user interface.</UU5.Bricks.Li>
+</UU5.Bricks.Ul>
+<UU5.Bricks.Header level="4">Attribute Constraints and Validations</UU5.Bricks.Header>
+<UU5.Bricks.P>Validation and constraint checking is done through standard <UU5.Bricks.Em>uuApp Server Validation framework</UU5.Bricks.Em>. Each <UU5.Bricks.Em>standing data type</UU5.Bricks.Em> can define, which validation schema is used for validation during creation of a new <UU5.Bricks.Em>standing data items</UU5.Bricks.Em> or modification of existing items (e.g. during import operation). Validation works same as validation of input DTOs while processing commands. There is no need to specify validation schema for <UU5.Bricks.Strong><UU5.Bricks.Em>simple</UU5.Bricks.Em></UU5.Bricks.Strong> and <UU5.Bricks.Strong><UU5.Bricks.Em>combined</UU5.Bricks.Em></UU5.Bricks.Strong> standing data types if there is no need for any custom validations. If not overridden, these are then validated against default validation schemas as mentioned in chapter &quot;Standing data types&quot;.</UU5.Bricks.P>
+<UU5.Bricks.P>The validations are applied only to the updated items - they do not propagate to referenced standing data types. As a consequence, when a standing data item passes validations and the change is applied, this change may render another combined data item, which references the changed item, invalid by the time validation rules. Such propagated validations can be quite demanding when applied to large data sets. To simplify the component, detection of these situations won’t be implemented in the first phase, but it may be a subject for improvement in the future.</UU5.Bricks.P>
+<UuDocKit.Bricks.BlockInfo>Note that, each item of the <UU5.Bricks.Em>standing data type</UU5.Bricks.Em> is validated against defined validation schema.</UuDocKit.Bricks.BlockInfo>
+<UU5.Bricks.Header level="4">Ordering (sorting)</UU5.Bricks.Header>
+<UU5.Bricks.P>Ordering of <UU5.Bricks.Em>standing data items</UU5.Bricks.Em> is implicitly by natural alphabetical order of the <UU5.Bricks.Em>standing data item</UU5.Bricks.Em> names (labels). Each item has an <UU5.Bricks.Code>order</UU5.Bricks.Code> attribute that  explicitly defines the position of the item. The <UU5.Bricks.Code>order</UU5.Bricks.Code> attribute overrides the implicit sort by the item name if it is specified.
+<UU5.Bricks.Em>Standing Data Management</UU5.Bricks.Em> component doesn’t support ordering of application-specific domain classes that reference standing data items (references are represented only as codes stored within the entity). It is taken as responsibility of target application to implement custom domain object sorting by referenced standing data items.</UU5.Bricks.P>
+<UU5.Bricks.Header level="4">Time Validity</UU5.Bricks.Header>
+<UU5.Bricks.P>Each <UU5.Bricks.Em>standing data item</UU5.Bricks.Em> has a time validity, which defines the time range for which is the specific standing data item valid. This can be configured for each standing data type separately by setting time validity flag to true or false depending on whether the standing data type has limited or unlimited time validity. Time validity can also be unbound from one or both sides, either valid from start of the epoch and/or valid indefinitely, simply by not setting the respective attributes.</UU5.Bricks.P>
+<UuDocKit.Bricks.BlockInfo>The time granularity of validity interval is <UU5.Bricks.Strong>one hour</UU5.Bricks.Strong>.</UuDocKit.Bricks.BlockInfo>
+<UU5.Bricks.P>Time validity interval can also be discontinuous, this state is represented by creating multiple <UU5.Bricks.Em>standing data items</UU5.Bricks.Em> with the same attributes except the interval sections for which they are active. Other attributes may also vary in time, only code must stay the same for logical reasons. This generally means, that there can be as many instances of the <UU5.Bricks.Em>standing data item</UU5.Bricks.Em> with the same code as long as the time validity intervals doesn’t overlap. <UU5.Bricks.Strong>Two or more standing data items, that are continuous in time (i.e. when one ends, the second one begins at the same exact time) are taken as non-overlapping.</UU5.Bricks.Strong></UU5.Bricks.P>
+<UU5.Bricks.P>In most cases the standing data management doesn’t delete standing data items, but only changes their active flag instead, so that the unwanted data item is invalid and therefore cannot be used further. There are however cases, when deletion is needed and standing data management provides functionality for these cases, for more see the <UU5.Bricks.Link href="https://uuos9.plus4u.net/uu-dockitg01-main/78462435-9ab38fdad41947d2afa9b2c7fe0522c6/book/page?code=sdmTechOverview">technical design</UU5.Bricks.Link>. The inactive standing data items can however be returned as part of a business entity through reference, if the creation of given business entity falls within the time range, when the standing data item was valid.</UU5.Bricks.P>
+<UuDocKit.Bricks.BlockInfo>Note that, combined standing data cannot exceed time validity of standing data items it combines (e.g. generally the two or more linked standing data items must not have incoherent time validity intervals)</UuDocKit.Bricks.BlockInfo>
+<UU5.Bricks.Header level="2">Standing Data Types</UU5.Bricks.Header>
+<UU5.Bricks.P><UU5.Bricks.Em>UuAppServer Standing Data Management</UU5.Bricks.Em> component supports multiple types of standing data as described in following chapters.</UU5.Bricks.P>
+<Plus4U5.UuBmlDraw.Image className="center" code="sdmStandingDataTypes"/>
+<UU5.Bricks.P>Each <UU5.Bricks.Strong>Standing data type</UU5.Bricks.Strong> is generally defined by these attributes:</UU5.Bricks.P>
+<UU5.Bricks.Table>
+<UU5.Bricks.Table.THead>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Th>Attribute</UU5.Bricks.Table.Th><UU5.Bricks.Table.Th>Description</UU5.Bricks.Table.Th></UU5.Bricks.Table.Tr>
+</UU5.Bricks.Table.THead>
+<UU5.Bricks.Table.TBody>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>code</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Unique code of the standing data type</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>name</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Name or short description of the standing data type</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>validationSchema</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Validation schema that is used to validate each item of the standing data type, more in chapter <UU5.Bricks.Em>Attribute constraints and validations</UU5.Bricks.Em></UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>accessRights</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>List of profiles and their granted access, more in Permissions.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>hasTimeValidity</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Indication, whether this standing data type supports time validity.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>classification</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Classification of the standing data type, either simple of combined.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>active</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Indication, whether this standing data type is active or not (no matter the standing data items time validity)</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+</UU5.Bricks.Table.TBody>
+</UU5.Bricks.Table>
+<UU5.Bricks.P>Each <UU5.Bricks.Strong>Standing data item</UU5.Bricks.Strong> is generally defined by these attributes:</UU5.Bricks.P>
+<UU5.Bricks.Table>
+<UU5.Bricks.Table.THead>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Th>Attribute</UU5.Bricks.Table.Th><UU5.Bricks.Table.Th>Description</UU5.Bricks.Table.Th></UU5.Bricks.Table.Tr>
+</UU5.Bricks.Table.THead>
+<UU5.Bricks.Table.TBody>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>code</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Code of the standing data item.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>altCodes</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>List of alternative codes of the standing data item, which can be used to look up the standing data item, but cannot be used as a reference in combined standing data type items. Each alternative code has an attached “type” attribute, which classifies the alternative code.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>name</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Name or short description of the standing data item, i.e. what is displayed at front-end.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>value</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Value of the standing data item. For example, simple standing data item representing number Pi could have code &quot;PI&quot;, name “Number Pi” and value &quot;3.1415…&quot;.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>description</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Longer description of the standing data item.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>active</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Indication, whether this standing data type is active or not (no matter the standing data items time validity)</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>validFromTs: datetime</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Start of the data item validity. If empty, it is presumed, that the item was valid from the start of the epoch.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>validToTs: datetime</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>End of the data item validity. If empty, it is presumed, that the item will be valid indefinitely.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+<UU5.Bricks.Table.Tr><UU5.Bricks.Table.Td>order</UU5.Bricks.Table.Td><UU5.Bricks.Table.Td>Position of the standing data item when returned as part of the collection of standing data items.</UU5.Bricks.Table.Td></UU5.Bricks.Table.Tr>
+</UU5.Bricks.Table.TBody>
+</UU5.Bricks.Table>
+<UuDocKit.Bricks.BlockInfo>Note that, code and any alternative code (altCodes) of the standing data item is unique only for each point in time, i.e. there can be several standing data items with the same code as long as their validity doesn't overlap (doesn't apply for standing data type with no time validity)</UuDocKit.Bricks.BlockInfo>
+<UU5.Bricks.P>Because of the nature of the <UU5.Bricks.Em>standing data</UU5.Bricks.Em>, it is presumed, that all <UU5.Bricks.Em>standing data types</UU5.Bricks.Em> definitions are static during application lifetime and their change should be part of a change in business process, i.e. all <UU5.Bricks.Em>standing data types</UU5.Bricks.Em> are created in context of some business process. There is no need for dynamic addition of <UU5.Bricks.Strong><UU5.Bricks.Em>standing data types</UU5.Bricks.Em></UU5.Bricks.Strong>, as there would be no business process that could “use” them. The definition of standing data types will be loaded and processed during the initialization of a workspace.</UU5.Bricks.P>
+<UU5.Bricks.P>Additional attributes are described in further chapters in their respective standing data type chapter.</UU5.Bricks.P>
+<UU5.Bricks.Header level="3">Simple Standing Data</UU5.Bricks.Header>
+<UU5.Bricks.P>Simple standing data type is formal definition of one data set describing an area of interest and which restricts the possible description of given area into fixed set of values. Simple standing data types are therefore simple sets of codes (and sometimes values) paired with description (names).</UU5.Bricks.P>
+<UU5.Bricks.P>Simple standing data type is defined as follows (only definition, not validation):</UU5.Bricks.P>
+<UU5.CodeKit.CodeViewer mode="js" key="js271"><uu5string.pre>const simpleStandingDataType = shape({
+  code: string().isRequired(), //unique code of the standing data type
+  name: string().isRequired(), //name of the standing data type
+  validationSchema: string.isRequired(), //schema used to validate standing data
+  hasTimeValidity: boolean().isRequired(), //indication if this data type supports time validity
+  classification: string().oneOf(["simple","combined","extended"]).isRequired(),
+  active: boolean(), //active marker
+  accessRights: array(
+     shape({
+       accessType: string().oneOf(["read","read_write"]), //type of the granted access
+       profile: string().isRequired() //profile to which the access is granted
+     }).isRequired()
+  )
+});
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.Bricks.P>Simple standing data (value in the simple standing data type) is then defined below. Note that, this schema is also used as default validation schema for simple standing data.</UU5.Bricks.P>
+<UU5.CodeKit.CodeViewer mode="js" key="js275"><uu5string.pre>const simpleStandingDataItemType = shape({
+  code: string().isRequired(), //unique code of the standing data
+  name: string().isRequired(), //name of the standing data
+  value: string(), //value of the standing data item, if different to code
+  altCodes: array(shape({
+    altCode: string(), //alternative code
+    type: string() //type or classification od the alternative code
+  })), //array of alternate codes of the standing data item
+  description: string(), //longer description of this standing data item
+  typeCode: string().isRequired(), //code of the standing data type to which this item belongs
+  active: boolean(), //active marker
+  order: number(), //position of the standing data item
+  validFromTs: datetime(), //start of the data item validity
+  validToTs: datetime() //end of the data item validity
+});
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.Bricks.Header level="4">Example of Simple Standing Data</UU5.Bricks.Header>
+<UU5.CodeKit.CodeViewer mode="js" key="js279"><uu5string.pre>const countryStandingDataType = {
+  code: "COUNTRY",
+  name: "Country ISO codes",
+  hasTimeValidity: true,
+  active: true,
+  validationSchema: "defaultSimpleStandingDataType",
+  accessRights: [{
+    //omitted
+  }]
+};
+
+const countryStandingDataItem = {
+  code: "CZE", //unique code of the standing data type
+  name: "Czech Republic", //name of the standing data type
+  typeCode: "COUNTRY", //code of the standing data type
+  active: true,
+  order: 1,
+  validFromTs: "2017-10-15T00:00Z" //start of the data item validity
+  // end of the validity period not specified -> validity is not limited
+};
+
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.Bricks.Header level="3">Combined Standing Data</UU5.Bricks.Header>
+<UU5.Bricks.P>Combined standing data type represents a named relation between two or more <UU5.Bricks.Em>simple</UU5.Bricks.Em> and/or <UU5.Bricks.Em>combined</UU5.Bricks.Em> standing data or constant values. Using constant values in combined standing data type means that instead of connecting other standing data items together, the combined standing data type can combine string (constant) values.</UU5.Bricks.P>
+<UU5.Bricks.P>These combined standing data can represent both 1:N or N:M relations, if only two references are used, <UU5.Bricks.Strong>but there is no limit to what number of references the combined standing data type can have</UU5.Bricks.Strong>.</UU5.Bricks.P>
+<UuDocKit.Bricks.BlockInfo glyphicon="mdi mdi-hand-pointing-right">Note that combined standing data type can reference also extended standing data type(s)</UuDocKit.Bricks.BlockInfo>
+<UU5.Bricks.P>To support combination of references and values (as described in the beginning of this chapter), the type of combined item can be either <UU5.Bricks.Strong><UU5.Bricks.Em>reference</UU5.Bricks.Em></UU5.Bricks.Strong> or <UU5.Bricks.Strong><UU5.Bricks.Em>value</UU5.Bricks.Em></UU5.Bricks.Strong>.
+The <UU5.Bricks.Strong><UU5.Bricks.Em>reference</UU5.Bricks.Em></UU5.Bricks.Strong> type is used to create an association with another standing data type. The linked standing data type is identified using its code, which is put into the refCode attribute of the combined standing data type (see the validation schema below).
+On the other hand, when the combined data type has the <UU5.Bricks.Strong><UU5.Bricks.Em>value</UU5.Bricks.Em></UU5.Bricks.Strong> type, the values are not references to some other standing data type, but only constants standing on their own. The reference validation does not apply to these.</UU5.Bricks.P>
+<UuDocKit.Bricks.BlockInfo>If the same standing data type is used in the combined standing data type more than once, the additional name is defined for each occurrence of the same standing data type to distinguish them.</UuDocKit.Bricks.BlockInfo>
+<UU5.Bricks.P>Combined standing data type is defined as follows (only definition, not validation):</UU5.Bricks.P>
+<UU5.CodeKit.CodeViewer mode="js" key="js297"><uu5string.pre>const combinedStandingDataType = shape({
+  code: string().isRequired(), //unique code of the standing data type
+  name: string().isRequired(), //name of the standing data type
+  validationSchema: string.isRequired(), //schema used to validate standing data
+  hasTimeValidity: boolean().isRequired(), //indication if this data type supports time validity
+  active: boolean(), //active marker,
+  classification: string().oneOf(["simple","combined","extended"]).isRequired(),
+  combinedTypes: array(shape({
+    type: string().oneOf(["reference","value"]).isRequired(), //type of the reference
+    name: string().isRequired(), //name of the reference, used to distinguish the combined items if they are values or reference the same standing data type. Must be unique in the scope of one combined standing data type.
+    refCode : string() //reference to the another standing data type, if the combinedType type is "reference". Not used when the type is "value".
+  })).isRequired(), //standing data types or constants combined into this type
+  accessRights: array(
+     shape({
+       accessType: string().oneOf(["read","read_write"]), //type of the granted access
+       profile: string().isRequired() //profile in which the access is granted
+     })
+  )
+});
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.Bricks.P>Combined standing data item (value in the combined standing data type) is then defined below. Note that, this schema is also used as default validation schema for combined standing data.</UU5.Bricks.P>
+<UU5.CodeKit.CodeViewer mode="js" key="js301"><uu5string.pre>const combinedStandingDataItemType = shape({
+  code: string().isRequired(), //unique code of the standing data
+  name: string().isRequired(), //name of the standing data
+  altCodes: array(shape({
+    altCode: string(), //alternative code
+    type: string() //type or classification od the alternative code
+  })), //array of alternate codes of the standing data item
+  description: string(), //longer description of this standing data item
+  typeCode: string().isRequired(), //code of the standing data type to which this item belongs
+  active: boolean(), //active marker
+  order: number(), //position of the standing data item
+  validFromTs: datetime(), //start of the data item validity
+  validToTs: datetime(), //end of the data item validity
+  combinedValues: array(string()) //codes of the standing data types (references) or values combined into this type
+});
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UuDocKit.Bricks.BlockWarning>The order of the standing data type combinedValues must match the order of the defined combinedTypes in the combined standing data type definition!</UuDocKit.Bricks.BlockWarning>
+<UU5.Bricks.Header level="4">Examples of Combined Standing Data</UU5.Bricks.Header>
+<UU5.CodeKit.CodeViewer mode="js" key="js306"><uu5string.pre>const borderStandingDataType = {
+  code: "BORDER",
+  name: "Country border",
+  validationSchema: "defaultCombinedStandingDataType",
+  hasTimeValidity: true,
+  active: true,
+  combinedTypes : [
+    {
+      type: "reference",
+      name: "Area-in",
+      refCode: "COUNTRY"
+    },
+    {
+      type: "reference",
+      name: "Area-out",
+      refCode: "COUNTRY"
+    }
+  ],
+  accessRights: [{
+    //omitted
+  }]
+};
+
+const borderStandingDataItem = {
+  code: "CZE-DEU", //unique code of the standing data type
+  name: "Czech Republic - Germany border", //name of the standing data type
+  typeCode: "BORDER", //code of the standing data type
+  combinedValues: ["CZE", "DEU"],
+  active: true,
+  validFromTs: "2017-10-15T00:00Z", //start of the data item validity
+  validToTs: "2018-10-15T00:00Z" //end of the data item validity
+};
+
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.Bricks.Header level="3">Extended Standing Data</UU5.Bricks.Header>
+<UU5.Bricks.P><UU5.Bricks.Em>Extended standing data type</UU5.Bricks.Em> represents more complex standing data, either simple or combined extended with additional attributes. The extended standing data are, mainly, key business entities needed by the application, but as any other standing data type, they remain mostly unchanged during application lifetime. As opposed to simple or combined standing data, these can define their own fields. <UU5.Bricks.Em>Extended standing data type</UU5.Bricks.Em> cannot extend other extended standing data type.</UU5.Bricks.P>
+<UU5.Bricks.P>Extended simple or combined standing data type is defined same as in previous chapters but contains additional attributes. The structure of the <UU5.Bricks.Em>extended standing data items</UU5.Bricks.Em> is limited and controlled by defined entity object and used validation schema in the <UU5.Bricks.Em>standing data type</UU5.Bricks.Em> definition. Validation of <UU5.Bricks.Em>standing data item</UU5.Bricks.Em> containing more attributes than defined in validation schema would fail.</UU5.Bricks.P>
+<UU5.Bricks.Header level="4">Examples of Extended Standing Data</UU5.Bricks.Header>
+<UU5.CodeKit.CodeViewer mode="js" key="js319"><uu5string.pre>const countryStandingDataType = {
+  code: "EXTENDED_BORDER",
+  name: "Country borders with extended data",
+  validationSchema: "extendedBorderStandingDataType", // custom validation schema to validate also additional attributes
+  hasTimeValidity: true,
+  active: true,
+  classification: "extended", //classification of the extended standing data type - simple, combined or extended
+  combinedTypes : [
+    {
+      type: "reference",
+      name: "Area-in",
+      refCode: "COUNTRY"
+    },
+    {
+      type: "reference",
+      name: "Area-out",
+      refCode: "COUNTRY"
+    }
+  ],
+  accessRights: [{
+    //omitted
+  }]
+};
+
+const extendedStandingDataItemType = {
+  code: "CZE-DEU", //unique code of the standing data type
+  name: "Czech Republic - Germany border", //name of the standing data type
+  typeCode: "EXTENDED_BORDER", //code of the standing data type
+  combinedValues: ["CZE", "DEU"],
+  active: true,
+  order: 1,
+  validFromTs: "2017-10-15T00:00Z", //start of the data item validity
+  validToTs: "2018-10-15T00:00Z", //end of the data item validity
+  //Additional attributes as needed.
+  numOfBorderCrossings: 23,
+  borderLength: 810.7
+};
+
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.Bricks.Header level="2">Provided Commands</UU5.Bricks.Header>
+<UU5.Bricks.P>The component will allow to export or import the content (list of the records and their attributes) of any standing data type to/from XML in the unified generic form.
+This functionality will be used for:</UU5.Bricks.P>
+<UU5.Bricks.Ul>
+<UU5.Bricks.Li>executing batch management operations on the standing data</UU5.Bricks.Li>
+<UU5.Bricks.Li>management of standing data types whose content changes rather rarely and it is not worth to implement GUI administration for it</UU5.Bricks.Li>
+</UU5.Bricks.Ul>
+<UU5.Bricks.P><UU5.Bricks.Em>Plans for future versions include a generic interface + GUI for standing data management. See <UU5.Bricks.Link href="https://uuos9.plus4u.net/uu-dockitg01-main/78462435-9ab38fdad41947d2afa9b2c7fe0522c6/book/page?code=sdmPossibleImprovements">Possible improvements</UU5.Bricks.Link>.</UU5.Bricks.Em></UU5.Bricks.P>
+<UU5.Bricks.Header level="3">XML Definition</UU5.Bricks.Header>
+<UU5.Bricks.P>Both import and export standing data commands work with the same representation of data in XML file. This defines list of all <UU5.Bricks.Strong><UU5.Bricks.Em>Standing data types</UU5.Bricks.Em></UU5.Bricks.Strong> and values they contain, as in example below. <UU5.Bricks.Strong>Tag names and XML form is not final and may be altered during the implementation phase.</UU5.Bricks.Strong></UU5.Bricks.P>
+<UuDocKit.Bricks.BlockInfo>Note that, referenced <UU5.Bricks.Strong>standing data types</UU5.Bricks.Strong> (either through hierarchy or by combined standing data type) must be declared **before** standing data types, where they are referenced.</UuDocKit.Bricks.BlockInfo>
+<UU5.CodeKit.CodeViewer mode="xml" key="xml348"><uu5string.pre>  <!-- Example of simple standing data type. -->
+
+  <standingDataType>
+    <standingDataTypeCode>CURRENCY</standingDataTypeCode>;
+    <items>
+      <standingDataItem>
+         <code>CZK</code>
+         <alternativeCodes>
+          <alternativeCode>
+            <code>KČ</code>
+            <type>cz</type>
+          </alternativeCode>
+          <!-- More items omitted -->
+         </alternativeCodes>
+         <name>Czech crown</name>
+         <value>CZK</value>
+         <active>true</active>
+         <order>1</order>
+         <validFromTs>2017-10-15T00:00Z</validFromTs>
+         <validToTs>2018-10-15T00:00Z</validToTs>
+       </standingDataItem>
+       <!-- More items omitted -->
+    </items>
+</standingDataType>
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.CodeKit.CodeViewer mode="xml" key="xml349"><uu5string.pre>  <!-- Example of combined standing data type. -->
+
+  <standingDataType>
+    <standingDataTypeCode>COUNTRY_CURRENCY</standingDataTypeCode>
+    <items>
+      <standingDataItemType>
+         <code>CZE_CZK</code>
+         <alternativeCodes>
+          <alternativeCode>
+            <code>CZE_KČ</code>
+            <type>cz</type>
+          </alternativeCode>
+          <!-- More items omitted -->
+         </alternativeCodes>
+         <name>Czech Republic - Czech crown</name>
+         <value>CZE_CZK</value>
+         <refValues>
+          <refValue>CZE</refValue>
+          <refValue>CZK</refValue>
+         </refValues>
+         <order>1</order>
+         <validFromTs>2017-10-15T00:00Z</validFromTs>
+         <validToTs>2018-10-15T00:00Z</validToTs>
+       </standingDataItemType>
+    </items>
+    <!-- More items omitted -->
+  </standingDataType>
+</uu5string.pre></UU5.CodeKit.CodeViewer>
+<UU5.CodeKit.CodeViewer mode="xml" key="xml350"><uu5string.pre>   <!-- Example of extended standing data type. -->
+
+   <standingDataType>
+     <standingDataTypeCode>BRANCH_OFFICE</standingDataTypeCode>
+     <items>
+       <standingDataItemType>
+          <code>PRAGUE_HQ</code>
+         <alternativeCodes>
+          <alternativeCode>
+            <code>PRAHA_CENTRALA</code>
+            <type>cz</type>
+          </alternativeCode>
+          <!-- More items omitted -->
+         </alternativeCodes>
+          <value>PRAGUE_HQ</value>
+          <name>Prague HQ</name>
+          <order>1</order>
+          <!-- Custom extended attributes follow -->
+          <!-- There can be as much attributes as needed - this completely depends on the custom entity -->
+          <address>Street 11, Prague 100 01</address>
+          ...
+
+          <validFromTs>2017-10-15T00:00Z</validFromTs>
+          <validToTs>2018-10-15T00:00Z</validToTs>
+        </standingDataItemType>
+     </items>
+     <!-- More items omitted -->
+   </standingDataType>
+
+</uu5string.pre></UU5.CodeKit.CodeViewer>
