@@ -1,5 +1,5 @@
 # UU5 to Markdown
-Develop branch : ![Travis](https://travis-ci.org/jiridudekusy/uu5-to-markdown.svg?branch=develop)
+Develop branch : ![Travis](https://travis-ci.org/jiridudekusy/uu5-to-markdown.svg?branch=develop) [Build history](https://travis-ci.org/jiridudekusy/uu5-to-markdown/builds)
 
 Converts uu5string into markdown.
 
