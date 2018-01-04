@@ -34,11 +34,6 @@
 
         "uu5-to-markdown": "/lib/uu5-to-markdown.js"
       },
-      // TODO probably wrong. It should be possible just to remove xmldom dependency from the uu5-to-markdown
-      "map":{
-        "xmldom": '@empty'
-      }
-
     });
 
   </script>
@@ -54,41 +49,12 @@
   import * as UU5 from "uu5g04";
   import "uu5g04-bricks";
   import CodeKit from "uu5codekitg01";
-  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
+  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters, mdToUu5Plugin} from "uu5-to-markdown";
 
-  let md = `Ace (Ajax.org Cloud9 Editor)
-============================
-
-_Note_: The new site at http://ace.c9.io contains all the info below along with an embedding guide and all the other resources you need to get started with Ace.
-
-Ace is a standalone code editor written in JavaScript. Our goal is to create a browser based editor that matches and extends the features, usability and performance of existing native editors such as TextMate, Vim or Eclipse. It can be easily embedded in any web page or JavaScript application. Ace is developed as the primary editor for [Cloud9 IDE](https://c9.io/) and the successor of the Mozilla Skywriter (Bespin) Project.
-
-Features
---------
-
-* Syntax highlighting for over 120 languages (TextMate/Sublime/_.tmlanguage_ files can be imported)
-* Over 20 themes (TextMate/Sublime/_.tmtheme_ files can be imported)
-* Automatic indent and outdent
-* An optional command line
-* Handles huge documents (at last check, 4,000,000 lines is the upper limit)
-* Fully customizable key bindings including vim and Emacs modes
-* Search and replace with regular expressions
-* Highlight matching parentheses
-* Toggle between soft tabs and real tabs
-* Displays hidden characters
-* Drag and drop text using the mouse
-* Line wrapping
-* Code folding
-* Multiple cursors and selections
-* Live syntax checker (currently JavaScript/CoffeeScript/CSS/XQuery)
-* Cut, copy, and paste functionality
-
-Take Ace for a spin!
---------------------
-
-Check out the Ace live [demo](http://ace.c9.io/build/kitchen-sink.html) or get a [Cloud9 IDE account](https://c9.io/) to experience Ace while editing one of your own GitHub projects.
-
-If you want, you can use Ace as a textarea replacement thanks to the [Ace Bookmarklet](http://ajaxorg.github.io/ace/build/demo/bookmarklet/index.html).
+  let md = `# {section} test
+Test section content
+Next Line
+{section}
 `;
 
   var Page = createReactClass({
@@ -100,6 +66,7 @@ If you want, you can use Ace as a textarea replacement thanks to the [Ace Bookma
           highlight: true,
           headerLevel: 2
         });
+        this._mdr.use(mdToUu5Plugin);
         this.mdValue = md;
         this._uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitPlugin());
         return {

@@ -141,6 +141,36 @@ describe('UU5.Bricks.Header', () => {
     '<UU5.Bricks.Header level="8">Hello world</UU5.Bricks.Header>');
 });
 
+describe('UU5.Bricks.Section', () => {
+  uu5ToMdTest('single section',
+    '<UU5.Bricks.Section header="Section title">Section content</UU5.Bricks.Section>',
+    ['# {section} Section title',
+      'Section content',
+      '',
+      '{section}'].join('\n'));
+
+  uu5ToMdTest('nested section',
+    ['<UU5.Bricks.Section header="Section title">',
+      'Section content',
+      '<UU5.Bricks.Section header="Nested section title">',
+      'Nested section content',
+      '</UU5.Bricks.Section>',
+      'Additional section content',
+      '</UU5.Bricks.Section>'].join('\n'),
+    ['# {section} Section title',
+      'Section content',
+      '',
+      '# {section} Nested section title',
+      'Nested section content',
+      '',
+      '{section}',
+      '',
+      'Additional section content',
+      '',
+      '{section}'].join('\n'));
+
+});
+
 describe('Uu5.Bricks.Link', () => {
   uu5ToMdTest('default',
     '<UU5.Bricks.Link href="http://example.com/about">About us</UU5.Bricks.Link>',

@@ -93,6 +93,14 @@ export default class UU5Converters {
         }
       },
       {
+        filter: uu5BricksSection,
+        replacement: function (content, node) {
+          let header = node.getAttribute('header');
+
+          return `\n\n# {section} ${header}\n${content}\n\n{section}\n\n`;
+        }
+      },
+      {
         filter: uu5BricksEm,
         replacement: function (content) {
           return '*' + content + '*';
