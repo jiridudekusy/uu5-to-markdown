@@ -1,16 +1,15 @@
 export default class UU5Parser {
   constructor() {
-    // todo this is only for nodeJs ?
-    if (typeof DOMParser === 'function') {
-      this._parser = new DOMParser();
-    } else {
-      let DOMParser = require('xmldom').DOMParser;
+    // use xmldom parser from node_modules instead of the one in browser
+    let DOMParser = require('xmldom').DOMParser;
 
-      this._parser = new DOMParser();
-    }
+    this._parser = new DOMParser();
   }
 
   parse(source) {
-    return this._parser.parseFromString(source, 'application/xml');
+    // do mot use any specific type
+    //    application/xml has problem with <> in attributes
+    //    text/html has lower cased element s etc.
+    return this._parser.parseFromString(source);
   }
 }

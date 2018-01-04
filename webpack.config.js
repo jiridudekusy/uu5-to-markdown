@@ -26,9 +26,6 @@ const config = {
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
-  externals: {
-    'xmldom': 'xmldom'
-  },
   module: {
     rules: [
       {

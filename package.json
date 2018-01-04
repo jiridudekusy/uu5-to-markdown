@@ -40,10 +40,10 @@
     "mochify": "^5.0.0",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.7",
-    "yargs": "^10.0.3",
-    "xmldom": "0.1.27"
+    "yargs": "^10.0.3"
   },
   "dependencies": {
-    "collapse-whitespace": "1.1.6"
+    "collapse-whitespace": "1.1.6",
+    "xmldom": "0.1.27"
   }
 }
