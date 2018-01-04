@@ -266,7 +266,18 @@ export default class UU5ToMarkdown {
     let res = '<' + node.localName;
 
     for (let i = 0; i < node.attributes.length; i++) {
-      res += ' ' + node.attributes[i].name + '="' + node.attributes[i].value + '"';
+      let quotChar = '"';
+      let attribute = node.attributes[i];
+
+      if (attribute.value.indexOf('"') > -1) {
+        if (attribute.value.indexOf('\'') > -1) {
+          console.error(`Attribute "{attribute.name}" with value "${attribute.value}"of element ${node.localName} contains ' and ".`);
+        } else {
+          quotChar = '\'';
+        }
+      }
+
+      res += ` ${attribute.name}=${quotChar}${attribute.value}${quotChar}`;
     }
     if (content) {
       res += '>';

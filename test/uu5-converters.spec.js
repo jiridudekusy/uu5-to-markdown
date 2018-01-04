@@ -32,6 +32,21 @@ describe('Unknown tags', () => {
       '<UU5.Bricks.P>Some <UU5.Bricks.Strong>Text</UU5.Bricks.Strong></UU5.Bricks.P>',
       '<UU5.Bricks.P>Some <UUS.Bricks.Em> Other<UU5.Bricks.Strong>Text</UU5.Bricks.Strong></UUS.Bricks.Em></UU5.Bricks.P>',
       '</UUS.Unknown>'].join('\n'));
+  uu5ToMdTest('Unknown tag with entities',
+    '<UUS.Unknown attr1="\'><&" attr2=\'"><&\'>Some Text</UUS.Unknown>',
+    '<UUS.Unknown attr1="\'><&" attr2=\'"><&\'>Some Text</UUS.Unknown>');
+  uu5ToMdTest('Unknown tag with uu5json',
+    `      <UU5.Unknown data='<uu5json/>[
+        ["name1", "value1"],
+        ["name2", "value2"],
+        ["name3", "value3"]
+      ]'/>`,
+    `<UU5.Unknown data='<uu5json/>[
+        ["name1", "value1"],
+        ["name2", "value2"],
+        ["name3", "value3"]
+      ]'/>`);
+
 });
 
 describe('Uu5.Bricks.P', () => {
@@ -141,6 +156,7 @@ describe('Uu5.Bricks.Link', () => {
     '[<span>About us</span>](http://example.com/about)');
 });
 
+// TODO finsish table tests
 describe('UU5.Bricks.Table', () => {
   uu5ToMdTest('Basic table',
     ['<UU5.Bricks.Table>',
@@ -167,6 +183,8 @@ describe('UU5.Bricks.Table', () => {
       '| Row 1, Column 1 | Row 1, Column 2 |',
       '| Row 2, Column 1 | Row 2, Column 2 |'].join('\n'));
 });
+
+// TODO Section tests
 
 // TODO Finish lists
 
