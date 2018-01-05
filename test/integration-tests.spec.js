@@ -11,9 +11,8 @@ let uu5ToMarkdown = new UU5ToMarkdown(new UU5CodeKitConverters(), new UUDockitPl
 
 function uu5FileTest(name, uu5stringFile, mdStringFile) {
   let fs = require('fs');
-  // TODO fix path
-  let uu5string = fs.readFileSync('/Users/jdk/work/uuDockit-helpers/uu5-to-markdown/test/data/' + uu5stringFile, 'utf8');
-  let mdString = fs.readFileSync('/Users/jdk/work/uuDockit-helpers/uu5-to-markdown/test/data/' + mdStringFile, 'utf8');
+  let uu5string = fs.readFileSync('./test/data/' + uu5stringFile, 'utf8');
+  let mdString = fs.readFileSync('./test/data/' + mdStringFile, 'utf8');
 
   // remove the latest \n from mdString, since IntelliJ always put \n to the end of MD file
   mdString = mdString.slice(0, -1);
