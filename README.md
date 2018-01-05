@@ -4,7 +4,7 @@ Develop branch : [![Build Status](https://travis-ci.org/jiridudekusy/uu5-to-mark
 Master branch : [![Build Status](https://travis-ci.org/jiridudekusy/uu5-to-markdown.svg?branch=master)](https://travis-ci.org/jiridudekusy/uu5-to-markdown)
 
 
-Converts uu5string into markdown.
+Converts uu5string and uuDocKit JSON into markdown.
 
 Following UU5 components are suppported:
 - Core
@@ -50,7 +50,8 @@ Include library into package.json :
 }
 ```
 
-You can then use in your ES6 code :
+### Convert UU5 to MD
+
 ```ecmascript 6
 // import core
 import {UU5ToMarkdown} from "uu5-to-markdown";
@@ -63,6 +64,87 @@ let uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitP
 //convert uu5string to markdown
 let uu5string = "...some uu5 string..."
 let markdown = uu5toMarkdown.toMarkdown(uu5string);
+
+```
+
+### Convert MD to UU5
+
+To convert markdown to UU5 you must use CodeKit(uu5codekitg01) with plugin from this repository to convert non-markdown extensions (like sections).
+
+```ecmascript 6
+// import core
+import {UU5ToMarkdown} from "uu5-to-markdown";
+import CodeKit from 'uu5codekitg01';
+
+//import plugins
+import {mdToUu5Plugin} from "uu5-to-markdown";
+
+//create convertor
+let mdr = new CodeKit.MarkdownRenderer('full', {
+  html: true,
+  xhtmlOut: true,
+  typographer: true,
+  highlight: true,
+  headerLevel: 2
+});
+//register plugin for non-markdown extendsions (like sections)
+mdr.use(mdToUu5Plugin);
+
+//convert markdown to uu5string
+let markdown = "...some markdown string..."
+let uu5String = mdr.render(markdown);
+
+```
+
+### Convert uuDocKit JSON to MD
+
+```ecmascript 6
+// import core
+import {UU5ToMarkdown} from "uu5-to-markdown";
+//import plugins
+import {UUDockitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
+//import uuDocKit convertor
+import {UuDocKitToMarkdown} from "uu5-to-markdown";
+
+//create uu5convertor
+let uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitPlugin());
+
+//create uuDocKit convertor
+let uuDocKitToMarkdown = new UuDocKitToMarkdown(uu5toMarkdown);
+
+//convert uuDocKit JSON to markdown
+let uuDocKitJson = "...some uuDocKit JSON string..."
+let markdown = uuDocKitToMarkdown.toMarkdown(uuDocKitJson);
+```
+### Convert MD to uuDocKit JSON
+
+To convert markdown to uuDocKit JSON you must use CodeKit(uu5codekitg01) with plugin and helper from this repository.
+
+```ecmascript 6
+// import core
+import {UU5ToMarkdown} from "uu5-to-markdown";
+import CodeKit from 'uu5codekitg01';
+//import plugins
+import {mdToUu5Plugin} from "uu5-to-markdown";
+import {MarkdownToUuDocKit} from "uu5-to-markdown";
+
+//create convertor
+let mdr = new CodeKit.MarkdownRenderer('full', {
+  html: true,
+  xhtmlOut: true,
+  typographer: true,
+  highlight: true,
+  headerLevel: 2
+});
+//register plugin for non-markdown extendsions (like sections)
+mdr.use(mdToUu5Plugin);
+
+//create uuDocKit convertor
+let markdownToUuDocKit = new MarkdownToUuDocKit(mdr)
+
+//convert markdown to uuDocKit JSON
+let markdown = "...some markdown string..."
+let uuDocKitJSON = markdownToUuDocKit.toUuDocKit(markdown);
 
 ```
 

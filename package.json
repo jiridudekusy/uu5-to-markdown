@@ -7,10 +7,10 @@
     "build": "npm run test && npm rum browserTest && npm run integrationTest && webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
     "start": "webpack-dev-server",
-    "test": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js",
+    "test": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js ./test/uuDockit-to-markdown.spec.js ./test/markdown-to-uDocKit.spec.js",
     "integrationTest": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/integration-tests.spec.js",
     "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js",
-    "browserTest": "mochify --transform babelify --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js"
+    "browserTest": "mochify --transform babelify --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js ./test/uuDockit-to-markdown.spec.js ./test/markdown-to-uDocKit.spec.js"
   },
   "repository": {
     "type": "git",
