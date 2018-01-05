@@ -1,4 +1,11 @@
 language: node_js
 node_js:
-  - 8
-
+script: npm run build
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: jiri.dudek@unicornsystems.eu
+  branch: master
+  tags: true
+  api_key:
+    secure: kSL/+jKZSMYv4vA2LgOEh9EkgGEhH2gyAETSR49edyFr+NIN5IovSD4qbNDeuMC5sDceviP3kCilNdrMdykHi5SAxUhsUwlhkS5Q7FPp9wnbBKs79Gi2DiKGf715x0cb8RDVrZb+/sdQ0EYBx3N+eUJOYMSwu678o5zk3end5xd+PcNQW0W/4mJmfSBuQv1I+hUZXztoFnx2lhPg/+xUBLdS8y5SqgGNUws7NuASK5SqMyR9TDhjmdCe6CEbRmNrJd9+LMFGD1Gq/O7d4A0z+yctsJsN7GHmM+fq4Ay0laZtZZptvoSKyYZ2gBiWhEOdZeJPAjqDG1GgmriXsZ6O46rcmLE9WZrQX+YIflw8hmggkcQVQEa4eHLf3+BrmBZRt1uqFEJi+gXW2JTxqtlOIeFqnXwS0Z8IDfEXCtSRUwR4IXcb4/tXmWq9AvKzeslV+9xq+p4OyfhViPGUuCR18zglw/5nsDkHlpCYhcQGR0fqUOtJPZxHU6FveUP1zNdF/lvxiSaGAH89sEmQzbi9fqWJEr1rCt0IYvkTXbxSGW0vvFmu0uv6I93Haz/8O5dLV28E/Hs/AEJrTRuQw9oHIpCVTd84tFMIBD0ZaB5+00YIZUjCJNc6EOKnPy2zYsutwmb9zVXZ9LIZvwzeTIn4QacC6zPtaTxX4U3yBZbPIuI=
