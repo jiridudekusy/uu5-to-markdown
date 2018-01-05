@@ -181,15 +181,14 @@ ES6 source files
 2. Development mode
   * Having all the dependencies installed run `yarn dev` or `npm run dev`. This command will generate an non-minified version of your library and will run a watcher so you get the compilation on file change.
 3. Running the tests
-  * Run `yarn test` or `npm run test` for unit tests in NodeJS (debug in IntelliJ is supported)
+  * Run `yarn test` or `npm run test` for unit tests, integration tests and test with UU5(CodeKit.MarkdownRenderer) in NodeJS (debug in IntelliJ is supported)
   * Run `yarn browserTest` or `npm run browserTest` for unit tests in browser 
-  * Run `yarn integrationTest` or `npm run integrationTest` for integration tests in NodeJS (debug in IntelliJ is supported)
 
 ### Scripts
 
 * `yarn build` or `npm run build` - produces production version of your library under the `lib` folder
 * `yarn dev` or `npm run dev` - produces development version of your library and runs a watcher
 * `yarn start` or `npm start` - run webserver on <http://localhost:8080/> for access demo pages 
-* `yarn test` or `npm run test` - unit tests in NodeJS (debug in IntelliJ is supported)
+* `yarn test` or `npm run test` - unit tests, integration tests and test with UU5(CodeKit.MarkdownRenderer) in NodeJS (debug in IntelliJ is supported)
 * `yarn browserTest` or `npm run browserTest` -  unit tests in browser 
-* `yarn integrationTest` or `npm run integrationTest` - integration tests in NodeJS (debug in IntelliJ is supported)
+

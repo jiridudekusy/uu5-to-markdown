@@ -1,6 +1,6 @@
 import chai from 'chai';
-import UU5ToMarkdown from '../src/uu5-to-markdown.js';
-import UuDockitToMarkdown from '../src/uuDockit-to-markdown';
+import UU5ToMarkdown from '../../src/uu5-to-markdown.js';
+import UuDockitToMarkdown from '../../src/uuDockit-to-markdown';
 
 chai.expect();
 

@@ -64,8 +64,6 @@ function section(state, startLine, endLine, silent) {
 
   let sectionHeader = state.src.slice(pos, max).trim();
 
-  console.log('section header : ' + sectionHeader);
-
   let nextLine = startLine + 1;
   let endRecoginzed = false;
   let contentEndLine;
@@ -119,7 +117,7 @@ function section(state, startLine, endLine, silent) {
 // rendering rules
 
 function sectionOpen(tokens, idx, options, env, renderer) {
-  return `<UU5.Bricks.Section  header="${tokens[idx].header}">\n`;
+  return `<UU5.Bricks.Section header="${tokens[idx].header}">\n`;
 };
 
 function sectionClose(tokens, idx, options, env, renderer) {

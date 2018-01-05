@@ -4,13 +4,11 @@
   "description": "Coverts uu5tring to markdown. It supports plugins.",
   "main": "lib/uu5-to-markdown.js",
   "scripts": {
-    "build": "npm run test && npm rum browserTest && npm run integrationTest && webpack --env dev && webpack --env build",
+    "build": "npm run test && npm rum browserTest && webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
     "start": "webpack-dev-server",
-    "test": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js ./test/uuDockit-to-markdown.spec.js ./test/markdown-to-uDocKit.spec.js",
-    "integrationTest": "mocha $NODE_DEBUG_OPTION --require babel-core/register --colors ./test/integration-tests.spec.js",
-    "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js",
-    "browserTest": "mochify --transform babelify --colors ./test/uu5-converters.spec.js ./test/uu5CodeKit-coverters.spec.js ./test/uuDockit-plugin.spec.js ./test/uuDockit-to-markdown.spec.js ./test/markdown-to-uDocKit.spec.js"
+    "test": "mocha $NODE_DEBUG_OPTION --require babel-core/register --require ./test/withUU5/tools/require-mapper.js --colors ./test/common/*.spec.js ./test/nodeOnly/*.spec.js ./test/withUU5/*.spec.js",
+    "browserTest": "mochify --transform babelify --colors --colors ./test/common/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -38,8 +36,12 @@
     "eslint-loader": "^1.9.0",
     "mocha": "^4.0.1",
     "mochify": "^5.0.0",
+    "require-hacker": "^3.0.1",
+    "uu5codekitg01": "https://cdn.plus4u.net/uu-uu5codekitg01/1.0.0/uu5codekitg01.tgz",
+    "uu5g04": "https://cdn.plus4u.net/uu-uu5g04/1.4.0/uu5g04.tgz",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.7",
+    "window": "^4.2.4",
     "yargs": "^10.0.3"
   },
   "dependencies": {

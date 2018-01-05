@@ -1,7 +1,7 @@
 import chai from 'chai';
-import UU5ToMarkdown from '../src/uu5-to-markdown.js';
-import UU5CodeKitConverters from '../src/converters/uu5CodeKit-converters.js';
-import UUDockitPlugin from '../src/converters/uuDockit-plugin.js';
+import UU5ToMarkdown from '../../src/uu5-to-markdown.js';
+import UU5CodeKitConverters from '../../src/converters/uu5CodeKit-converters.js';
+import UUDockitPlugin from '../../src/converters/uuDockit-plugin.js';
 
 chai.expect();
 
@@ -11,8 +11,8 @@ let uu5ToMarkdown = new UU5ToMarkdown(new UU5CodeKitConverters(), new UUDockitPl
 
 function uu5FileTest(name, uu5stringFile, mdStringFile) {
   let fs = require('fs');
-  let uu5string = fs.readFileSync('./test/data/' + uu5stringFile, 'utf8');
-  let mdString = fs.readFileSync('./test/data/' + mdStringFile, 'utf8');
+  let uu5string = fs.readFileSync('./test/nodeOnly/data/' + uu5stringFile, 'utf8');
+  let mdString = fs.readFileSync('./test/nodeOnly/data/' + mdStringFile, 'utf8');
 
   // remove the latest \n from mdString, since IntelliJ always put \n to the end of MD file
   mdString = mdString.slice(0, -1);

@@ -1,5 +1,5 @@
 import chai from 'chai';
-import MarkdownToUuDocKit from '../src/markdown-to-uuDockit';
+import MarkdownToUuDocKit from '../../src/markdown-to-uuDockit';
 
 const expect = chai.expect;
 
