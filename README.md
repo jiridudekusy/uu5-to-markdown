@@ -13,6 +13,7 @@ Following UU5 components are suppported:
   - UU5.Bricks.Em
   - UU5.Bricks.Link
   - UU5.Bricks.Header
+  - UU5.Bricks.Section
   - UU5.Bricks.Code (inline and block)
   - UU5.Bricks.Blockquote
   - Lists
