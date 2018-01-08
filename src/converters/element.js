@@ -2,6 +2,7 @@ class ElementDef {
   constructor(name, ...attributes) {
     this.name = name;
     this.attributes = attributes;
+    this._anyAttributes = false;
     this.caseSensitive(true);
     this.leaf(true);
     this.skipTextNodes(false);
@@ -9,6 +10,11 @@ class ElementDef {
 
   caseSensitive(aCaseSensitive) {
     this.isCaseSensitive = aCaseSensitive;
+    return this;
+  }
+
+  anyAttributes() {
+    this._anyAttributes = true;
     return this;
   }
 
@@ -53,20 +59,19 @@ class ElementDef {
     } else {
       result = this.name.toUpperCase() === node.nodeName.toUpperCase();
     }
-    // if (result) {
-    //   let attributeNames = node.getAttributeNames();
-    //
-    //   if (attributes) {
-    //     for (let key in attributeNames) {
-    //       result = result & (attributes.indexOf(attributeNames[key]) > -1);
-    //       if (!result) {
-    //         break;
-    //       }
-    //     }
-    //   } else {
-    //     result = result & attributeNames.length === 0;
-    //   }
-    // }
+    if (result) {
+
+      if (!this._anyAttributes) {
+        for (let i = 0; i < node.attributes.length; i++) {
+          let attribute = node.attributes[i];
+
+          result = result & (this.attributes.indexOf(attribute.name) > -1);
+          if (!result) {
+            break;
+          }
+        }
+      }
+    }
 
     return result;
   }

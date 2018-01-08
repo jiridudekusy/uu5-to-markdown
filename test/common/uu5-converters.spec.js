@@ -11,6 +11,7 @@ function uu5ToMdTest(name, uu5string, mdString) {
 
   it(name, () => {
     let parsed = uu5ToMarkdown.toMarkdown(uu5string);
+
     expect(parsed).to.be.equal(mdString);
   });
 
@@ -46,6 +47,9 @@ describe('Unknown tags', () => {
         ["name2", "value2"],
         ["name3", "value3"]
       ]'/>`);
+  uu5ToMdTest('Known tag with unknown attribute',
+    '<UUS.Bricks.P unknownAttribute="val">Some Text</UUS.Bricks.P>',
+    '<UUS.Bricks.P unknownAttribute="val">Some Text</UUS.Bricks.P>');
 
 });
 

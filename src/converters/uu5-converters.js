@@ -18,15 +18,17 @@ export default class UU5Converters {
     let uu5BricksP = new ElementDef('UU5.Bricks.P').block();
     let uu5BricksStrong = new ElementDef('UU5.Bricks.Strong').leaf();
     let uu5BricksEm = new ElementDef('UU5.Bricks.Em').leaf();
-    let uu5BricksLink = new ElementDef('UU5.Bricks.Link').leaf();
-    let uu5BricksHeader = new ElementDef('UU5.Bricks.Header').block();
-    let uu5BricksSection = new ElementDef('UU5.Bricks.Section').block();
+    let uu5BricksLink = new ElementDef('UU5.Bricks.Link', 'href', 'target', 'title').leaf();
+    let uu5BricksHeader = new ElementDef('UU5.Bricks.Header', 'level').block();
+    let uu5BricksSection = new ElementDef('UU5.Bricks.Section', 'header').block();
     let uu5stringPre = new ElementDef('uu5string.pre').block();
+    let uu5BricksPre = new ElementDef('UU5.Bricks.Pre').block();
     let uu5BricksCodeViewer = new ElementDef('UU5.CodeKit.CodeViewer').block();
     let uu5BricksCode = new ElementDef('UU5.Bricks.Code').leaf();
     let uu5BricksBlockquote = new ElementDef('UU5.Bricks.Blockquote').block();
     let uu5BricksOl = new ElementDef('UU5.Bricks.Ol').block().skipTextNodes();
     let uu5BricksUl = new ElementDef('UU5.Bricks.Ul').block().skipTextNodes();
+    let uu5BricksLi = new ElementDef('UU5.Bricks.Li').block();
     let uu5BricksTable = new ElementDef('UU5.Bricks.Table').block().skipTextNodes();
     let uu5BricksTableTHead = new ElementDef('UU5.Bricks.Table.THead').block().skipTextNodes();
     let uu5BricksTableTBody = new ElementDef('UU5.Bricks.Table.TBody').block().skipTextNodes();
@@ -44,11 +46,13 @@ export default class UU5Converters {
       uu5BricksHeader,
       uu5BricksSection,
       uu5stringPre,
+      uu5BricksPre,
       uu5BricksCodeViewer,
       uu5BricksCode,
       uu5BricksBlockquote,
       uu5BricksOl,
       uu5BricksUl,
+      uu5BricksLi,
       uu5BricksTable,
       uu5BricksTableTHead,
       uu5BricksTableTBody,
@@ -78,7 +82,7 @@ export default class UU5Converters {
       },
       {
         filter: function (node) {
-          let result = this.checkTag('UU5.Bricks.Header', ['level'])(node);
+          let result = uu5BricksHeader.checkTag(node);
 
           return result & (node.getAttribute('level') <= 7);
         },
@@ -117,9 +121,9 @@ export default class UU5Converters {
       {
         filter: function (node) {
           let hasSiblings = node.previousSibling || node.nextSibling;
-          let isCodeBlock = this.checkTag('UU5.Bricks.Pre')(node.parentNode) && !hasSiblings;
+          let isCodeBlock = uu5BricksPre.checkTag(node.parentNode) && !hasSiblings;
 
-          return this.checkTag('UU5.Bricks.Code')(node) && !isCodeBlock;
+          return uu5BricksCode.checkTag(node) && !isCodeBlock;
         },
         replacement: function (content) {
           return '`' + content + '`';
@@ -129,8 +133,8 @@ export default class UU5Converters {
       // Code blocks
       {
         filter: function (node) {
-          return this.checkTag('UU5.Bricks.Pre')(node) && this.checkTag('UU5.Bricks.Code')(
-            node.firstChild);
+          // TODO Check if there isnt any problem in case of text nodes
+          return uu5BricksPre.checkTag(node) && uu5BricksCode.checkTag(node.firstChild);
         },
         replacement: function (content, node) {
           return '\n\n    ' + node.firstChild.textContent.replace(/\n/g, '\n    ') + '\n\n';
@@ -138,7 +142,7 @@ export default class UU5Converters {
       },
       {
         filter: function (node) {
-          return this.checkTag('UU5.Bricks.Link', ['href', 'target', 'title'])(node) && node.getAttribute('href');
+          return uu5BricksLink.checkTag(node) && node.getAttribute('href');
         },
         replacement: function (content, node) {
           var titlePart = node.getAttribute('title') ? ' "' + node.getAttribute('title') + '"' : '';
@@ -148,9 +152,7 @@ export default class UU5Converters {
         }
       },
       {
-        filter: function (node) {
-          return this.checkTag('UU5.Bricks.Blockquote')(node);
-        },
+        filter: uu5BricksBlockquote,
         replacement: function (content) {
           content = content.trim();
           content = content.replace(/\n{3,}/g, '\n\n');
@@ -159,19 +161,16 @@ export default class UU5Converters {
         }
       },
       {
-        filter: function (node) {
-          return this.checkTag('UU5.Bricks.Li')(node);
-        },
+        filter: uu5BricksLi,
         replacement: function (content, node) {
           let prefix = '*   ';
           let parent = node.parentNode;
 
           content = content.replace(/^\s+/, '').replace(/\n/gm, '\n    ');
-          if (parent.nodeName === 'UU5.Bricks.Ol') {
-            let start = parent.getAttribute('start');
-            let index = Array.prototype.filter.call(parent.childNodes, n => n.nodeName === 'UU5.Bricks.Li').indexOf(node);
+          if (parent.nodeName === uu5BricksOl.name) {
+            let index = Array.prototype.filter.call(parent.childNodes, n => n.nodeName === uu5BricksLi.name).indexOf(node);
 
-            prefix = (start ? Number(start) + index : index + 1) + '.  ';
+            prefix = index + 1 + '.  ';
           }
 
           return prefix + content;
@@ -179,13 +178,13 @@ export default class UU5Converters {
       },
       {
         filter: function (node) {
-          return this.checkTag('UU5.Bricks.Ul')(node) || this.checkTag('UU5.Bricks.Ol')(node);
+          return uu5BricksUl.checkTag(node) || uu5BricksOl.checkTag(node);
         },
         replacement: function (content, node) {
           var strings = [];
 
           Array.prototype.filter.call(node.childNodes, item => item.nodeType === 1).forEach(item => strings.push(item._replacement));
-          if (/UU5.Bricks.Li/i.test(node.parentNode.nodeName)) {
+          if (uu5BricksLi.name === node.parentNode.nodeName) {
             return '\n' + strings.join('\n');
           }
           return '\n\n' + strings.join('\n') + '\n\n';
