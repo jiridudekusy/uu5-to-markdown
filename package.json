@@ -4,7 +4,7 @@
   "description": "Coverts uu5tring to markdown. It supports plugins.",
   "main": "lib/uu5-to-markdown.js",
   "scripts": {
-    "build": "npm run test && npm rum browserTest && webpack --env dev && webpack --env build",
+    "build": "npm run test && webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
     "start": "webpack-dev-server",
     "test": "mocha $NODE_DEBUG_OPTION --require babel-core/register --require ./test/withUU5/tools/require-mapper.js --colors ./test/common/*.spec.js ./test/nodeOnly/*.spec.js ./test/withUU5/*.spec.js",
