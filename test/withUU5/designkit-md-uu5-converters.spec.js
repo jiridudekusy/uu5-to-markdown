@@ -4,6 +4,7 @@ import CodeKit from 'uu5codekitg01';
 import mdToUu5Plugin from '../../src/converters/md-uu5-plugin';
 import DesignKitMdToUu5Plugin from '../../src/converters/md2uu5/designKit/designKit-md-uu5-plugin';
 
+Setup();
 chai.expect();
 
 // TODO this test is currently not working because the uu5codekitg01 module cannot be loaded
@@ -18,7 +19,7 @@ let markdownToUu5 = new CodeKit.MarkdownRenderer('full', {
   headerLevel: 2
 });
 markdownToUu5.use(mdToUu5Plugin);
-markdownToUu5.use(DesignKitMdToUu5Plugin);
+markdownToUu5.use(DesignKitMdToUu5Plugin, {markdownToUu5: markdownToUu5});
 
 function mdToUu5Test(name, mdString, uu5String) {
 

@@ -1,14 +1,6 @@
-import CodeKit from 'uu5codekitg01';
 import UU5Parser from '../../../parser/uu5parser';
 import * as ParserUtils from '../../../parser/parserUtils';
 
-let markdownToUu5 = new CodeKit.MarkdownRenderer('full', {
-  html: true,
-  xhtmlOut: true,
-  typographer: true,
-  highlight: true,
-  headerLevel: 2
-});
 let uu5Parser = new UU5Parser();
 
 function getDesignKitCellContent(node) {
@@ -59,7 +51,7 @@ function getDesignKitCellLink(nodes) {
   return res;
 }
 
-function createDesignKitRecognizeFunction(marker, tagName, processCallback) {
+function createDesignKitRecognizeFunction(marker, tagName, opts, processCallback) {
   return function (state, startLine, endLine, silent) {
     let pos = state.bMarks[startLine] + state.tShift[startLine],
       max = state.eMarks[startLine],
@@ -95,7 +87,7 @@ function createDesignKitRecognizeFunction(marker, tagName, processCallback) {
     state.line = contentEndLine + 1;
 
     // convert md subcontent to uu5string for easier processing
-    let uu5content = markdownToUu5.render(content);
+    let uu5content = opts.markdownToUu5.render(content);
 
     // remove all new lines. They are just adding complexity to the parsing
     // TODO thish can be later replaced by some checks in  processing
@@ -114,8 +106,8 @@ function createDesignKitRecognizeFunction(marker, tagName, processCallback) {
   };
 }
 
-function createListToTableDesignKitJsonDesignKit(cfg) {
-  return createDesignKitRecognizeFunction(cfg.marker, cfg.tagName,
+function createListToTableDesignKitJsonDesignKit(cfg, opts) {
+  return createDesignKitRecognizeFunction(cfg.marker, cfg.tagName, opts,
     (dom) => {
       // TODO add check that dom.childNodes[1] is list
       // get uu5json data rows
@@ -168,7 +160,7 @@ function createDesignKitElement(tagName, attributes) {
   return res + '\n';
 }
 
-function createDesignKitRenderer(tagName) {
+function createDesignKitRenderer(tagName, opts) {
   return function (tokens, idx, options, env, renderer) {
     return createDesignKitElement(tagName, tokens[idx].tagAttributes);
   };

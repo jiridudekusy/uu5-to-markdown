@@ -49,7 +49,7 @@
   import * as UU5 from "uu5g04";
   import "uu5g04-bricks";
   import CodeKit from "uu5codekitg01";
-  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters, mdToUu5Plugin, UuDocKitToMarkdown, MarkdownToUuDocKit} from "uu5-to-markdown";
+  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters, UuAppDesignKitConverters, mdToUu5Plugin, UuDocKitToMarkdown, MarkdownToUuDocKit,desighKitMdToUu5Plugin} from "uu5-to-markdown";
 
   let md = `# {section} test
 Test section content
@@ -67,10 +67,11 @@ Next Line
           headerLevel: 2
         });
         mdr.use(mdToUu5Plugin);
+        mdr.use(desighKitMdToUu5Plugin, {markdownToUu5: mdr});
 
         this._markdownToUuDocKit = new MarkdownToUuDocKit(mdr);
 
-        let uu5toMarkdown = new UU5ToMarkdown(new UU5CodeKitConverters(), new UUDockitPlugin());
+        let uu5toMarkdown = new UU5ToMarkdown(new UU5CodeKitConverters(), new UUDockitPlugin(), new UuAppDesignKitConverters());
 
         this._uuDocKitToMarkdown = new UuDocKitToMarkdown(uu5toMarkdown);
 
