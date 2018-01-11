@@ -36,6 +36,9 @@ Following UU5 components are suppported:
 - uuDockit Plugin 
    - UU5.Bricks.Header with level offset (during MD -> UU5 conversion level is MD level + 1)
 
+- uuAppDesignKit Plugin
+  - UuApp.DesignKit.UuSubAppDataStoreList
+
 The components that are not supported are copied to markdown as is.
 
 ## How to use it
