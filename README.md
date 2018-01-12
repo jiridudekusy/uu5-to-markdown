@@ -38,6 +38,24 @@ Following UU5 components are suppported:
 
 - uuAppDesignKit Plugin
   - UuApp.DesignKit.UuSubAppDataStoreList
+  - UuApp.DesignKit.UuCmdList
+  - UuApp.DesignKit.UuSubAppInfo
+  - UuApp.DesignKit.UuAppProfileList
+  - UuApp.DesignKit.UU5UveList
+  - UuApp.DesignKit.UuCmdErrorList
+  - UuApp.DesignKit.UuCmdInfo
+  - UuApp.DesignKit.UuCmdDefaultValueList
+  - UuApp.DesignKit.DescriptionList
+  - UuApp.DesignKit.BusinessRoleList
+  - UuApp.DesignKit.BusinessProcessList
+  - UuApp.DesignKit.BusinessUseCaseList
+  - UuApp.DesignKit.UuAppObjectStoreSchemaList
+  - UuApp.DesignKit.UuAppObjectStoreInfo
+  - UuApp.DesignKit.UuAppBinaryStoreInfo
+  - UuApp.DesignKit.UuAppObjectStoreSchemaLimitList
+  - UuApp.DesignKit.UuAppObjectStoreSchemaIndexList
+  - UuApp.DesignKit.UuAppObjectStoreSchemaDaoMethodList
+  - UuApp.DesignKit.UuAppBinaryStoreSchemaDaoMethodList
 
 The components that are not supported are copied to markdown as is.
 

@@ -52,4 +52,46 @@ describe('UuApp.DesignKit', () => {
   - datastore2 description`,
       `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[["datastore1Code","O","datastore1 description"],["datastore2Code","B","datastore2 description"]]'/>\n`);
   });
+  describe('UuCmdList', () => {
+    mdToUu5Test('with link in first column, text in other',
+      `{UuCmdList}
+- [initCourse](initCourse)
+  - 1
+  - B
+  - SysOwner
+  - Inicializace kurzu.
+- updateCourse
+  - 2
+  - C
+  - ExecutivesContent
+  - Aktualizace schema kurz.`,
+      `<uu5string/><UuApp.DesignKit.UuCmdList data='<uu5json/>[[["initCourse","initCourse"],"1","B","SysOwner","Inicializace kurzu."],["updateCourse","2","C","ExecutivesContent","Aktualizace schema kurz."]]'/>\n`);
+  });
+  describe('UuSubAppInfo', () => {
+    mdToUu5Test('with text',
+      `{UuSubAppInfo}
+- uuCourse
+- Multi
+- uuSubApp do something.
+- [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU-BT:4419189)`,
+      `<uu5string/><UuApp.DesignKit.UuSubAppInfo data='<uu5json/>["uuCourse","Multi","uuSubApp do something.",["ues:UU-BT:4419189","ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git"]]'/>\n`);
+  });
+  describe('UU5UveList', () => {
+    mdToUu5Test('empty UU5UveList',
+      `{UU5UveList}\n`,
+      `<uu5string/><UuApp.DesignKit.UU5UveList data='<uu5json/>[]'/>\n`);
+  });
+  describe('UuCmdErrorList', () => {
+    mdToUu5Test('with \\n',
+      `{UuCmdErrorList}
+- invalidDtoIn
+  - Error
+  - DtoIn is not valid.
+  - "invalidTypeKeyMap":{}
+    "invalidValueKeyMap":{}
+    "missingKeyMap":{}
+`,
+      `<uu5string/><UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[["invalidDtoIn","Error","DtoIn is not valid.","\\"invalidTypeKeyMap\\":{}\\n\\"invalidValueKeyMap\\":{}\\n\\"missingKeyMap\\":{}"]]'/>\n`);
+  });
+
 });

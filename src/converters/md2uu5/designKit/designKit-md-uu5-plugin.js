@@ -1,4 +1,4 @@
-import * as DesignKitHelper from './designkit-helpers';
+import DesignKitHelpers from './designkit-helpers';
 import UuAppDesignKitConverterConfiguration from '../../uuAppDesignKitConverterConfiguration';
 
 /**
@@ -8,8 +8,8 @@ import UuAppDesignKitConverterConfiguration from '../../uuAppDesignKitConverterC
  */
 export default function mdToUu5Plugin(renderer, opts) {
   UuAppDesignKitConverterConfiguration.forEach((cfg) => {
-    renderer.block.ruler.before('code', cfg.tagName, DesignKitHelper.createListToTableDesignKitJsonDesignKit(cfg, opts));
-    renderer.renderer.rules[cfg.tagName] = DesignKitHelper.createDesignKitRenderer(cfg.tagName, opts);
+    renderer.block.ruler.before('code', cfg.tagName, DesignKitHelpers.createListToTableDesignKitJsonDesignKit(cfg, opts));
+    renderer.renderer.rules[cfg.tagName] = DesignKitHelpers.createDesignKitRenderer(cfg.tagName, opts);
   });
 }
 

@@ -32,25 +32,35 @@ export default class UuAppDesignKitConverters {
     if (!UU5Utils.isUU5Json(jsonString)) {
       throw new Error(`String '${jsonString}' is not valid uu5json.`);
     }
+    jsonString = jsonString.replace(/-/g, '\\\\-');
+
     let data = UU5Utils.parseJson(jsonString);
     let res = [transformation.marker];
-    let columnsDef = transformation.columns;
     const lineStart = '*   ';
 
     for (let i = 0; i < data.length; i++) {
       let line = lineStart;
       let jsonRow = data[i];
 
-      for (let j = 0; j < jsonRow.length; j++) {
-        let columnDef = columnsDef[j];
-        let prefix = '';
+      if (transformation.columns) {
+        for (let j = 0; j < jsonRow.length; j++) {
+          let columnDef = transformation.columns[j];
+          let prefix = '';
 
-        if (columnDef.indent) {
-          prefix = new Array(columnDef.indent + 1).join('    ');
+          if (columnDef.indent) {
+            prefix = new Array(columnDef.indent + 1).join('    ');
+          }
+          line = prefix + lineStart;
+
+          line += this._getDesignKitContent(jsonRow[j], columnDef.linkSupported, uu5ToMd);
+          res.push(line);
         }
-        line = prefix + lineStart;
+      } else if (transformation.items) {
+        let itemDef = transformation.items[i];
 
-        line += this._getDesignKitContent(jsonRow[j], columnDef.linkSupported, uu5ToMd);
+        line = lineStart;
+
+        line += this._getDesignKitContent(jsonRow, itemDef.linkSupported, uu5ToMd);
         res.push(line);
       }
     }

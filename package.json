@@ -1,6 +1,6 @@
 {
   "name": "uu5-to-markdown",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Coverts uu5tring to markdown. It supports plugins.",
   "main": "lib/uu5-to-markdown.js",
   "scripts": {

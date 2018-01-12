@@ -58,4 +58,13 @@ describe('UuApp.DesignKit', () => {
     *   **datastore1** description
         *   item 1`);
   });
+  describe('UuSubAppInfo', () => {
+    uu5ToMdTest('default(link,text,text)',
+      `<uu5string/><UuApp.DesignKit.UuSubAppInfo data='<uu5json/>["uuCourse","Multi","uuSubApp do something.",["ues:UU-BT:4419189","ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git"]]'/>`,
+      `{UuSubAppInfo}
+*   uuCourse
+*   Multi
+*   uuSubApp do something.
+*   [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU\\-BT:4419189)`);
+  });
 });

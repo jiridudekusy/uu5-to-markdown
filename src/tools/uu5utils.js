@@ -20,4 +20,8 @@ export default class UU5Utils {
 
     return JSON.parse(jsonStr);
   }
+
+  static toUU5Json(obj) {
+    return UU5JSON + JSON.stringify(obj);
+  }
 }
