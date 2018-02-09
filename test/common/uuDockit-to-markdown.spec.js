@@ -38,4 +38,12 @@ Section content
 
 {section}`);
 
+  uuDockitToMdTest('pure string body',
+    `{
+  "code": "BusinessModel",
+  "body": "<uu5string/><UU5.Bricks.P>paragraph content</UU5.Bricks.P>"
+}`, `{uuDocKit-pageCode} BusinessModel
+
+paragraph content`);
+
 });
