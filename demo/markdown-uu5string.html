@@ -24,6 +24,7 @@
         "uu_plus4u5g01-dockit": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01-dockit.min.js",
         "uu_plus4u5g01-uubmldraw": "https://cdn.plus4u.net/uu-plus4u5g01/1.0.0/uu_plus4u5g01-uubmldraw.min.js",
         "uu5codekitg01": "https://cdn.plus4u.net/uu-uu5codekitg01/1.0.0/uu5codekitg01.min.js",
+        "uu5codekitg01-markdown": "https://cdn.plus4u.net/uu-uu5codekitg01/1.0.0/uu5codekitg01-markdown.js",
         "uu_appg01_core": "https://cdn.plus4u.net/uu-appg01-core/3.0.0/uu_appg01_core.min.js",
         "uu_appg01": "https://cdn.plus4u.net/uu-appg01/3.0.0/uu_appg01-base.min.js",
         "uu_oidcg01": "https://cdn.plus4u.net/uu-oidcg01/3.0.0/uu_oidcg01.min.js",
@@ -49,6 +50,7 @@
   import * as UU5 from "uu5g04";
   import "uu5g04-bricks";
   import CodeKit from "uu5codekitg01";
+  import { MarkdownRenderer } from "uu5codekitg01-markdown";
   import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters, UuAppDesignKitConverters,mdToUu5Plugin, desighKitMdToUu5Plugin} from "uu5-to-markdown";
 
   let md = `# {section} test
@@ -59,7 +61,7 @@ Next Line
 
   var Page = createReactClass({
       getInitialState() {
-        this._mdr = new CodeKit.MarkdownRenderer('full', {
+        this._mdr = new MarkdownRenderer('full', {
           html: true,
           xhtmlOut: true,
           typographer: true,
