@@ -50,6 +50,9 @@ describe('Unknown tags', () => {
   uu5ToMdTest('Known tag with unknown attribute',
     '<UUS.Bricks.P unknownAttribute="val">Some Text</UUS.Bricks.P>',
     '<UUS.Bricks.P unknownAttribute="val">Some Text</UUS.Bricks.P>');
+  uu5ToMdTest('Known tag with unknown attribute without value',
+    '<UUS.Bricks.P unknownAttribute>Some Text</UUS.Bricks.P>',
+    '<UUS.Bricks.P unknownAttribute>Some Text</UUS.Bricks.P>');
 
 });
 

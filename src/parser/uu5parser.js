@@ -1,7 +1,7 @@
 export default class UU5Parser {
   constructor() {
     // use xmldom parser from node_modules instead of the one in browser
-    let DOMParser = require('xmldom').DOMParser;
+    let DOMParser = require('xmldom-uu5').DOMParser;
 
     this._parser = new DOMParser();
   }
