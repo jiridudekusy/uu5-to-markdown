@@ -56,6 +56,12 @@ Following UU5 components are suppported:
   - UuApp.DesignKit.UuAppObjectStoreSchemaIndexList
   - UuApp.DesignKit.UuAppObjectStoreSchemaDaoMethodList
   - UuApp.DesignKit.UuAppBinaryStoreSchemaDaoMethodList
+  - UuApp.DesignKit.UU5UveInfo
+  - UuApp.DesignKit.UU5RouteList
+  - UuApp.DesignKit.UU5RouteInfo
+  - UuApp.DesignKit.UU5ComponentInfo
+  - UuApp.DesignKit.UU5ComponentMixins
+  - UuApp.DesignKit.UU5ComponentList
 
 The components that are not supported are copied to markdown as is.
 

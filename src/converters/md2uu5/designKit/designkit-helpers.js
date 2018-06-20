@@ -128,6 +128,11 @@ export default class DesignKitHelpers {
 
             uu5jsonRes.push(uu5jsonRow);
           }
+        } else if (cfg.singleColumn) {
+          for (let i = 0; i < uu5Rows.length; i++) {
+            let uu5Row = uu5Rows[i];
+            uu5jsonRes.push(DesignKitHelpers.getDesignKitCellContent(uu5Row, cfg.singleColumn));
+          }
         } else if (cfg.items) {
           for (let i = 0; i < uu5Rows.length; i++) {
             let uu5Row = uu5Rows[i];

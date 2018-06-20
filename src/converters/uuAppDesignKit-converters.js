@@ -55,6 +55,13 @@ export default class UuAppDesignKitConverters {
           line += this._getDesignKitContent(jsonRow[j], columnDef.linkSupported, uu5ToMd);
           res.push(line);
         }
+      } else if (transformation.singleColumn) {
+        let columnDef = transformation.singleColumn;
+
+        line = lineStart;
+
+        line += this._getDesignKitContent(jsonRow, columnDef.linkSupported, uu5ToMd);
+        res.push(line);
       } else if (transformation.items) {
         let itemDef = transformation.items[i];
 

@@ -32,11 +32,70 @@ export default [
     ]
   },
   {
+    marker: '{UU5UveInfo}',
+    tagName: 'UuApp.DesignKit.UU5UveInfo',
+    items: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  {
+    marker: '{UU5RouteList}',
+    tagName: 'UuApp.DesignKit.UU5RouteList',
+    columns: [
+      {linkSupported: true},
+      {indent: 1},
+      {indent: 1},
+      {indent: 1},
+      {indent: 1}
+    ]
+  },
+  {
+    marker: '{UU5RouteInfo}',
+    tagName: 'UuApp.DesignKit.UU5RouteInfo',
+    items: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  {
+    marker: '{UU5ComponentInfo}',
+    tagName: 'UuApp.DesignKit.UU5ComponentInfo',
+    items: [
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  {
+    marker: '{UU5ComponentMixins}',
+    tagName: 'UuApp.DesignKit.UU5ComponentMixins',
+    singleColumn: {linkSupported: true}
+  },
+  {
     marker: '{UuAppProfileList}',
     tagName: 'UuApp.DesignKit.UuAppProfileList',
     columns: [
       {},
       // TODO this property(indent) is maybe not needed at all
+      {indent: 1}
+    ]
+  },
+  {
+    marker: '{UU5ComponentList}',
+    tagName: 'UuApp.DesignKit.UU5ComponentList',
+    columns: [
+      {linkSupported: true},
       {indent: 1}
     ]
   },

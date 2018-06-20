@@ -94,4 +94,14 @@ describe('UuApp.DesignKit', () => {
       `<uu5string/><UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[["invalidDtoIn","Error","DtoIn is not valid.","\\"invalidTypeKeyMap\\":{}\\n\\"invalidValueKeyMap\\":{}\\n\\"missingKeyMap\\":{}"]]'/>\n`);
   });
 
+  describe('UU5ComponentMixins', () => {
+    mdToUu5Test('default',
+      `{UU5ComponentMixins}
+*   [nějaký mixin](SomeMixin)
+*   [UU5.Common.BaseMixin](https://uuos9.plus4u.net/uu\\-dockitg01\\-main/78462435\\-ed11ec379073476db0aa295ad6c00178/book/page?code=uu5CommonBaseMixin)
+*   UU5.Common.Elementary
+`,
+      `<uu5string/><UuApp.DesignKit.UU5ComponentMixins data='<uu5json/>[["SomeMixin","nějaký mixin"],["https://uuos9.plus4u.net/uu-dockitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=uu5CommonBaseMixin","UU5.Common.BaseMixin"],"UU5.Common.Elementary"]'/>\n`);
+  });
+
 });
