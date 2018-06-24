@@ -12,6 +12,7 @@ export default [
   {
     marker: '{UuCmdList}',
     tagName: 'UuApp.DesignKit.UuCmdList',
+    attributes: ['bookUri'],
     columns: [
       {linkSupported: true},
       // TODO this property(indent) is maybe not needed at all

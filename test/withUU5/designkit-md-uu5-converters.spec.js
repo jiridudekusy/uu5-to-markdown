@@ -103,5 +103,19 @@ describe('UuApp.DesignKit', () => {
 `,
       `<uu5string/><UuApp.DesignKit.UU5ComponentMixins data='<uu5json/>[["SomeMixin","nějaký mixin"],["https://uuos9.plus4u.net/uu-dockitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=uu5CommonBaseMixin","UU5.Common.BaseMixin"],"UU5.Common.Elementary"]'/>\n`);
   });
-
+  describe('UUCmdList', () => {
+    mdToUu5Test('\'with bookUri',
+      `{UuCmdList}{:"bookUri":"https://uuos9.plus4u.net/uu-dockitg01-main/78462435-34df77ebe0a04adda6dcd62d32c4f513/book"}
+*   [sys/calculateDataStoreStats](sysCalculateDataStoreStats_00)
+    *   \\-
+    *   \\-
+    *   AwidOwner, AsidOwner
+    *   Calculates information on a data store usage for a given workspace.
+*   [sys/clearAppWorkspaceConfig](sysClearAppWorkspaceConfig_00)
+    *   \\-
+    *   \\-
+    *   Authorities, AwidOwner
+    *   Removes all configuration attributes of the uuAppWorkspace.`,
+      `<uu5string/><UuApp.DesignKit.UuCmdList bookUri='https://uuos9.plus4u.net/uu-dockitg01-main/78462435-34df77ebe0a04adda6dcd62d32c4f513/book' data='<uu5json/>[[["sysCalculateDataStoreStats_00","sys/calculateDataStoreStats"],"-","-","AwidOwner, AsidOwner","Calculates information on a data store usage for a given workspace."],[["sysClearAppWorkspaceConfig_00","sys/clearAppWorkspaceConfig"],"-","-","Authorities, AwidOwner","Removes all configuration attributes of the uuAppWorkspace."]]'/>\n`);
+  });
 });
