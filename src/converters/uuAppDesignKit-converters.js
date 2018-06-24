@@ -14,7 +14,13 @@ export default class UuAppDesignKitConverters {
     this._converters = [];
 
     UuAppDesignKitConverterConfiguration.forEach((cfg) => {
-      let def = new ElementDef(cfg.tagName, 'data').block();
+      let attributes = ['data'];
+
+      if (cfg.attributes) {
+        attributes = attributes.concat(cfg.attributes);
+      }
+
+      let def = new ElementDef(cfg.tagName, ...attributes).block();
 
       this._elementDefsRepo.addElementDef(def);
       this._converters.push({
@@ -35,7 +41,7 @@ export default class UuAppDesignKitConverters {
     jsonString = jsonString.replace(/-/g, '\\\\-');
 
     let data = UU5Utils.parseJson(jsonString);
-    let res = [transformation.marker];
+    let res = [transformation.marker + this._getAttributes(node, transformation)];
     const lineStart = '*   ';
 
     for (let i = 0; i < data.length; i++) {
@@ -74,6 +80,24 @@ export default class UuAppDesignKitConverters {
     let resString = res.join('\n');
 
     return `\n\n${resString}\n\n`;
+  }
+
+  _getAttributes(node, transformation) {
+    if (!transformation.attributes || transformation.attributes.length === 0) {
+      return '';
+    }
+
+    let attributes = {};
+
+    for (let attribute of transformation.attributes) {
+      if (node.hasAttribute(attribute)) {
+        attributes[attribute] = node.getAttribute(attribute);
+      }
+    }
+    if (Object.keys(attributes).length > 0) {
+      return JSON.stringify(attributes).replace(/^\{/, '{:');
+    }
+    return '';
   }
 
   _getDesignKitContent(cnt, linkSupported, uu5ToMd) {

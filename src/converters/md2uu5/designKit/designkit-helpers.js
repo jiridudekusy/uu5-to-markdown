@@ -36,6 +36,20 @@ export default class DesignKitHelpers {
     return res;
   };
 
+  static parseAttributes(line, marker) {
+    let attributes = {};
+
+    if (line === marker) {
+      return attributes;
+    }
+
+    let attributesString = line.substring(marker.length);
+
+    attributesString = attributesString.replace(/^\s*\{:/, '{');
+    attributes = JSON.parse(attributesString);
+    return attributes;
+  }
+
   static createDesignKitRecognizeFunction(marker, tagName, opts, processCallback) {
     return function (state, startLine, endLine, silent) {
       let pos = state.bMarks[startLine] + state.tShift[startLine],
@@ -48,7 +62,7 @@ export default class DesignKitHelpers {
 
       let line = state.getLines(startLine, startLine + 1, 0, false);
 
-      if (marker !== line) {
+      if (!line.startsWith(marker)) {
         return false;
       }
 
@@ -79,6 +93,7 @@ export default class DesignKitHelpers {
 
       let attributes = processCallback(dom);
 
+      attributes = Object.assign(attributes, DesignKitHelpers.parseAttributes(line, marker));
       state.tokens.push({
         type: tagName,
         tagAttributes: attributes
@@ -148,19 +163,23 @@ export default class DesignKitHelpers {
       });
   }
 
-  static createDesignKitElement(tagName, attributes) {
+  static createDesignKitElement(tagName, supportedAttributes, attributes) {
     // TODO get quot char acfording to the attribute
     let quotChar = '\'';
+    let attributstring = supportedAttributes.filter(attribute => attributes[attribute]).map(
+      attribute => `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`).join(' ');
 
     // TODO support multiple attributes
-    let res = '<' + tagName + ' data=' + quotChar + attributes['data'] + quotChar + '/>';
+    let res = '<' + tagName + ' ' + attributstring + '/>';
 
     return res + '\n';
   }
 
-  static createDesignKitRenderer(tagName, opts) {
+  static createDesignKitRenderer(tagName, attribues, opts) {
+    let supportedAttributes = [].concat(attribues).concat(['data']);
+
     return function (tokens, idx, options, env, renderer) {
-      return DesignKitHelpers.createDesignKitElement(tagName, tokens[idx].tagAttributes);
+      return DesignKitHelpers.createDesignKitElement(tagName, supportedAttributes, tokens[idx].tagAttributes);
     };
   }
 

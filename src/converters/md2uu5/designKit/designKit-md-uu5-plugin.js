@@ -9,7 +9,7 @@ import UuAppDesignKitConverterConfiguration from '../../uuAppDesignKitConverterC
 export default function mdToUu5Plugin(renderer, opts) {
   UuAppDesignKitConverterConfiguration.forEach((cfg) => {
     renderer.block.ruler.before('code', cfg.tagName, DesignKitHelpers.createListToTableDesignKitJsonDesignKit(cfg, opts));
-    renderer.renderer.rules[cfg.tagName] = DesignKitHelpers.createDesignKitRenderer(cfg.tagName, opts);
+    renderer.renderer.rules[cfg.tagName] = DesignKitHelpers.createDesignKitRenderer(cfg.tagName, cfg.attributes, opts);
   });
 }
 
