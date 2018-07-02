@@ -1,39 +1,45 @@
 export default class ParserUtils {
-
   static getChildNodes(node) {
-    return Array.prototype.filter.call(node.childNodes, (item) => item.nodeType === 1);
+    return Array.prototype.filter.call(
+      node.childNodes,
+      item => item.nodeType === 1
+    );
   }
 
   static getXml(node) {
-    let res = '<' + node.localName;
+    let res = "<" + node.localName;
 
     for (let i = 0; i < node.attributes.length; i++) {
       let quotChar = '"';
       let attribute = node.attributes[i];
 
       if (attribute.value.indexOf('"') > -1) {
-        if (attribute.value.indexOf('\'') > -1) {
-          console.error(`Attribute "{attribute.name}" with value "${attribute.value}"of element ${node.localName} contains ' and ".`);
+        if (attribute.value.indexOf("'") > -1) {
+          console.error(
+            `Attribute "{attribute.name}" with value "${
+              attribute.value
+            }"of element ${node.localName} contains ' and ".`
+          );
         } else {
-          quotChar = '\'';
+          quotChar = "'";
         }
       }
 
       res += ` ${attribute.name}=${quotChar}${attribute.value}${quotChar}`;
     }
     if (node.childNodes.length > 0) {
-      res += '>';
+      res += ">";
       res += ParserUtils.getXmlContent(node);
-      res += '</' + node.localName + '>';
+      res += "</" + node.localName + ">";
     } else {
-      res += '/>';
+      res += "/>";
     }
 
     return res;
-  };
+  }
 
   static getXmlContent(node) {
-    let res = '';
+    let res = "";
 
     for (let i = 0; i < node.childNodes.length; i++) {
       let currentNode = node.childNodes[i];
@@ -43,15 +49,18 @@ export default class ParserUtils {
       } else if (currentNode.nodeType === 3) {
         res += currentNode.data;
       } else {
-        throw new Error('Not supported.');
+        throw new Error("Not supported.");
       }
     }
 
     return res;
-  };
+  }
 
   static hasOnlyTextContent(node) {
-    return !Array.prototype.find.call(node.childNodes, (item) => item.nodeType !== 3);
+    return !Array.prototype.find.call(
+      node.childNodes,
+      item => item.nodeType !== 3
+    );
   }
 
   static hasOneElement(node) {
@@ -62,4 +71,3 @@ export default class ParserUtils {
     return ParserUtils.getChildNodes(node)[0];
   }
 }
-

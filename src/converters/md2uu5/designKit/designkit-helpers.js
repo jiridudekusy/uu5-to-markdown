@@ -1,6 +1,6 @@
-import UU5Parser from '../../../parser/uu5parser';
-import UU5Utils from '../../../tools/uu5utils';
-import ParserUtils from '../../../parser/parserUtils';
+import UU5Parser from "../../../parser/uu5parser";
+import UU5Utils from "../../../tools/uu5utils";
+import ParserUtils from "../../../parser/parserUtils";
 
 let uu5Parser = new UU5Parser();
 
@@ -8,7 +8,7 @@ export default class DesignKitHelpers {
   static _transformLink(node) {
     let res;
     let linkText = DesignKitHelpers.getDesignKitCellContent(node);
-    let linkHref = node.getAttribute('href');
+    let linkHref = node.getAttribute("href");
 
     if (linkHref) {
       // case: link with href
@@ -23,18 +23,22 @@ export default class DesignKitHelpers {
   static getDesignKitCellContent(node, linkSupported) {
     let res;
 
-    if (linkSupported && ParserUtils.hasOneElement(node) && ParserUtils.getOneElement(node).localName === 'UU5.Bricks.Link') {
+    if (
+      linkSupported &&
+      ParserUtils.hasOneElement(node) &&
+      ParserUtils.getOneElement(node).localName === "UU5.Bricks.Link"
+    ) {
       res = DesignKitHelpers._transformLink(ParserUtils.getOneElement(node));
     } else {
-      res = '';
+      res = "";
       if (!ParserUtils.hasOnlyTextContent(node)) {
-        res = '<uu5string/>';
+        res = "<uu5string/>";
       }
       res += ParserUtils.getXmlContent(node);
       res = res.trim();
     }
     return res;
-  };
+  }
 
   static parseAttributes(line, marker) {
     let attributes = {};
@@ -45,13 +49,18 @@ export default class DesignKitHelpers {
 
     let attributesString = line.substring(marker.length);
 
-    attributesString = attributesString.replace(/^\s*\{:/, '{');
+    attributesString = attributesString.replace(/^\s*\{:/, "{");
     attributes = JSON.parse(attributesString);
     return attributes;
   }
 
-  static createDesignKitRecognizeFunction(marker, tagName, opts, processCallback) {
-    return function (state, startLine, endLine, silent) {
+  static createDesignKitRecognizeFunction(
+    marker,
+    tagName,
+    opts,
+    processCallback
+  ) {
+    return function(state, startLine, endLine, silent) {
       let pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
         contentEndLine;
@@ -71,16 +80,16 @@ export default class DesignKitHelpers {
       }
 
       let nextLine = startLine + 1;
-      let content = '';
+      let content = "";
 
       for (; nextLine < endLine; nextLine++) {
         let line = state.getLines(nextLine, nextLine + 1, 0, false);
 
-        if (line.trim() === '') {
+        if (line.trim() === "") {
           contentEndLine = nextLine - 1;
           break;
         }
-        content += line + '\n';
+        content += line + "\n";
       }
 
       state.line = contentEndLine + 1;
@@ -93,7 +102,10 @@ export default class DesignKitHelpers {
 
       let attributes = processCallback(dom);
 
-      attributes = Object.assign(attributes, DesignKitHelpers.parseAttributes(line, marker));
+      attributes = Object.assign(
+        attributes,
+        DesignKitHelpers.parseAttributes(line, marker)
+      );
       state.tokens.push({
         type: tagName,
         tagAttributes: attributes
@@ -103,12 +115,15 @@ export default class DesignKitHelpers {
   }
 
   static createListToTableDesignKitJsonDesignKit(cfg, opts) {
-    return DesignKitHelpers.createDesignKitRecognizeFunction(cfg.marker, cfg.tagName, opts,
-      (dom) => {
+    return DesignKitHelpers.createDesignKitRecognizeFunction(
+      cfg.marker,
+      cfg.tagName,
+      opts,
+      dom => {
         let res = {};
 
         if (dom.childNodes.length === 1) {
-          res['data'] = UU5Utils.toUU5Json([]);
+          res["data"] = UU5Utils.toUU5Json([]);
           return res;
         }
         // TODO add check that dom.childNodes[1] is list
@@ -123,21 +138,35 @@ export default class DesignKitHelpers {
             let listNode;
             let firstCellNodes;
 
-            if (uu5Row.lastChild.localName === 'UU5.Bricks.Ul') {
+            if (uu5Row.lastChild.localName === "UU5.Bricks.Ul") {
               listNode = uu5Row.lastChild;
-              firstCellNodes = Array.prototype.slice.call(uu5Row.childNodes, 0, -1);
+              firstCellNodes = Array.prototype.slice.call(
+                uu5Row.childNodes,
+                0,
+                -1
+              );
             } else {
               firstCellNodes = uu5Row.childNodes;
             }
             let uu5jsonRow = [];
 
-            uu5jsonRow.push(DesignKitHelpers.getDesignKitCellContent({childNodes: firstCellNodes, nodeType: 1}, cfg.columns[0].linkSupported));
+            uu5jsonRow.push(
+              DesignKitHelpers.getDesignKitCellContent(
+                { childNodes: firstCellNodes, nodeType: 1 },
+                cfg.columns[0].linkSupported
+              )
+            );
 
             if (listNode) {
               let listChildNodes = ParserUtils.getChildNodes(listNode);
 
               for (let j = 0; j < listChildNodes.length; j++) {
-                uu5jsonRow.push(DesignKitHelpers.getDesignKitCellContent(listChildNodes[j], cfg.columns[j + 1].linkSupported));
+                uu5jsonRow.push(
+                  DesignKitHelpers.getDesignKitCellContent(
+                    listChildNodes[j],
+                    cfg.columns[j + 1].linkSupported
+                  )
+                );
               }
             }
 
@@ -147,40 +176,56 @@ export default class DesignKitHelpers {
           for (let i = 0; i < uu5Rows.length; i++) {
             let uu5Row = uu5Rows[i];
 
-            uu5jsonRes.push(DesignKitHelpers.getDesignKitCellContent(uu5Row, cfg.singleColumn));
+            uu5jsonRes.push(
+              DesignKitHelpers.getDesignKitCellContent(uu5Row, cfg.singleColumn)
+            );
           }
         } else if (cfg.items) {
           for (let i = 0; i < uu5Rows.length; i++) {
             let uu5Row = uu5Rows[i];
             let itemCfg = cfg.items[i];
 
-            uu5jsonRes.push(DesignKitHelpers.getDesignKitCellContent(uu5Row, itemCfg.linkSupported));
+            uu5jsonRes.push(
+              DesignKitHelpers.getDesignKitCellContent(
+                uu5Row,
+                itemCfg.linkSupported
+              )
+            );
           }
         }
 
-        res['data'] = UU5Utils.toUU5Json(uu5jsonRes);
+        res["data"] = UU5Utils.toUU5Json(uu5jsonRes);
         return res;
-      });
+      }
+    );
   }
 
   static createDesignKitElement(tagName, supportedAttributes, attributes) {
     // TODO get quot char acfording to the attribute
-    let quotChar = '\'';
-    let attributstring = supportedAttributes.filter(attribute => attributes[attribute]).map(
-      attribute => `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`).join(' ');
+    let quotChar = "'";
+    let attributstring = supportedAttributes
+      .filter(attribute => attributes[attribute])
+      .map(
+        attribute =>
+          `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`
+      )
+      .join(" ");
 
     // TODO support multiple attributes
-    let res = '<' + tagName + ' ' + attributstring + '/>';
+    let res = "<" + tagName + " " + attributstring + "/>";
 
-    return res + '\n';
+    return res + "\n";
   }
 
-  static createDesignKitRenderer(tagName, attribues, opts) {
-    let supportedAttributes = [].concat(attribues).concat(['data']);
+  static createDesignKitRenderer(tagName, attribues) {
+    let supportedAttributes = [].concat(attribues).concat(["data"]);
 
-    return function (tokens, idx, options, env, renderer) {
-      return DesignKitHelpers.createDesignKitElement(tagName, supportedAttributes, tokens[idx].tagAttributes);
+    return function(tokens, idx) {
+      return DesignKitHelpers.createDesignKitElement(
+        tagName,
+        supportedAttributes,
+        tokens[idx].tagAttributes
+      );
     };
   }
-
 }

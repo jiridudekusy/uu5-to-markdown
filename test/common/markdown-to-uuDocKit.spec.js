@@ -1,5 +1,5 @@
-import chai from 'chai';
-import MarkdownToUuDocKit from '../../src/markdown-to-uuDockit';
+import chai from "chai";
+import MarkdownToUuDocKit from "../../src/markdown-to-uuDockit";
 
 const expect = chai.expect;
 
@@ -15,18 +15,17 @@ class TestMarkdownRenderer {
 let markdownToUuDocKit = new MarkdownToUuDocKit(new TestMarkdownRenderer());
 
 function markdownToUuDocKitTest(name, mdString, uuDockitString) {
-
   it(name, () => {
     let parsed = markdownToUuDocKit.toUuDocKit(mdString);
 
     expect(parsed).to.be.equal(uuDockitString);
   });
-
 }
 
-describe('markdownToUuDocKit', () => {
+describe("markdownToUuDocKit", () => {
   // tests currently use test MarkdownRenderer which just returns input markdown string
-  markdownToUuDocKitTest('default',
+  markdownToUuDocKitTest(
+    "default",
     `{uuDocKit-pageCode} BusinessModel
 
 paragraph content
@@ -43,6 +42,6 @@ Section content
     "\\nparagraph content\\n",
     "\\n# {section} Process Flow\\nSection content\\n\\n{section}"
   ]
-}`);
-
+}`
+  );
 });

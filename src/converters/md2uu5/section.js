@@ -1,4 +1,4 @@
-const SECTION_MARKER = '{section}';
+const SECTION_MARKER = "{section}";
 const SECTION_OPEN_REGEXP = /#+ \{section\}.*/;
 
 /**
@@ -18,7 +18,9 @@ const SECTION_OPEN_REGEXP = /#+ \{section\}.*/;
  * @returns {boolean}
  */
 function section(state, startLine, endLine, silent) {
-  var ch, level, tmp,
+  var ch,
+    level,
+    tmp,
     pos = state.bMarks[startLine] + state.tShift[startLine],
     max = state.eMarks[startLine];
 
@@ -28,19 +30,19 @@ function section(state, startLine, endLine, silent) {
 
   ch = state.src.charCodeAt(pos);
 
-  if (ch !== 0x23/* # */ || pos >= max) {
+  if (ch !== 0x23 /* # */ || pos >= max) {
     return false;
   }
 
   // count heading level
   level = 1;
   ch = state.src.charCodeAt(++pos);
-  while (ch === 0x23/* # */ && pos < max && level <= 6) {
+  while (ch === 0x23 /* # */ && pos < max && level <= 6) {
     level++;
     ch = state.src.charCodeAt(++pos);
   }
 
-  if (level > 6 || (pos < max && ch !== 0x20/* space */)) {
+  if (level > 6 || (pos < max && ch !== 0x20) /* space */) {
     return false;
   }
 
@@ -56,7 +58,7 @@ function section(state, startLine, endLine, silent) {
 
   max = state.skipCharsBack(max, 0x20, pos); // space
   tmp = state.skipCharsBack(max, 0x23, pos); // #
-  if (tmp > pos && state.src.charCodeAt(tmp - 1) === 0x20/* space */) {
+  if (tmp > pos && state.src.charCodeAt(tmp - 1) === 0x20 /* space */) {
     max = tmp;
   }
 
@@ -98,7 +100,7 @@ function section(state, startLine, endLine, silent) {
   state.line = contentEndLine + 2;
 
   state.tokens.push({
-    type: 'section_open',
+    type: "section_open",
     hLevel: level,
     lines: [startLine, state.line],
     level: state.level,
@@ -108,20 +110,24 @@ function section(state, startLine, endLine, silent) {
   state.line = startLine + 1;
   state.parser.tokenize(state, startLine + 1, contentEndLine, false);
 
-  state.tokens.push({type: 'section_close', hLevel: level, level: state.level});
+  state.tokens.push({
+    type: "section_close",
+    hLevel: level,
+    level: state.level
+  });
 
   state.line = contentEndLine + 2;
   return true;
-};
+}
 
 // rendering rules
 
-function sectionOpen(tokens, idx, options, env, renderer) {
+function sectionOpen(tokens, idx) {
   return `<UU5.Bricks.Section header="${tokens[idx].header}">\n`;
-};
+}
 
 function sectionClose(tokens, idx, options, env, renderer) {
-  return '</UU5.Bricks.Section>' + renderer.getBreak(tokens, idx);
-};
+  return "</UU5.Bricks.Section>" + renderer.getBreak(tokens, idx);
+}
 
-export {section, sectionOpen, sectionClose};
+export { section, sectionOpen, sectionClose };

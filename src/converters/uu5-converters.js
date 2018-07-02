@@ -1,41 +1,60 @@
-'use strict';
-import {ElementDef, ElementsDefRepo} from './element.js';
+"use strict";
+import { ElementDef, ElementsDefRepo } from "./element.js";
 
 function cell(content, node) {
-  var index = Array.prototype.filter.call(node.parentNode.childNodes, (child) => child.nodeType === 1).indexOf(node);
-  var prefix = ' ';
+  var index = Array.prototype.filter
+    .call(node.parentNode.childNodes, child => child.nodeType === 1)
+    .indexOf(node);
+  var prefix = " ";
 
   if (index === 0) {
-    prefix = '| ';
+    prefix = "| ";
   }
-  return prefix + content + ' |';
+  return prefix + content + " |";
 }
 
 export default class UU5Converters {
-
   constructor() {
-    let uu5string = new ElementDef('uu5string').void();
-    let uu5BricksP = new ElementDef('UU5.Bricks.P').block();
-    let uu5BricksStrong = new ElementDef('UU5.Bricks.Strong').leaf();
-    let uu5BricksEm = new ElementDef('UU5.Bricks.Em').leaf();
-    let uu5BricksLink = new ElementDef('UU5.Bricks.Link', 'href', 'target', 'title').leaf();
-    let uu5BricksHeader = new ElementDef('UU5.Bricks.Header', 'level').block();
-    let uu5BricksSection = new ElementDef('UU5.Bricks.Section', 'header').block();
-    let uu5stringPre = new ElementDef('uu5string.pre').block();
-    let uu5BricksPre = new ElementDef('UU5.Bricks.Pre').block();
-    let uu5BricksCodeViewer = new ElementDef('UU5.CodeKit.CodeViewer').block();
-    let uu5BricksCode = new ElementDef('UU5.Bricks.Code').leaf();
-    let uu5BricksBlockquote = new ElementDef('UU5.Bricks.Blockquote').block();
-    let uu5BricksOl = new ElementDef('UU5.Bricks.Ol').block().skipTextNodes();
-    let uu5BricksUl = new ElementDef('UU5.Bricks.Ul').block().skipTextNodes();
-    let uu5BricksLi = new ElementDef('UU5.Bricks.Li').block();
-    let uu5BricksTable = new ElementDef('UU5.Bricks.Table').block().skipTextNodes();
-    let uu5BricksTableTHead = new ElementDef('UU5.Bricks.Table.THead').block().skipTextNodes();
-    let uu5BricksTableTBody = new ElementDef('UU5.Bricks.Table.TBody').block().skipTextNodes();
-    let uu5BricksTableTFoot = new ElementDef('UU5.Bricks.Table.TFoot').block().skipTextNodes();
-    let uu5BricksTableTr = new ElementDef('UU5.Bricks.Table.Tr').leaf().skipTextNodes();
-    let uu5BricksTableTh = new ElementDef('UU5.Bricks.Table.Th').leaf();
-    let uu5BricksTableTd = new ElementDef('UU5.Bricks.Table.Td').leaf();
+    let uu5string = new ElementDef("uu5string").void();
+    let uu5BricksP = new ElementDef("UU5.Bricks.P").block();
+    let uu5BricksStrong = new ElementDef("UU5.Bricks.Strong").leaf();
+    let uu5BricksEm = new ElementDef("UU5.Bricks.Em").leaf();
+    let uu5BricksLink = new ElementDef(
+      "UU5.Bricks.Link",
+      "href",
+      "target",
+      "title"
+    ).leaf();
+    let uu5BricksHeader = new ElementDef("UU5.Bricks.Header", "level").block();
+    let uu5BricksSection = new ElementDef(
+      "UU5.Bricks.Section",
+      "header"
+    ).block();
+    let uu5stringPre = new ElementDef("uu5string.pre").block();
+    let uu5BricksPre = new ElementDef("UU5.Bricks.Pre").block();
+    let uu5BricksCodeViewer = new ElementDef("UU5.CodeKit.CodeViewer").block();
+    let uu5BricksCode = new ElementDef("UU5.Bricks.Code").leaf();
+    let uu5BricksBlockquote = new ElementDef("UU5.Bricks.Blockquote").block();
+    let uu5BricksOl = new ElementDef("UU5.Bricks.Ol").block().skipTextNodes();
+    let uu5BricksUl = new ElementDef("UU5.Bricks.Ul").block().skipTextNodes();
+    let uu5BricksLi = new ElementDef("UU5.Bricks.Li").block();
+    let uu5BricksTable = new ElementDef("UU5.Bricks.Table")
+      .block()
+      .skipTextNodes();
+    let uu5BricksTableTHead = new ElementDef("UU5.Bricks.Table.THead")
+      .block()
+      .skipTextNodes();
+    let uu5BricksTableTBody = new ElementDef("UU5.Bricks.Table.TBody")
+      .block()
+      .skipTextNodes();
+    let uu5BricksTableTFoot = new ElementDef("UU5.Bricks.Table.TFoot")
+      .block()
+      .skipTextNodes();
+    let uu5BricksTableTr = new ElementDef("UU5.Bricks.Table.Tr")
+      .leaf()
+      .skipTextNodes();
+    let uu5BricksTableTh = new ElementDef("UU5.Bricks.Table.Th").leaf();
+    let uu5BricksTableTd = new ElementDef("UU5.Bricks.Table.Td").leaf();
 
     this._elementDefsRepo = new ElementsDefRepo(
       uu5string,
@@ -59,156 +78,181 @@ export default class UU5Converters {
       uu5BricksTableTFoot,
       uu5BricksTableTr,
       uu5BricksTableTh,
-      uu5BricksTableTd);
+      uu5BricksTableTd
+    );
 
     this._converters = [
       {
-        filter: 'root',
-        replacement: function (content) {
-          return '';
+        filter: "root",
+        replacement: function() {
+          return "";
         }
       },
       {
         filter: uu5string,
-        replacement: function (content) {
-          return '';
+        replacement: function() {
+          return "";
         }
       },
       {
         filter: uu5BricksP,
-        replacement: function (content) {
-          return '\n\n' + content + '\n\n';
+        replacement: function(content) {
+          return "\n\n" + content + "\n\n";
         }
       },
       {
-        filter: function (node) {
+        filter: function(node) {
           let result = uu5BricksHeader.checkTag(node);
 
-          return result & (node.getAttribute('level') <= 7);
+          return result & (node.getAttribute("level") <= 7);
         },
-        replacement: function (content, node) {
-          var hLevel = node.getAttribute('level');
-          var hPrefix = '';
+        replacement: function(content, node) {
+          var hLevel = node.getAttribute("level");
+          var hPrefix = "";
 
           for (let i = 0; i < hLevel; i++) {
-            hPrefix += '#';
+            hPrefix += "#";
           }
-          return '\n\n' + hPrefix + ' ' + content + '\n\n';
+          return "\n\n" + hPrefix + " " + content + "\n\n";
         }
       },
       {
         filter: uu5BricksSection,
-        replacement: function (content, node) {
-          let header = node.getAttribute('header');
+        replacement: function(content, node) {
+          let header = node.getAttribute("header");
 
           return `\n\n# {section} ${header}\n${content}\n\n{section}\n\n`;
         }
       },
       {
         filter: uu5BricksEm,
-        replacement: function (content) {
-          return '*' + content + '*';
+        replacement: function(content) {
+          return "*" + content + "*";
         }
       },
       {
         filter: uu5BricksStrong,
-        replacement: function (content) {
-          return '**' + content + '**';
+        replacement: function(content) {
+          return "**" + content + "**";
         }
       },
 
       // Inline code
       {
-        filter: function (node) {
+        filter: function(node) {
           let hasSiblings = node.previousSibling || node.nextSibling;
-          let isCodeBlock = uu5BricksPre.checkTag(node.parentNode) && !hasSiblings;
+          let isCodeBlock =
+            uu5BricksPre.checkTag(node.parentNode) && !hasSiblings;
 
           return uu5BricksCode.checkTag(node) && !isCodeBlock;
         },
-        replacement: function (content) {
-          return '`' + content + '`';
+        replacement: function(content) {
+          return "`" + content + "`";
         }
       },
 
       // Code blocks
       {
-        filter: function (node) {
+        filter: function(node) {
           // TODO Check if there isnt any problem in case of text nodes
-          return uu5BricksPre.checkTag(node) && uu5BricksCode.checkTag(node.firstChild);
+          return (
+            uu5BricksPre.checkTag(node) &&
+            uu5BricksCode.checkTag(node.firstChild)
+          );
         },
-        replacement: function (content, node) {
-          return '\n\n    ' + node.firstChild.textContent.replace(/\n/g, '\n    ') + '\n\n';
+        replacement: function(content, node) {
+          return (
+            "\n\n    " +
+            node.firstChild.textContent.replace(/\n/g, "\n    ") +
+            "\n\n"
+          );
         }
       },
       {
-        filter: function (node) {
-          return uu5BricksLink.checkTag(node) && node.getAttribute('href');
+        filter: function(node) {
+          return uu5BricksLink.checkTag(node) && node.getAttribute("href");
         },
-        replacement: function (content, node) {
-          var titlePart = node.getAttribute('title') ? ' "' + node.getAttribute('title') + '"' : '';
-          var target = node.getAttribute('target') ? '{:target="' + node.getAttribute('target') + '"}' : '';
+        replacement: function(content, node) {
+          var titlePart = node.getAttribute("title")
+            ? ' "' + node.getAttribute("title") + '"'
+            : "";
+          var target = node.getAttribute("target")
+            ? '{:target="' + node.getAttribute("target") + '"}'
+            : "";
 
-          return '[' + content + '](' + node.getAttribute('href') + titlePart + ')' + target;
+          return (
+            "[" +
+            content +
+            "](" +
+            node.getAttribute("href") +
+            titlePart +
+            ")" +
+            target
+          );
         }
       },
       {
         filter: uu5BricksBlockquote,
-        replacement: function (content) {
+        replacement: function(content) {
           content = content.trim();
-          content = content.replace(/\n{3,}/g, '\n\n');
-          content = content.replace(/^/gm, '> ');
-          return '\n\n' + content + '\n\n';
+          content = content.replace(/\n{3,}/g, "\n\n");
+          content = content.replace(/^/gm, "> ");
+          return "\n\n" + content + "\n\n";
         }
       },
       {
         filter: uu5BricksLi,
-        replacement: function (content, node) {
-          let prefix = '*   ';
+        replacement: function(content, node) {
+          let prefix = "*   ";
           let parent = node.parentNode;
 
-          content = content.replace(/^\s+/, '').replace(/\n/gm, '\n    ');
+          content = content.replace(/^\s+/, "").replace(/\n/gm, "\n    ");
           if (parent.nodeName === uu5BricksOl.name) {
-            let index = Array.prototype.filter.call(parent.childNodes, n => n.nodeName === uu5BricksLi.name).indexOf(node);
+            let index = Array.prototype.filter
+              .call(parent.childNodes, n => n.nodeName === uu5BricksLi.name)
+              .indexOf(node);
 
-            prefix = index + 1 + '.  ';
+            prefix = index + 1 + ".  ";
           }
 
           return prefix + content;
         }
       },
       {
-        filter: function (node) {
+        filter: function(node) {
           return uu5BricksUl.checkTag(node) || uu5BricksOl.checkTag(node);
         },
-        replacement: function (content, node) {
+        replacement: function(content, node) {
           var strings = [];
 
-          Array.prototype.filter.call(node.childNodes, item => item.nodeType === 1).forEach(item => strings.push(item._replacement));
+          Array.prototype.filter
+            .call(node.childNodes, item => item.nodeType === 1)
+            .forEach(item => strings.push(item._replacement));
           if (uu5BricksLi.name === node.parentNode.nodeName) {
-            return '\n' + strings.join('\n');
+            return "\n" + strings.join("\n");
           }
-          return '\n\n' + strings.join('\n') + '\n\n';
+          return "\n\n" + strings.join("\n") + "\n\n";
         }
       },
       {
         filter: [uu5BricksTableTh, uu5BricksTableTd],
-        replacement: function (content, node) {
+        replacement: function(content, node) {
           return cell(content, node);
         }
       },
 
       {
         filter: uu5BricksTableTr,
-        replacement: function (content, node) {
-          var borderCells = '';
-          var alignMap = {left: ':--', right: '--:', center: ':-:'};
+        replacement: function(content, node) {
+          var borderCells = "";
+          var alignMap = { left: ":--", right: "--:", center: ":-:" };
 
           if (node.parentNode.nodeName === uu5BricksTableTHead.name) {
             for (let i = 0; i < node.childNodes.length; i++) {
               let align;
               // TODO Fix table align
               // let align = node.childNodes[i].attributes.align;
-              let border = '---';
+              let border = "---";
 
               if (node.childNodes[i].nodeType === 3) {
                 // text nodes are not cells
@@ -222,20 +266,20 @@ export default class UU5Converters {
               borderCells += cell(border, node.childNodes[i]);
             }
           }
-          return '\n' + content + (borderCells ? '\n' + borderCells : '');
+          return "\n" + content + (borderCells ? "\n" + borderCells : "");
         }
       },
 
       {
         filter: uu5BricksTable,
-        replacement: function (content) {
-          return '\n\n' + content + '\n\n';
+        replacement: function(content) {
+          return "\n\n" + content + "\n\n";
         }
       },
 
       {
         filter: [uu5BricksTableTHead, uu5BricksTableTBody, uu5BricksTableTFoot],
-        replacement: function (content) {
+        replacement: function(content) {
           return content;
         }
       }
@@ -249,6 +293,4 @@ export default class UU5Converters {
   get converters() {
     return this._converters;
   }
-
 }
-

@@ -1,6 +1,6 @@
-import UU5Parser from './parser/uu5parser.js';
-import mdConverters from './converters/md-converters.js';
-import UU5Converters from './converters/uu5-converters.js';
+import UU5Parser from "./parser/uu5parser.js";
+import mdConverters from "./converters/md-converters.js";
+import UU5Converters from "./converters/uu5-converters.js";
 
 export default class UU5ToMarkdown {
   constructor(...plugins) {
@@ -18,10 +18,18 @@ export default class UU5ToMarkdown {
   }
 
   toMarkdown(source) {
-    source = this._replaceAll(source, '<uu5string.pre>', '<uu5string.pre><![CDATA[');
-    source = this._replaceAll(source, '</uu5string.pre>', ']]></uu5string.pre>');
+    source = this._replaceAll(
+      source,
+      "<uu5string.pre>",
+      "<uu5string.pre><![CDATA["
+    );
+    source = this._replaceAll(
+      source,
+      "</uu5string.pre>",
+      "]]></uu5string.pre>"
+    );
 
-    source = '<root>' + source + '</root>';
+    source = "<root>" + source + "</root>";
     let dom = this._parser.parse(source);
     let nodes = this._bfsOrder(dom.documentElement);
 
@@ -30,7 +38,10 @@ export default class UU5ToMarkdown {
     }
     let output = this.getContent(dom.documentElement);
 
-    return output.replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, '').replace(/\n\s+\n/g, '\n\n').replace(/\n{3,}/g, '\n\n');
+    return output
+      .replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, "")
+      .replace(/\n\s+\n/g, "\n\n")
+      .replace(/\n{3,}/g, "\n\n");
   }
 
   /*
@@ -76,18 +87,23 @@ export default class UU5ToMarkdown {
       let converter = this._converters[i];
 
       if (this._canConvert(node, converter.filter)) {
-        if (typeof converter.replacement !== 'function') {
+        if (typeof converter.replacement !== "function") {
           throw new TypeError(
-            '`replacement` needs to be a function that returns a string'
+            "`replacement` needs to be a function that returns a string"
           );
         }
 
         let whitespace = this._flankingWhitespace(node, content);
 
-        if (whitespace.leading || whitespace.trailing || this._repository.isTrimContent(node.nodeName)) {
+        if (
+          whitespace.leading ||
+          whitespace.trailing ||
+          this._repository.isTrimContent(node.nodeName)
+        ) {
           content = content.trim();
         }
-        replacement = whitespace.leading +
+        replacement =
+          whitespace.leading +
           converter.replacement.call(this, content, node, usedTags) +
           whitespace.trailing;
         break;
@@ -102,7 +118,7 @@ export default class UU5ToMarkdown {
     var regExp;
     var isFlanked;
 
-    if (side === 'left') {
+    if (side === "left") {
       sibling = node.previousSibling;
       regExp = / $/;
     } else {
@@ -121,22 +137,22 @@ export default class UU5ToMarkdown {
   }
 
   _flankingWhitespace(node, content) {
-    var leading = '';
-    var trailing = '';
+    var leading = "";
+    var trailing = "";
 
     if (!this.isBlock(node)) {
       let hasLeading = /^[ \r\n\t]/.test(content);
       let hasTrailing = /[ \r\n\t]$/.test(content);
 
-      if (hasLeading && !this._isFlankedByWhitespace('left', node)) {
-        leading = ' ';
+      if (hasLeading && !this._isFlankedByWhitespace("left", node)) {
+        leading = " ";
       }
-      if (hasTrailing && !this._isFlankedByWhitespace('right', node)) {
-        trailing = ' ';
+      if (hasTrailing && !this._isFlankedByWhitespace("right", node)) {
+        trailing = " ";
       }
     }
 
-    return {leading: leading, trailing: trailing};
+    return { leading: leading, trailing: trailing };
   }
 
   isBlock(node) {
@@ -151,27 +167,27 @@ export default class UU5ToMarkdown {
   }
 
   _canConvertInternal(node, filter) {
-    if (typeof filter === 'string') {
+    if (typeof filter === "string") {
       return filter === node.nodeName;
     }
     if (Array.isArray(filter)) {
       return filter.indexOf(node.nodeName) !== -1;
     } else if (filter.checkTag) {
       return filter.checkTag(node);
-    } else if (typeof filter === 'function') {
+    } else if (typeof filter === "function") {
       return filter.call(this, node);
     }
-    throw new TypeError('`filter` needs to be a string, array, or function');
+    throw new TypeError("`filter` needs to be a string, array, or function");
   }
 
   _replaceAll(string, what, replacement) {
     return string.split(what).join(replacement);
   }
 
-  checkTag(tagname, attributes) {
+  checkTag(tagname) {
     var tag = tagname.toUpperCase();
 
-    return (node) => {
+    return node => {
       var result = node.nodeName.toUpperCase() === tag;
 
       // if (result) {
@@ -197,7 +213,7 @@ export default class UU5ToMarkdown {
    * Contructs a Markdown string of replacement text for a given node
    */
   getContent(node) {
-    let text = '';
+    let text = "";
     let skipTextNodes = this._repository.isSkipTextNodes(node.nodeName);
 
     for (let i = 0; i < node.childNodes.length; i++) {
@@ -223,14 +239,15 @@ export default class UU5ToMarkdown {
         }
 
         // in UU5 string all consecutive whitespace characters are grouped into single space
-        nodeData = nodeData.replace(/\s+/g, ' ');
+        nodeData = nodeData.replace(/\s+/g, " ");
         if (
-          (lastCharacter !== ' ' && !currentNode.previousSibling) ||
-          (this.isBlock(currentNode.previousSibling))) {
-          nodeData = nodeData.replace(/^\s+/, '');
+          (lastCharacter !== " " && !currentNode.previousSibling) ||
+          this.isBlock(currentNode.previousSibling)
+        ) {
+          nodeData = nodeData.replace(/^\s+/, "");
         }
         if (!currentNode.nextSibling || this.isBlock(currentNode.nextSibling)) {
-          nodeData = nodeData.replace(/\s+$/, '');
+          nodeData = nodeData.replace(/\s+$/, "");
         }
         text += nodeData;
       } else {
@@ -244,7 +261,7 @@ export default class UU5ToMarkdown {
  * Contructs a Markdown string of replacement text for a given node
  */
   getRawContent(node) {
-    var text = '';
+    var text = "";
 
     for (let i = 0; i < node.childNodes.length; i++) {
       if (node.childNodes[i].nodeType === 1) {
@@ -263,20 +280,23 @@ export default class UU5ToMarkdown {
    */
 
   outer(node, content) {
-    let res = '<' + node.localName;
+    let res = "<" + node.localName;
 
     for (let i = 0; i < node.attributes.length; i++) {
       let attribute = node.attributes[i];
 
       if (!attribute.noValue) {
-
         let quotChar = '"';
 
         if (attribute.value.indexOf('"') > -1) {
-          if (attribute.value.indexOf('\'') > -1) {
-            console.error(`Attribute "{attribute.name}" with value "${attribute.value}"of element ${node.localName} contains ' and ".`);
+          if (attribute.value.indexOf("'") > -1) {
+            console.error(
+              `Attribute "{attribute.name}" with value "${
+                attribute.value
+              }"of element ${node.localName} contains ' and ".`
+            );
           } else {
-            quotChar = '\'';
+            quotChar = "'";
           }
         }
 
@@ -286,11 +306,11 @@ export default class UU5ToMarkdown {
       }
     }
     if (content) {
-      res += '>';
+      res += ">";
       res += content;
-      res += '</' + node.localName + '>';
+      res += "</" + node.localName + ">";
     } else {
-      res += '/>';
+      res += "/>";
     }
 
     return res;

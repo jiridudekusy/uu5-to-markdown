@@ -1,6 +1,6 @@
-import chai from 'chai';
+import chai from "chai";
 // todo test against lib is not working
-import {UU5ToMarkdown} from '../lib/uu5-to-markdown.js';
+import { UU5ToMarkdown } from "../lib/uu5-to-markdown.js";
 
 chai.expect();
 

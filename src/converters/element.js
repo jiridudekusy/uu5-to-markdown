@@ -60,7 +60,6 @@ class ElementDef {
       result = this.name.toUpperCase() === node.nodeName.toUpperCase();
     }
     if (result) {
-
       if (!this._anyAttributes) {
         for (let i = 0; i < node.attributes.length; i++) {
           let attribute = node.attributes[i];
@@ -150,5 +149,4 @@ class ElementsDefRepo {
   }
 }
 
-export {ElementDef, ElementsDefRepo};
-
+export { ElementDef, ElementsDefRepo };

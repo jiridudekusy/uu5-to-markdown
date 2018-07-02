@@ -1,122 +1,126 @@
-'use strict';
+"use strict";
 
 module.exports = [
   {
-    filter: 'p',
-    replacement: function (content) {
-      return '\n\n' + content + '\n\n';
+    filter: "p",
+    replacement: function(content) {
+      return "\n\n" + content + "\n\n";
     }
   },
 
   {
-    filter: 'br',
-    replacement: function () {
-      return '  \n';
+    filter: "br",
+    replacement: function() {
+      return "  \n";
     }
   },
 
   {
-    filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-    replacement: function (content, node) {
+    filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
+    replacement: function(content, node) {
       var hLevel = node.nodeName.charAt(1);
-      var hPrefix = '';
+      var hPrefix = "";
 
       for (let i = 0; i < hLevel; i++) {
-        hPrefix += '#';
+        hPrefix += "#";
       }
-      return '\n\n' + hPrefix + ' ' + content + '\n\n';
+      return "\n\n" + hPrefix + " " + content + "\n\n";
     }
   },
 
   {
-    filter: 'hr',
-    replacement: function () {
-      return '\n\n* * *\n\n';
+    filter: "hr",
+    replacement: function() {
+      return "\n\n* * *\n\n";
     }
   },
 
   {
-    filter: ['em', 'i'],
-    replacement: function (content) {
-      return '_' + content + '_';
+    filter: ["em", "i"],
+    replacement: function(content) {
+      return "_" + content + "_";
     }
   },
 
   {
-    filter: ['strong', 'b'],
-    replacement: function (content) {
-      return '**' + content + '**';
+    filter: ["strong", "b"],
+    replacement: function(content) {
+      return "**" + content + "**";
     }
   },
 
   // Inline code
   {
-    filter: function (node) {
+    filter: function(node) {
       var hasSiblings = node.previousSibling || node.nextSibling;
-      var isCodeBlock = node.parentNode.nodeName === 'PRE' && !hasSiblings;
+      var isCodeBlock = node.parentNode.nodeName === "PRE" && !hasSiblings;
 
-      return node.nodeName === 'CODE' && !isCodeBlock;
+      return node.nodeName === "CODE" && !isCodeBlock;
     },
-    replacement: function (content) {
-      return '`' + content + '`';
+    replacement: function(content) {
+      return "`" + content + "`";
     }
   },
 
   {
-    filter: function (node) {
-      return node.nodeName === 'A' && node.getAttribute('href');
+    filter: function(node) {
+      return node.nodeName === "A" && node.getAttribute("href");
     },
-    replacement: function (content, node) {
-      var titlePart = node.title ? ' "' + node.title + '"' : '';
+    replacement: function(content, node) {
+      var titlePart = node.title ? ' "' + node.title + '"' : "";
 
-      return '[' + content + '](' + node.getAttribute('href') + titlePart + ')';
+      return "[" + content + "](" + node.getAttribute("href") + titlePart + ")";
     }
   },
 
   {
-    filter: 'img',
-    replacement: function (content, node) {
-      var alt = node.alt || '';
-      var src = node.getAttribute('src') || '';
-      var title = node.title || '';
-      var titlePart = title ? ' "' + title + '"' : '';
+    filter: "img",
+    replacement: function(content, node) {
+      var alt = node.alt || "";
+      var src = node.getAttribute("src") || "";
+      var title = node.title || "";
+      var titlePart = title ? ' "' + title + '"' : "";
 
-      return src ? '![' + alt + ']' + '(' + src + titlePart + ')' : '';
+      return src ? "![" + alt + "]" + "(" + src + titlePart + ")" : "";
     }
   },
 
   // Code blocks
   {
-    filter: function (node) {
-      return node.nodeName === 'PRE' && node.firstChild.nodeName === 'CODE';
+    filter: function(node) {
+      return node.nodeName === "PRE" && node.firstChild.nodeName === "CODE";
     },
-    replacement: function (content, node) {
-      return '\n\n    ' + node.firstChild.textContent.replace(/\n/g, '\n    ') + '\n\n';
+    replacement: function(content, node) {
+      return (
+        "\n\n    " +
+        node.firstChild.textContent.replace(/\n/g, "\n    ") +
+        "\n\n"
+      );
     }
   },
 
   {
-    filter: 'blockquote',
-    replacement: function (content) {
+    filter: "blockquote",
+    replacement: function(content) {
       content = content.trim();
-      content = content.replace(/\n{3,}/g, '\n\n');
-      content = content.replace(/^/gm, '> ');
-      return '\n\n' + content + '\n\n';
+      content = content.replace(/\n{3,}/g, "\n\n");
+      content = content.replace(/^/gm, "> ");
+      return "\n\n" + content + "\n\n";
     }
   },
 
   {
-    filter: 'li',
-    replacement: function (content, node) {
-      var prefix = '*   ';
+    filter: "li",
+    replacement: function(content, node) {
+      var prefix = "*   ";
       var parent = node.parentNode;
 
-      content = content.replace(/^\s+/, '').replace(/\n/gm, '\n    ');
-      if (parent.nodeName === 'OL') {
-        let start = parent.getAttribute('start');
+      content = content.replace(/^\s+/, "").replace(/\n/gm, "\n    ");
+      if (parent.nodeName === "OL") {
+        let start = parent.getAttribute("start");
         let index = Array.prototype.indexOf.call(parent.children, node);
 
-        prefix = (start ? Number(start) + index : index + 1) + '.  ';
+        prefix = (start ? Number(start) + index : index + 1) + ".  ";
       }
 
       return prefix + content;
@@ -124,8 +128,8 @@ module.exports = [
   },
 
   {
-    filter: ['ul', 'ol'],
-    replacement: function (content, node) {
+    filter: ["ul", "ol"],
+    replacement: function(content, node) {
       var strings = [];
 
       for (let i = 0; i < node.childNodes.length; i++) {
@@ -133,30 +137,30 @@ module.exports = [
       }
 
       if (/li/i.test(node.parentNode.nodeName)) {
-        return '\n' + strings.join('\n');
+        return "\n" + strings.join("\n");
       }
-      return '\n\n' + strings.join('\n') + '\n\n';
+      return "\n\n" + strings.join("\n") + "\n\n";
     }
   },
 
   {
-    filter: function (node) {
+    filter: function(node) {
       return this.isBlock(node);
     },
-    replacement: function (content, node, usedTags) {
+    replacement: function(content, node, usedTags) {
       // ensure that pure HTML/UU5 blocks content will not be interpreted
       node.noReplacement = true;
 
-      return '\n\n' + this.outer(node, content, usedTags) + '\n\n';
+      return "\n\n" + this.outer(node, content, usedTags) + "\n\n";
     }
   },
 
   // Anything else!
   {
-    filter: function () {
+    filter: function() {
       return true;
     },
-    replacement: function (content, node, usedTags) {
+    replacement: function(content, node, usedTags) {
       // ensure that pure HTML/UU5 blocks content will not be interpreted
       node.noReplacement = true;
 

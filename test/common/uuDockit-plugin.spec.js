@@ -16,6 +16,7 @@ function uu5ToMdTest(name, uu5string, mdString) {
   });
 
 }
+
 describe('uuDockit-plugin', () => {
 
   describe('UU5.Bricks.Header', () => {
