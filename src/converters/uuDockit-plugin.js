@@ -1,9 +1,20 @@
 "use strict";
 import { ElementsDefRepo } from "./element.js";
+import { ElementDef } from "./element";
 
 export default class UUDockitPlugin {
   constructor() {
-    this._elementDefsRepo = new ElementsDefRepo();
+    let gotoPageLinkdockit = new ElementDef(
+      "UuDocKit.Bricks.GoToPageLink",
+      "page",
+      "label"
+    ).leaf();
+    let gotoPageLink = new ElementDef(
+      "UuBookKit.Bricks.GoToPageLink",
+      "page",
+      "label"
+    ).leaf();
+    this._elementDefsRepo = new ElementsDefRepo(gotoPageLink);
     this._converters = [
       {
         // override UU5.Bricks.Header converter to lower the level by one
@@ -25,6 +36,19 @@ export default class UUDockitPlugin {
             hPrefix += "#";
           }
           return "\n\n" + hPrefix + " " + content + "\n\n";
+        }
+      },
+      {
+        filter: function(node) {
+          return (
+            gotoPageLink.checkTag(node) || gotoPageLinkdockit.checkTag(node)
+          );
+        },
+        replacement: function(content, node) {
+          let label = node.getAttribute("label")
+            ? node.getAttribute("label")
+            : content;
+          return `[${label}](book:${node.getAttribute("page")})`;
         }
       }
     ];

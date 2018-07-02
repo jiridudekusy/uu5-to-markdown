@@ -173,10 +173,10 @@ export default class UU5Converters {
           return uu5BricksLink.checkTag(node) && node.getAttribute("href");
         },
         replacement: function(content, node) {
-          var titlePart = node.getAttribute("title")
+          let titlePart = node.getAttribute("title")
             ? ' "' + node.getAttribute("title") + '"'
             : "";
-          var target = node.getAttribute("target")
+          let target = node.getAttribute("target")
             ? '{:target="' + node.getAttribute("target") + '"}'
             : "";
 
