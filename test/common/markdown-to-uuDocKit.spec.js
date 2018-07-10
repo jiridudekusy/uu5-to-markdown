@@ -16,7 +16,7 @@ let markdownToUuDocKit = new MarkdownToUuDocKit(new TestMarkdownRenderer());
 
 function markdownToUuDocKitTest(name, mdString, uuDockitString) {
   it(name, () => {
-    let parsed = markdownToUuDocKit.toUuDocKit(mdString);
+    let parsed = markdownToUuDocKit.toUuDocKit(mdString, true);
 
     expect(parsed).to.be.equal(uuDockitString);
   });
@@ -39,8 +39,8 @@ Section content
     `{
   "code": "BusinessModel",
   "body": [
-    "\\nparagraph content\\n",
-    "\\n# {section} Process Flow\\nSection content\\n\\n{section}"
+    "paragraph content\\n",
+    "# {section} Process Flow\\nSection content\\n\\n{section}"
   ]
 }`
   );

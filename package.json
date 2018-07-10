@@ -1,6 +1,6 @@
 {
   "name": "uu5-to-markdown",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Coverts uu5tring to markdown. It supports plugins.",
   "main": "lib/uu5-to-markdown.js",
   "scripts": {
@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "collapse-whitespace": "1.1.6",
-    "xmldom-uu5": "0.1.28"
+    "xmldom-uu5": "0.1.28",
+    "pretty-data": "^0.40.0"
   }
 }

@@ -1,3 +1,5 @@
+import {pd} from "pretty-data";
+
 const PAGE_CODE_RE = /^\{uuDocKit-pageCode\} *([^\n]*)\n/;
 
 export default class MarkdownToUuDocKit {
@@ -8,14 +10,14 @@ export default class MarkdownToUuDocKit {
   toUu5(markdown) {
     let dockitMdParts = markdown.split("\n{uuDocKit-partBreak}\n");
     let res = dockitMdParts
-      .map(mdPart => this._markDownRenderer.render(mdPart))
-      .map(part => part.substring("<uu5string/>".length))
-      .join("\n");
+    .map(mdPart => this._markDownRenderer.render(mdPart))
+    .map(part => part.substring("<uu5string/>".length))
+    .join("\n");
 
     return "<uu5string/>" + res;
   }
 
-  toUuDocKit(markdown) {
+  toUuDocKit(markdown,pretty) {
     let uuDockitObject = {
       code: "",
       body: []
@@ -33,6 +35,9 @@ export default class MarkdownToUuDocKit {
     uuDockitObject.body = dockitMdParts.map(mdPart =>
       this._markDownRenderer.render(mdPart)
     );
+    if(pretty){
+      uuDockitObject.body = uuDockitObject.body.map(uu5String => pd.xml(uu5String));
+    }
     return JSON.stringify(uuDockitObject, null, 2);
   }
 }
