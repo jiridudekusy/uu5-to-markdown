@@ -1,6 +1,6 @@
 import Setup from "./tools/setup";
 import chai from "chai";
-import {pd} from "pretty-data";
+import {pd} from "../../src/tools/markdownRenderer/pretty-data";
 
 chai.expect();
 
@@ -117,4 +117,32 @@ describe("UU5PrettyPrint", () => {
   </UuApp.DesignKit.EmbeddedText>
 </UU5.Bricks.Section>`
   );
+  prettyPrintTest("DesignKitCodeJSONwithIndents",
+    `<uu5string/>
+<UU5.Bricks.Section header="Validation Schema (dtoInType)">
+    <UuApp.DesignKit.EmbeddedText label="dtoInType" codeStyle="javascript">
+  const processDefinitionListDtoInType = shape({
+      code: code(),
+      pageInfo: shape({
+        pageIndex: integer(0, null),
+        pageSize: integer(1, 1000)
+      })
+    })
+    </UuApp.DesignKit.EmbeddedText>
+    </UU5.Bricks.Section>`,
+    `<uu5string/>
+<UU5.Bricks.Section header="Validation Schema (dtoInType)">
+  <UuApp.DesignKit.EmbeddedText label="dtoInType" codeStyle="javascript">
+  const processDefinitionListDtoInType = shape({
+      code: code(),
+      pageInfo: shape({
+        pageIndex: integer(0, null),
+        pageSize: integer(1, 1000)
+      })
+    })
+    </UuApp.DesignKit.EmbeddedText>
+</UU5.Bricks.Section>`
+  );
+
+
 });

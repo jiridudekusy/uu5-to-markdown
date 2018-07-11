@@ -21,6 +21,14 @@ export default class UU5Utils {
   }
 
   static toUU5Json(obj) {
-    return UU5JSON + JSON.stringify(obj);
+    let jsonString;
+    if (Array.isArray(obj) && obj.length) {
+      jsonString = "[\n";
+      jsonString += obj.map(item => "  " + JSON.stringify(item)).join(",\n");
+      jsonString += "\n]";
+    } else {
+      jsonString = JSON.stringify(obj);
+    }
+    return UU5JSON + jsonString;
   }
 }

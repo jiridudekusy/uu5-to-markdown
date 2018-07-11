@@ -1,4 +1,4 @@
-import {pd} from "pretty-data";
+import { pd } from "./tools/markdownRenderer/pretty-data";
 
 const PAGE_CODE_RE = /^\{uuDocKit-pageCode\} *([^\n]*)\n/;
 
@@ -7,17 +7,26 @@ export default class MarkdownToUuDocKit {
     this._markDownRenderer = makrdownRenderer;
   }
 
-  toUu5(markdown) {
-    let dockitMdParts = markdown.split("\n{uuDocKit-partBreak}\n");
+  toUu5(markdown, pretty) {
+    let markdownTmp = markdown;
+    let pageCodeSearch = PAGE_CODE_RE.exec(markdownTmp);
+    if (pageCodeSearch) {
+      markdownTmp = markdownTmp.replace(PAGE_CODE_RE, "");
+    }
+
+    let dockitMdParts = markdownTmp.split("\n{uuDocKit-partBreak}\n");
     let res = dockitMdParts
-    .map(mdPart => this._markDownRenderer.render(mdPart))
-    .map(part => part.substring("<uu5string/>".length))
-    .join("\n");
+      .map(mdPart => this._markDownRenderer.render(mdPart))
+      .map(part => part.substring("<uu5string/>".length))
+      .map(part => (pretty ? pd.xml(part) : part))
+      .join(
+        "\n\n<div hidden>Part end(uu5string does not support comments)</div>\n\n"
+      );
 
     return "<uu5string/>" + res;
   }
 
-  toUuDocKit(markdown,pretty) {
+  toUuDocKit(markdown, pretty) {
     let uuDockitObject = {
       code: "",
       body: []
@@ -32,12 +41,9 @@ export default class MarkdownToUuDocKit {
 
     let dockitMdParts = markdownTmp.split("\n{uuDocKit-partBreak}\n");
 
-    uuDockitObject.body = dockitMdParts.map(mdPart =>
-      this._markDownRenderer.render(mdPart)
-    );
-    if(pretty){
-      uuDockitObject.body = uuDockitObject.body.map(uu5String => pd.xml(uu5String));
-    }
+    uuDockitObject.body = dockitMdParts
+      .map(mdPart => this._markDownRenderer.render(mdPart))
+      .map(part => (pretty ? pd.xml(part) : part));
     return JSON.stringify(uuDockitObject, null, 2);
   }
 }

@@ -38,7 +38,10 @@ describe("UuApp.DesignKit", () => {
 - [datastore2 label](datastore2Code)
   - B
   - datastore2 description`,
-      `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[[["datastore1Code","datastore1 label"],"O","datastore1 description"],[["datastore2Code","datastore2 label"],"B","datastore2 description"]]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[
+  [["datastore1Code","datastore1 label"],"O","datastore1 description"],
+  [["datastore2Code","datastore2 label"],"B","datastore2 description"]
+]'/>\n`
     );
     mdToUu5Test(
       "with text in first column, text in desc",
@@ -49,7 +52,10 @@ describe("UuApp.DesignKit", () => {
 - datastore2Code
   - B
   - datastore2 description`,
-      `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[["datastore1Code","O","datastore1 description"],["datastore2Code","B","datastore2 description"]]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[
+  ["datastore1Code","O","datastore1 description"],
+  ["datastore2Code","B","datastore2 description"]
+]'/>\n`
     );
   });
   describe("UuCmdList", () => {
@@ -66,7 +72,10 @@ describe("UuApp.DesignKit", () => {
   - C
   - ExecutivesContent
   - Aktualizace schema kurz.`,
-      `<uu5string/><UuApp.DesignKit.UuCmdList data='<uu5json/>[[["initCourse","initCourse"],"1","B","SysOwner","Inicializace kurzu."],["updateCourse","2","C","ExecutivesContent","Aktualizace schema kurz."]]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UuCmdList data='<uu5json/>[
+  [["initCourse","initCourse"],"1","B","SysOwner","Inicializace kurzu."],
+  ["updateCourse","2","C","ExecutivesContent","Aktualizace schema kurz."]
+]'/>\n`
     );
   });
   describe("UuSubAppInfo", () => {
@@ -77,7 +86,12 @@ describe("UuApp.DesignKit", () => {
 - Multi
 - uuSubApp do something.
 - [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU-BT:4419189)`,
-      `<uu5string/><UuApp.DesignKit.UuSubAppInfo data='<uu5json/>["uuCourse","Multi","uuSubApp do something.",["ues:UU-BT:4419189","ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git"]]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UuSubAppInfo data='<uu5json/>[
+  "uuCourse",
+  "Multi",
+  "uuSubApp do something.",
+  ["ues:UU-BT:4419189","ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git"]
+]'/>\n`
     );
   });
   describe("UU5UveList", () => {
@@ -98,7 +112,9 @@ describe("UuApp.DesignKit", () => {
     "invalidValueKeyMap":{}
     "missingKeyMap":{}
 `,
-      `<uu5string/><UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[["invalidDtoIn","Error","DtoIn is not valid.","\\"invalidTypeKeyMap\\":{}\\n\\"invalidValueKeyMap\\":{}\\n\\"missingKeyMap\\":{}"]]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[
+  ["invalidDtoIn","Error","DtoIn is not valid.","\\"invalidTypeKeyMap\\":{}\\n\\"invalidValueKeyMap\\":{}\\n\\"missingKeyMap\\":{}"]
+]'/>\n`
     );
   });
 
@@ -110,7 +126,11 @@ describe("UuApp.DesignKit", () => {
 *   [UU5.Common.BaseMixin](https://uuos9.plus4u.net/uu\\-dockitg01\\-main/78462435\\-ed11ec379073476db0aa295ad6c00178/book/page?code=uu5CommonBaseMixin)
 *   UU5.Common.Elementary
 `,
-      `<uu5string/><UuApp.DesignKit.UU5ComponentMixins data='<uu5json/>[["SomeMixin","nějaký mixin"],["https://uuos9.plus4u.net/uu-dockitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=uu5CommonBaseMixin","UU5.Common.BaseMixin"],"UU5.Common.Elementary"]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UU5ComponentMixins data='<uu5json/>[
+  ["SomeMixin","nějaký mixin"],
+  ["https://uuos9.plus4u.net/uu-dockitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=uu5CommonBaseMixin","UU5.Common.BaseMixin"],
+  "UU5.Common.Elementary"
+]'/>\n`
     );
   });
   describe("UUCmdList", () => {
@@ -127,7 +147,10 @@ describe("UuApp.DesignKit", () => {
     *   \\-
     *   Authorities, AwidOwner
     *   Removes all configuration attributes of the uuAppWorkspace.`,
-      `<uu5string/><UuApp.DesignKit.UuCmdList bookUri='https://uuos9.plus4u.net/uu-dockitg01-main/78462435-34df77ebe0a04adda6dcd62d32c4f513/book' data='<uu5json/>[[["sysCalculateDataStoreStats_00","sys/calculateDataStoreStats"],"-","-","AwidOwner, AsidOwner","Calculates information on a data store usage for a given workspace."],[["sysClearAppWorkspaceConfig_00","sys/clearAppWorkspaceConfig"],"-","-","Authorities, AwidOwner","Removes all configuration attributes of the uuAppWorkspace."]]'/>\n`
+      `<uu5string/><UuApp.DesignKit.UuCmdList bookUri='https://uuos9.plus4u.net/uu-dockitg01-main/78462435-34df77ebe0a04adda6dcd62d32c4f513/book' data='<uu5json/>[
+  [["sysCalculateDataStoreStats_00","sys/calculateDataStoreStats"],"-","-","AwidOwner, AsidOwner","Calculates information on a data store usage for a given workspace."],
+  [["sysClearAppWorkspaceConfig_00","sys/clearAppWorkspaceConfig"],"-","-","Authorities, AwidOwner","Removes all configuration attributes of the uuAppWorkspace."]
+]'/>\n`
     );
   });
 });
