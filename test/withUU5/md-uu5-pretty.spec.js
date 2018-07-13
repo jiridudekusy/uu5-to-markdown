@@ -1,15 +1,16 @@
 import Setup from "./tools/setup";
 import chai from "chai";
-import {pd} from "../../src/tools/markdownRenderer/pretty-data";
+import UU5Prettifyer from "../../src/uu5-prettifyer";
 
 chai.expect();
 
 const expect = chai.expect;
 
+const uu5prettifyer = new UU5Prettifyer();
 
 function prettyPrintTest(name, input, expectedOutput) {
   it(name, () => {
-    let prettyUu5 = pd.xml(input);
+    let prettyUu5 = uu5prettifyer.prettify(input);
     expect(prettyUu5).to.be.equal(expectedOutput);
   });
 }
@@ -45,20 +46,12 @@ describe("UU5PrettyPrint", () => {
   <UU5.Bricks.Ol>
     <UU5.Bricks.Li>Content 1
       <UU5.Bricks.Ol>
-        <UU5.Bricks.Li>
-          Content 1.1
-        </UU5.Bricks.Li>
-        <UU5.Bricks.Li>
-          Content 1.2
-        </UU5.Bricks.Li>
+        <UU5.Bricks.Li>Content 1.1 </UU5.Bricks.Li>
+        <UU5.Bricks.Li>Content 1.2 </UU5.Bricks.Li>
       </UU5.Bricks.Ol>
     </UU5.Bricks.Li>
-    <UU5.Bricks.Li>
-      Content 2
-    </UU5.Bricks.Li>
-    <UU5.Bricks.Li>
-      Content 3
-    </UU5.Bricks.Li>
+    <UU5.Bricks.Li>Content 2 </UU5.Bricks.Li>
+    <UU5.Bricks.Li>Content 3 </UU5.Bricks.Li>
   </UU5.Bricks.Ol>
 </UU5.Bricks.Section>`
   );
@@ -75,15 +68,14 @@ describe("UU5PrettyPrint", () => {
   </UU5.Bricks.Section>`,
     `<uu5string/>
 <UU5.Bricks.Section header="Basic Information">
-  <UuApp.DesignKit.UuCmdInfo data='
-    <uu5json/>[
+  <UuApp.DesignKit.UuCmdInfo data='<uu5json/>[
       "uuCMD createArea",
       "This command will create new Area.",
       "post",
       "https://{gateway}/{vendor}-{uuApp}-{uuSubApp}/{tid}-{awid}/createArea",
       "Executives"
     ]'/>
-  </UU5.Bricks.Section>`
+</UU5.Bricks.Section>`
   );
   prettyPrintTest("DesignKitCodeJSON",
     `<uu5string/>
@@ -141,6 +133,35 @@ describe("UU5PrettyPrint", () => {
       })
     })
     </UuApp.DesignKit.EmbeddedText>
+</UU5.Bricks.Section>`
+  );
+  prettyPrintTest("DesignKitCodeJSONwithUU5String",
+    `<uu5string/>
+<UU5.Bricks.Section header="Error list">
+    <UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[
+    ["xmlParseError","Error","An exception occurred during verification of XML.","cause: {…SAXException}"],
+    ["validationError","Error","The document contains invalid content.","\\"validationErrors\\":{…}"],
+    ["mappingError","Error","Could not map the document.","cause: {…RuntimeException}"],
+    ["remoteCallFailed","Error","An error occurred during remote system call.","\\"cause\\":{…RuntimeException}"],
+    ["persistenceError","Error","A persistence error occurred.","<uu5string/>\\"dbObject\\":{…},<br/>\\n\\"cause\\": {…DatastoreRuntimeException}"]
+  ]'/>
+  </UU5.Bricks.Section>`,
+    `<uu5string/>
+<UU5.Bricks.Section header="Error list">
+  <UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[
+    ["xmlParseError","Error","An exception occurred during verification of XML.","cause: {…SAXException}"],
+    ["validationError","Error","The document contains invalid content.","\\"validationErrors\\":{…}"],
+    ["mappingError","Error","Could not map the document.","cause: {…RuntimeException}"],
+    ["remoteCallFailed","Error","An error occurred during remote system call.","\\"cause\\":{…RuntimeException}"],
+    ["persistenceError","Error","A persistence error occurred.","<uu5string/>\\"dbObject\\":{…},<br/>\\n\\"cause\\": {…DatastoreRuntimeException}"]
+  ]'/>
+</UU5.Bricks.Section>`
+  );
+  prettyPrintTest("inilineTags",
+    `<uu5string/><UU5.Bricks.Section header="My Header"> <UU5.Bricks.P>Some <UU5.Bricks.Code>text</UU5.Bricks.Code></UU5.Bricks.P></UU5.Bricks.Section>`,
+    `<uu5string/>
+<UU5.Bricks.Section header="My Header">
+  <UU5.Bricks.P>Some <UU5.Bricks.Code>text</UU5.Bricks.Code></UU5.Bricks.P>
 </UU5.Bricks.Section>`
   );
 

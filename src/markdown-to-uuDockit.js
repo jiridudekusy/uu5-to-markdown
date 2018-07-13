@@ -1,10 +1,11 @@
-import { pd } from "./tools/markdownRenderer/pretty-data";
+import UU5Pertifier from "./uu5-prettifyer";
 
 const PAGE_CODE_RE = /^\{uuDocKit-pageCode\} *([^\n]*)\n/;
 
 export default class MarkdownToUuDocKit {
   constructor(makrdownRenderer) {
     this._markDownRenderer = makrdownRenderer;
+    this._uu5pertifier = new UU5Pertifier();
   }
 
   toUu5(markdown, pretty) {
@@ -18,7 +19,7 @@ export default class MarkdownToUuDocKit {
     let res = dockitMdParts
       .map(mdPart => this._markDownRenderer.render(mdPart))
       .map(part => part.substring("<uu5string/>".length))
-      .map(part => (pretty ? pd.xml(part) : part))
+      .map(part => (pretty ? this._uu5pertifier.prettify(part) : part))
       .join(
         "\n\n<div hidden>Part end(uu5string does not support comments)</div>\n\n"
       );
@@ -43,7 +44,7 @@ export default class MarkdownToUuDocKit {
 
     uuDockitObject.body = dockitMdParts
       .map(mdPart => this._markDownRenderer.render(mdPart))
-      .map(part => (pretty ? pd.xml(part) : part));
+      .map(part => (pretty ? this._uu5pertifier.prettify(part) : part));
     return JSON.stringify(uuDockitObject, null, 2);
   }
 }
