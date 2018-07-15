@@ -52,7 +52,10 @@ export default class UU5Prettifyer {
         let elementText = this._process(child, lastNodeBlock);
         if (child.nodeType === 1) {
           if (this.isBlock(child)) {
-            if (this._isPreformated(child) && !this._options.indentPreformated) {
+            if (
+              this._isPreformated(child) &&
+              !this._options.indentPreformated
+            ) {
               elementText = "  " + elementText;
             } else {
               elementText = elementText
@@ -151,7 +154,7 @@ export default class UU5Prettifyer {
 
   isBlock(node) {
     let inlineTags = ["UU5.Bricks.Code"];
-    return inlineTags.find(item => node.nodeName === item)===undefined;
+    return inlineTags.find(item => node.nodeName === item) === undefined;
     //TODO correct isBlock function
   }
 

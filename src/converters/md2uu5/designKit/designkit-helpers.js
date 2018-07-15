@@ -64,7 +64,7 @@ export default class DesignKitHelpers {
     opts,
     processCallback
   ) {
-    return function (state, startLine, endLine, silent) {
+    return function(state, startLine, endLine, silent) {
       let pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
         contentEndLine;
@@ -156,7 +156,7 @@ export default class DesignKitHelpers {
 
             uu5jsonRow.push(
               DesignKitHelpers.getDesignKitCellContent(
-                {childNodes: firstCellNodes, nodeType: 1},
+                { childNodes: firstCellNodes, nodeType: 1 },
                 cfg.columns[0].linkSupported,
                 cfg.columns[0].name
               )
@@ -168,7 +168,8 @@ export default class DesignKitHelpers {
               for (let j = 0; j < listChildNodes.length; j++) {
                 let defIndex = j + 1;
                 if (cfg.dynamicColumns) {
-                  defIndex = cfg.columns.length > (j + 1) ? (j + 1) : cfg.columns.length - 1;
+                  defIndex =
+                    cfg.columns.length > j + 1 ? j + 1 : cfg.columns.length - 1;
                 }
                 uu5jsonRow.push(
                   DesignKitHelpers.getDesignKitCellContent(
@@ -215,12 +216,14 @@ export default class DesignKitHelpers {
     // TODO get quot char acfording to the attribute
     let quotChar = "'";
     let attributesString = supportedAttributes
-    .filter(attribute => attributes[attribute] !== undefined)
-    .map(
-      attribute =>
-        attributes[attribute] != null ? `${attribute}=${quotChar}${attributes[attribute]}${quotChar}` : attribute
-    )
-    .join(" ");
+      .filter(attribute => attributes[attribute] !== undefined)
+      .map(
+        attribute =>
+          attributes[attribute] != null
+            ? `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`
+            : attribute
+      )
+      .join(" ");
 
     // TODO support multiple attributes
     let res = "<" + tagName + " " + attributesString + "/>";
@@ -231,7 +234,7 @@ export default class DesignKitHelpers {
   static createDesignKitRenderer(tagName, attribues) {
     let supportedAttributes = [].concat(attribues).concat(["data"]);
 
-    return function (tokens, idx) {
+    return function(tokens, idx) {
       return DesignKitHelpers.createDesignKitElement(
         tagName,
         supportedAttributes,

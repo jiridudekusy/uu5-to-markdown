@@ -1,5 +1,5 @@
 "use strict";
-import {ElementDef, ElementsDefRepo} from "./element.js";
+import { ElementDef, ElementsDefRepo } from "./element.js";
 import UU5Utils from "../tools/uu5utils";
 import UuAppDesignKitConverterConfiguration from "./uuAppDesignKitConverterConfiguration";
 
@@ -23,7 +23,7 @@ export default class UuAppDesignKitConverters {
       this._elementDefsRepo.addElementDef(def);
       this._converters.push({
         filter: def,
-        replacement: function (content, node) {
+        replacement: function(content, node) {
           return that._tableJsonToListDesignKitContent(
             content,
             node,
@@ -57,7 +57,10 @@ export default class UuAppDesignKitConverters {
         for (let j = 0; j < jsonRow.length; j++) {
           let defIndex = j;
           if (transformation.dynamicColumns) {
-            defIndex = transformation.columns.length > j ? j : transformation.columns.length - 1;
+            defIndex =
+              transformation.columns.length > j
+                ? j
+                : transformation.columns.length - 1;
           }
           let columnDef = transformation.columns[defIndex];
           let prefix = "";
@@ -99,7 +102,7 @@ export default class UuAppDesignKitConverters {
         );
         res.push(line);
       } else {
-        throw "Undefined component transformation strategy."
+        throw "Undefined component transformation strategy.";
       }
     }
     let resString = res.join("\n");
