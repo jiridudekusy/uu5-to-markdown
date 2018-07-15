@@ -3,10 +3,10 @@ export default [
     marker: "{UuSubAppDataStoreList}",
     tagName: "UuApp.DesignKit.UuSubAppDataStoreList",
     columns: [
-      { linkSupported: true },
+      {linkSupported: true},
       // TODO this property(indent) is maybe not needed at all
-      { indent: 1 },
-      { indent: 1 }
+      {indent: 1},
+      {indent: 1}
     ]
   },
   {
@@ -14,18 +14,18 @@ export default [
     tagName: "UuApp.DesignKit.UuCmdList",
     attributes: ["bookUri"],
     columns: [
-      { linkSupported: true },
+      {linkSupported: true},
       // TODO this property(indent) is maybe not needed at all
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 }
+      {indent: 1},
+      {indent: 1},
+      {indent: 1},
+      {indent: 1}
     ]
   },
   {
     marker: "{UuSubAppInfo}",
     tagName: "UuApp.DesignKit.UuSubAppInfo",
-    items: [{}, {}, {}, { linkSupported: true }]
+    items: [{}, {}, {}, {linkSupported: true}]
   },
   {
     marker: "{UU5UveInfo}",
@@ -36,11 +36,11 @@ export default [
     marker: "{UU5RouteList}",
     tagName: "UuApp.DesignKit.UU5RouteList",
     columns: [
-      { linkSupported: true },
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 }
+      {linkSupported: true},
+      {indent: 1},
+      {indent: 1},
+      {indent: 1},
+      {indent: 1}
     ]
   },
   {
@@ -56,7 +56,7 @@ export default [
   {
     marker: "{UU5ComponentMixins}",
     tagName: "UuApp.DesignKit.UU5ComponentMixins",
-    singleColumn: { linkSupported: true }
+    singleColumn: {linkSupported: true}
   },
   {
     marker: "{UuAppProfileList}",
@@ -64,24 +64,24 @@ export default [
     columns: [
       {},
       // TODO this property(indent) is maybe not needed at all
-      { indent: 1 }
+      {indent: 1}
     ]
   },
   {
     marker: "{UU5ComponentList}",
     tagName: "UuApp.DesignKit.UU5ComponentList",
-    columns: [{ linkSupported: true }, { indent: 1 }]
+    columns: [{linkSupported: true}, {indent: 1}]
   },
   {
     marker: "{UU5UveList}",
     tagName: "UuApp.DesignKit.UU5UveList",
     columns: [
-      { linkSupported: true },
+      {linkSupported: true},
       // TODO this property(indent) is maybe not needed at all
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 }
+      {indent: 1},
+      {indent: 1},
+      {indent: 1},
+      {indent: 1}
     ]
   },
   {
@@ -90,9 +90,9 @@ export default [
     columns: [
       {},
       // TODO this property(indent) is maybe not needed at all
-      { indent: 1 },
-      { indent: 1 },
-      { indent: 1 }
+      {indent: 1},
+      {indent: 1},
+      {indent: 1}
     ]
   },
   {
@@ -103,37 +103,32 @@ export default [
   {
     marker: "{UuCmdDefaultValueList}",
     tagName: "UuApp.DesignKit.UuCmdDefaultValueList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
   },
   {
     marker: "{DescriptionList}",
     tagName: "UuApp.DesignKit.DescriptionList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
   },
   {
     marker: "{BusinessRoleList}",
     tagName: "UuApp.DesignKit.BusinessRoleList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
   },
   {
     marker: "{BusinessProcessList}",
     tagName: "UuApp.DesignKit.BusinessProcessList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
   },
   {
     marker: "{BusinessUseCaseList}",
     tagName: "UuApp.DesignKit.BusinessUseCaseList",
-    columns: [{}, { indent: 1 }, { indent: 1 }]
+    columns: [{}, {indent: 1}, {indent: 1}]
   },
   {
     marker: "{UuAppObjectStoreSchemaList}",
     tagName: "UuApp.DesignKit.UuAppObjectStoreSchemaList",
-    columns: [{}, { indent: 1 }, { indent: 1 }]
-  },
-  {
-    marker: "{UuAppObjectStoreInfo}",
-    tagName: "UuApp.DesignKit.UuAppObjectStoreInfo",
-    items: [{}, {}]
+    columns: [{}, {indent: 1}, {indent: 1}]
   },
   {
     marker: "{UuAppBinaryStoreInfo}",
@@ -143,21 +138,28 @@ export default [
   {
     marker: "{UuAppObjectStoreSchemaLimitList}",
     tagName: "UuApp.DesignKit.UuAppObjectStoreSchemaLimitList",
-    columns: [{}, { indent: 1 }, { indent: 1 }]
+    columns: [{}, {indent: 1}, {indent: 1}]
   },
   {
     marker: "{UuAppObjectStoreSchemaIndexList}",
     tagName: "UuApp.DesignKit.UuAppObjectStoreSchemaIndexList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
   },
   {
     marker: "{UuAppObjectStoreSchemaDaoMethodList}",
     tagName: "UuApp.DesignKit.UuAppObjectStoreSchemaDaoMethodList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
   },
   {
     marker: "{UuAppBinaryStoreSchemaDaoMethodList}",
     tagName: "UuApp.DesignKit.UuAppBinaryStoreSchemaDaoMethodList",
-    columns: [{}, { indent: 1 }]
+    columns: [{}, {indent: 1}]
+  },
+  {
+    marker: "{Table}",
+    tagName: "UuApp.DesignKit.Table",
+    attributes: ["colHeader", "rowHeader", "transpose"],
+    columns: [{}, {indent: 1}],
+    dynamicColumns: true
   }
 ];

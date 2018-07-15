@@ -17,7 +17,7 @@ let markdownToUu5 = new CodeKit.MarkdownRenderer("full", {
   headerLevel: 2
 });
 markdownToUu5.use(mdToUu5Plugin);
-markdownToUu5.use(DesignKitMdToUu5Plugin, { markdownToUu5: markdownToUu5 });
+markdownToUu5.use(DesignKitMdToUu5Plugin, {markdownToUu5: markdownToUu5});
 
 function mdToUu5Test(name, mdString, uu5String) {
   it(name, () => {
@@ -150,6 +150,44 @@ describe("UuApp.DesignKit", () => {
       `<uu5string/><UuApp.DesignKit.UuCmdList bookUri='https://uuos9.plus4u.net/uu-dockitg01-main/78462435-34df77ebe0a04adda6dcd62d32c4f513/book' data='<uu5json/>[
   [["sysCalculateDataStoreStats_00","sys/calculateDataStoreStats"],"-","-","AwidOwner, AsidOwner","Calculates information on a data store usage for a given workspace."],
   [["sysClearAppWorkspaceConfig_00","sys/clearAppWorkspaceConfig"],"-","-","Authorities, AwidOwner","Removes all configuration attributes of the uuAppWorkspace."]
+]'/>\n`
+    );
+  });
+  describe("Table", () => {
+    mdToUu5Test(
+      "default",
+      `{Table}
+*   header1
+    *   header2
+    *   header3
+*   row 1.1
+    *   row 1.2
+    *   row 1.3
+*   row 2.1
+    *   row 2.2
+    *   row 2.3
+*   row 3.1
+    *   row 3.2
+    *   row 3.3`,
+      `<uu5string/><UuApp.DesignKit.Table data='<uu5json/>[
+  ["header1","header2","header3"],
+  ["row 1.1","row 1.2","row 1.3"],
+  ["row 2.1","row 2.2","row 2.3"],
+  ["row 3.1","row 3.2","row 3.3"]
+]'/>\n`
+    );
+    mdToUu5Test(
+      "with attributes without value",
+      `{Table}{:"colHeader":null,"rowHeader":null,"transpose":null}
+*   header1
+    *   header2
+    *   header3
+*   row 1.1
+    *   row 1.2
+    *   row 1.3`,
+      `<uu5string/><UuApp.DesignKit.Table colHeader rowHeader transpose data='<uu5json/>[
+  ["header1","header2","header3"],
+  ["row 1.1","row 1.2","row 1.3"]
 ]'/>\n`
     );
   });

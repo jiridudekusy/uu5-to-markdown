@@ -60,7 +60,7 @@ export default class DesignKitHelpers {
     opts,
     processCallback
   ) {
-    return function(state, startLine, endLine, silent) {
+    return function (state, startLine, endLine, silent) {
       let pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
         contentEndLine;
@@ -152,7 +152,7 @@ export default class DesignKitHelpers {
 
             uu5jsonRow.push(
               DesignKitHelpers.getDesignKitCellContent(
-                { childNodes: firstCellNodes, nodeType: 1 },
+                {childNodes: firstCellNodes, nodeType: 1},
                 cfg.columns[0].linkSupported
               )
             );
@@ -161,10 +161,14 @@ export default class DesignKitHelpers {
               let listChildNodes = ParserUtils.getChildNodes(listNode);
 
               for (let j = 0; j < listChildNodes.length; j++) {
+                let defIndex = j;
+                if (cfg.dynamicColumns) {
+                  defIndex = cfg.columns.length > (j + 1) ? (j + 1) : cfg.columns.length - 1;
+                }
                 uu5jsonRow.push(
                   DesignKitHelpers.getDesignKitCellContent(
                     listChildNodes[j],
-                    cfg.columns[j + 1].linkSupported
+                    cfg.columns[defIndex].linkSupported
                   )
                 );
               }
@@ -203,16 +207,16 @@ export default class DesignKitHelpers {
   static createDesignKitElement(tagName, supportedAttributes, attributes) {
     // TODO get quot char acfording to the attribute
     let quotChar = "'";
-    let attributstring = supportedAttributes
-      .filter(attribute => attributes[attribute])
-      .map(
-        attribute =>
-          `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`
-      )
-      .join(" ");
+    let attributesString = supportedAttributes
+    .filter(attribute => attributes[attribute] !== undefined)
+    .map(
+      attribute =>
+        attributes[attribute] != null ? `${attribute}=${quotChar}${attributes[attribute]}${quotChar}` : attribute
+    )
+    .join(" ");
 
     // TODO support multiple attributes
-    let res = "<" + tagName + " " + attributstring + "/>";
+    let res = "<" + tagName + " " + attributesString + "/>";
 
     return res + "\n";
   }
@@ -220,7 +224,7 @@ export default class DesignKitHelpers {
   static createDesignKitRenderer(tagName, attribues) {
     let supportedAttributes = [].concat(attribues).concat(["data"]);
 
-    return function(tokens, idx) {
+    return function (tokens, idx) {
       return DesignKitHelpers.createDesignKitElement(
         tagName,
         supportedAttributes,

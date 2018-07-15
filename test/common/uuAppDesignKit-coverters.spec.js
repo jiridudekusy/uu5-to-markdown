@@ -109,4 +109,42 @@ describe("UuApp.DesignKit", () => {
     *   Removes all configuration attributes of the uuAppWorkspace.`
     );
   });
+  describe("Table", () => {
+    uu5ToMdTest(
+      "default",
+      `<uu5string/><UuApp.DesignKit.Table data='<uu5json/>[
+          ["header1", "header2", "header3"],
+          ["row 1.1", "row 1.2", "row 1.3"],         
+          ["row 2.1", "row 2.2", "row 2.3"],         
+          ["row 3.1", "row 3.2", "row 3.3"]         
+        ]'/>`,
+      `{Table}
+*   header1
+    *   header2
+    *   header3
+*   row 1.1
+    *   row 1.2
+    *   row 1.3
+*   row 2.1
+    *   row 2.2
+    *   row 2.3
+*   row 3.1
+    *   row 3.2
+    *   row 3.3`
+    );
+    uu5ToMdTest(
+      "with attributes without value",
+      `<uu5string/><UuApp.DesignKit.Table rowHeader colHeader transpose data='<uu5json/>[
+          ["header1", "header2", "header3"],
+          ["row 1.1", "row 1.2", "row 1.3"]      
+        ]'/>`,
+      `{Table}{:"colHeader":null,"rowHeader":null,"transpose":null}
+*   header1
+    *   header2
+    *   header3
+*   row 1.1
+    *   row 1.2
+    *   row 1.3`
+    );
+  });
 });
