@@ -66,10 +66,10 @@ export default class UuAppDesignKitConverters {
             prefix = new Array(columnDef.indent + 1).join("    ");
           }
           line = prefix + lineStart;
-
           line += this._getDesignKitContent(
             jsonRow[j],
             columnDef.linkSupported,
+            columnDef.name,
             uu5ToMd
           );
           res.push(line);
@@ -82,6 +82,7 @@ export default class UuAppDesignKitConverters {
         line += this._getDesignKitContent(
           jsonRow,
           columnDef.linkSupported,
+          columnDef.name,
           uu5ToMd
         );
         res.push(line);
@@ -93,6 +94,7 @@ export default class UuAppDesignKitConverters {
         line += this._getDesignKitContent(
           jsonRow,
           itemDef.linkSupported,
+          itemDef.name,
           uu5ToMd
         );
         res.push(line);
@@ -127,7 +129,7 @@ export default class UuAppDesignKitConverters {
     return "";
   }
 
-  _getDesignKitContent(cnt, linkSupported, uu5ToMd) {
+  _getDesignKitContent(cnt, linkSupported, name, uu5ToMd) {
     let res;
 
     if (UU5Utils.isUU5String(cnt)) {
@@ -142,6 +144,9 @@ export default class UuAppDesignKitConverters {
       }
     }
     res = res.replace(/^\s+/, "").replace(/\n/gm, "\n        ");
+    if (name) {
+      res = `${name}: ${res}`;
+    }
     return res;
   }
 

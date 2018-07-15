@@ -20,7 +20,7 @@ export default class DesignKitHelpers {
     return res;
   }
 
-  static getDesignKitCellContent(node, linkSupported) {
+  static getDesignKitCellContent(node, linkSupported, name) {
     let res;
 
     if (
@@ -34,7 +34,11 @@ export default class DesignKitHelpers {
       if (!ParserUtils.hasOnlyTextContent(node)) {
         res = "<uu5string/>";
       }
-      res += ParserUtils.getXmlContent(node);
+      let xmlContent = ParserUtils.getXmlContent(node);
+      if (name) {
+        xmlContent = xmlContent.replace(new RegExp(`^\\s*${name}: `), "");
+      }
+      res += xmlContent;
       res = res.trim();
     }
     return res;
@@ -153,7 +157,8 @@ export default class DesignKitHelpers {
             uu5jsonRow.push(
               DesignKitHelpers.getDesignKitCellContent(
                 {childNodes: firstCellNodes, nodeType: 1},
-                cfg.columns[0].linkSupported
+                cfg.columns[0].linkSupported,
+                cfg.columns[0].name
               )
             );
 
@@ -161,14 +166,15 @@ export default class DesignKitHelpers {
               let listChildNodes = ParserUtils.getChildNodes(listNode);
 
               for (let j = 0; j < listChildNodes.length; j++) {
-                let defIndex = j;
+                let defIndex = j + 1;
                 if (cfg.dynamicColumns) {
                   defIndex = cfg.columns.length > (j + 1) ? (j + 1) : cfg.columns.length - 1;
                 }
                 uu5jsonRow.push(
                   DesignKitHelpers.getDesignKitCellContent(
                     listChildNodes[j],
-                    cfg.columns[defIndex].linkSupported
+                    cfg.columns[defIndex].linkSupported,
+                    cfg.columns[defIndex].name
                   )
                 );
               }
@@ -192,7 +198,8 @@ export default class DesignKitHelpers {
             uu5jsonRes.push(
               DesignKitHelpers.getDesignKitCellContent(
                 uu5Row,
-                itemCfg.linkSupported
+                itemCfg.linkSupported,
+                itemCfg.name
               )
             );
           }

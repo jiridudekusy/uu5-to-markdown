@@ -31,12 +31,12 @@ describe("UuApp.DesignKit", () => {
 [["datastore2Code","datastore2 label"],"B","datastore2 description"]]
 '/>`,
       `{UuSubAppDataStoreList}
-*   [datastore1 label](datastore1Code)
-    *   O
-    *   datastore1 description
-*   [datastore2 label](datastore2Code)
-    *   B
-    *   datastore2 description`
+*   Name: [datastore1 label](datastore1Code)
+    *   Type: O
+    *   Description: datastore1 description
+*   Name: [datastore2 label](datastore2Code)
+    *   Type: B
+    *   Description: datastore2 description`
     );
     uu5ToMdTest(
       "default(link,uu5,uu5)",
@@ -44,9 +44,9 @@ describe("UuApp.DesignKit", () => {
 [["datastore1Code","datastore1 label"],"<uu5string/><UU5.Bricks.Strong>O</UU5.Bricks.Strong>","<uu5string/><UU5.Bricks.Strong>datastore1</UU5.Bricks.Strong> description"]
 ]'/>`,
       `{UuSubAppDataStoreList}
-*   [datastore1 label](datastore1Code)
-    *   **O**
-    *   **datastore1** description`
+*   Name: [datastore1 label](datastore1Code)
+    *   Type: **O**
+    *   Description: **datastore1** description`
     );
 
     // TODO Lists are not yet correctly supported by uu5->md convertor in uu5json attributes
@@ -56,9 +56,9 @@ describe("UuApp.DesignKit", () => {
 [["datastore1Code","datastore1 label"],"<uu5string/><UU5.Bricks.Strong>O</UU5.Bricks.Strong>","<uu5string/><UU5.Bricks.Strong>datastore1</UU5.Bricks.Strong> description<UU5.Bricks.Ul><UU5.Bricks.Li>item 1</UU5.Bricks.Li></UU5.Bricks.Ul>"]
 ]'/>`,
       `{UuSubAppDataStoreList}
-*   [datastore1 label](datastore1Code)
-    *   **O**
-    *   **datastore1** description
+*   Name: [datastore1 label](datastore1Code)
+    *   Type: **O**
+    *   Description: **datastore1** description
         *   item 1`
     );
   });
@@ -67,10 +67,10 @@ describe("UuApp.DesignKit", () => {
       "default(link,text,text)",
       `<uu5string/><UuApp.DesignKit.UuSubAppInfo data='<uu5json/>["uuCourse","Multi","uuSubApp do something.",["ues:UU-BT:4419189","ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git"]]'/>`,
       `{UuSubAppInfo}
-*   uuCourse
-*   Multi
-*   uuSubApp do something.
-*   [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU\\-BT:4419189)`
+*   Name: uuCourse
+*   Type: Multi
+*   Description: uuSubApp do something.
+*   Git: [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU\\-BT:4419189)`
     );
   });
   describe("UU5ComponentMixins", () => {
@@ -97,16 +97,16 @@ describe("UuApp.DesignKit", () => {
           [["sysClearAppWorkspaceConfig_00", "sys/clearAppWorkspaceConfig"], "-", "-", "Authorities, AwidOwner", "Removes all configuration attributes of the uuAppWorkspace."]         
         ]'/>`,
       `{UuCmdList}{:"bookUri":"https://uuos9.plus4u.net/uu-dockitg01-main/78462435-34df77ebe0a04adda6dcd62d32c4f513/book"}
-*   [sys/calculateDataStoreStats](sysCalculateDataStoreStats_00)
-    *   \\-
-    *   \\-
-    *   AwidOwner, AsidOwner
-    *   Calculates information on a data store usage for a given workspace.
-*   [sys/clearAppWorkspaceConfig](sysClearAppWorkspaceConfig_00)
-    *   \\-
-    *   \\-
-    *   Authorities, AwidOwner
-    *   Removes all configuration attributes of the uuAppWorkspace.`
+*   Name: [sys/calculateDataStoreStats](sysCalculateDataStoreStats_00)
+    *   Priority: \\-
+    *   Complexity: \\-
+    *   Profiles: AwidOwner, AsidOwner
+    *   Description: Calculates information on a data store usage for a given workspace.
+*   Name: [sys/clearAppWorkspaceConfig](sysClearAppWorkspaceConfig_00)
+    *   Priority: \\-
+    *   Complexity: \\-
+    *   Profiles: Authorities, AwidOwner
+    *   Description: Removes all configuration attributes of the uuAppWorkspace.`
     );
   });
   describe("Table", () => {

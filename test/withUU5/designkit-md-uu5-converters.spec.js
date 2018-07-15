@@ -32,12 +32,12 @@ describe("UuApp.DesignKit", () => {
     mdToUu5Test(
       "with link in first column, text in desc",
       `{UuSubAppDataStoreList}
-- [datastore1 label](datastore1Code)
-  - O
-  - datastore1 description
-- [datastore2 label](datastore2Code)
-  - B
-  - datastore2 description`,
+- Name: [datastore1 label](datastore1Code)
+  - Type: O
+  - Description: datastore1 description
+- Name: [datastore2 label](datastore2Code)
+  - Type: B
+  - Description: datastore2 description`,
       `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[
   [["datastore1Code","datastore1 label"],"O","datastore1 description"],
   [["datastore2Code","datastore2 label"],"B","datastore2 description"]
@@ -46,12 +46,12 @@ describe("UuApp.DesignKit", () => {
     mdToUu5Test(
       "with text in first column, text in desc",
       `{UuSubAppDataStoreList}
-- datastore1Code
-  - O
-  - datastore1 description
-- datastore2Code
-  - B
-  - datastore2 description`,
+- Name: datastore1Code
+  - Type: O
+  - Description: datastore1 description
+- Name: datastore2Code
+  - Type: B
+  - Description: datastore2 description`,
       `<uu5string/><UuApp.DesignKit.UuSubAppDataStoreList data='<uu5json/>[
   ["datastore1Code","O","datastore1 description"],
   ["datastore2Code","B","datastore2 description"]
@@ -82,10 +82,10 @@ describe("UuApp.DesignKit", () => {
     mdToUu5Test(
       "with text",
       `{UuSubAppInfo}
-- uuCourse
-- Multi
-- uuSubApp do something.
-- [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU-BT:4419189)`,
+- Name: uuCourse
+- Type: Multi
+- Description: uuSubApp do something.
+- Git: [ssh://git@codebase.plus4u.net:9422/uu_uuapp_subapp01.git](ues:UU-BT:4419189)`,
       `<uu5string/><UuApp.DesignKit.UuSubAppInfo data='<uu5json/>[
   "uuCourse",
   "Multi",

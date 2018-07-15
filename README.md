@@ -6,6 +6,8 @@ Master branch : [![Build Status](https://travis-ci.org/jiridudekusy/uu5-to-markd
 
 Converts uu5string and uuDocKit JSON into markdown.
 
+[Changelog](doc/CHANGELOG.md)
+
 Following UU5 components are suppported:
 - Core
   - UU5.Bricks.P
@@ -33,8 +35,10 @@ Following UU5 components are suppported:
 - uu5CodeKit Plugin
   - UU5.CodeKit.CodeViewer
 
-- uuDockit Plugin 
+- uuBookkit Plugin 
    - UU5.Bricks.Header with level offset (during MD -> UU5 conversion level is MD level + 1)
+   - UuBookKit.Bricks.GoToPageLink
+   - UuDocKit.Bricks.GoToPageLink
 
 - uuAppDesignKit Plugin
   - UuApp.DesignKit.UuSubAppDataStoreList
@@ -62,6 +66,7 @@ Following UU5 components are suppported:
   - UuApp.DesignKit.UU5ComponentInfo
   - UuApp.DesignKit.UU5ComponentMixins
   - UuApp.DesignKit.UU5ComponentList
+  - UuApp.DesignKit.Table
 
 The components that are not supported are copied to markdown as is.
 
@@ -72,7 +77,7 @@ Include library into package.json :
 ```json
 {
   "dependencies": {
-    "uu5-to-markdown": "^0.1.3"
+    "uu5-to-markdown": "^0.2.0"
   }
 }
 ```
