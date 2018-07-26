@@ -4,7 +4,7 @@ Develop branch : [![Build Status](https://travis-ci.org/jiridudekusy/uu5-to-mark
 Master branch : [![Build Status](https://travis-ci.org/jiridudekusy/uu5-to-markdown.svg?branch=master)](https://travis-ci.org/jiridudekusy/uu5-to-markdown)
 
 
-Converts uu5string and uuDocKit JSON into markdown.
+Converts uu5string and uuBookKit JSON into markdown.
 
 [Changelog](doc/CHANGELOG.md)
 
@@ -88,10 +88,10 @@ Include library into package.json :
 // import core
 import {UU5ToMarkdown} from "uu5-to-markdown";
 //import plugins
-import {UUDockitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
+import {UuBookKitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
 
 //create convertor
-let uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitPlugin());
+let uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UuBookKitPlugin());
 
 //convert uu5string to markdown
 let uu5string = "...some uu5 string..."
@@ -128,29 +128,29 @@ let uu5String = mdr.render(markdown);
 
 ```
 
-### Convert uuDocKit JSON to MD
+### Convert uuBookKit JSON to MD
 
 ```ecmascript 6
 // import core
 import {UU5ToMarkdown} from "uu5-to-markdown";
 //import plugins
-import {UUDockitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
-//import uuDocKit convertor
-import {UuDocKitToMarkdown} from "uu5-to-markdown";
+import {UuBookKitPlugin, UU5CodeKitConverters} from "uu5-to-markdown";
+//import uuBookKit convertor
+import {UuBookKitToMarkdown} from "uu5-to-markdown";
 
 //create uu5convertor
-let uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitPlugin());
+let uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UuBookKitPlugin());
 
-//create uuDocKit convertor
-let uuDocKitToMarkdown = new UuDocKitToMarkdown(uu5toMarkdown);
+//create uuBookKit convertor
+let uuBookKitToMarkdown = new UuBookKitToMarkdown(uu5toMarkdown);
 
-//convert uuDocKit JSON to markdown
-let uuDocKitJson = "...some uuDocKit JSON string..."
-let markdown = uuDocKitToMarkdown.toMarkdown(uuDocKitJson);
+//convert uuBookKit JSON to markdown
+let uuBookKitJson = "...some uuDocKit JSON string..."
+let markdown = uuBookKitToMarkdown.toMarkdown(uuBookKitJson);
 ```
-### Convert MD to uuDocKit JSON
+### Convert MD to uuBookKit JSON
 
-To convert markdown to uuDocKit JSON you must use CodeKit(uu5codekitg01) with plugin and helper from this repository.
+To convert markdown to uuBookKit JSON you must use CodeKit(uu5codekitg01) with plugin and helper from this repository.
 
 ```ecmascript 6
 // import core
@@ -158,7 +158,7 @@ import {UU5ToMarkdown} from "uu5-to-markdown";
 import CodeKit from 'uu5codekitg01';
 //import plugins
 import {mdToUu5Plugin} from "uu5-to-markdown";
-import {MarkdownToUuDocKit} from "uu5-to-markdown";
+import {MarkdownToUuBookKit} from "uu5-to-markdown";
 
 //create convertor
 let mdr = new CodeKit.MarkdownRenderer('full', {
@@ -171,12 +171,12 @@ let mdr = new CodeKit.MarkdownRenderer('full', {
 //register plugin for non-markdown extendsions (like sections)
 mdr.use(mdToUu5Plugin);
 
-//create uuDocKit convertor
-let markdownToUuDocKit = new MarkdownToUuDocKit(mdr)
+//create uuBookKit convertor
+let markdownToUuBookKit = new MarkdownToUuBookKit(mdr)
 
-//convert markdown to uuDocKit JSON
+//convert markdown to uuBookKit JSON
 let markdown = "...some markdown string..."
-let uuDocKitJSON = markdownToUuDocKit.toUuDocKit(markdown);
+let uuBookKitJSON = markdownToUuBookKit.toUuDocKit(markdown);
 
 ```
 

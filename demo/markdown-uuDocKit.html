@@ -48,11 +48,10 @@
   import createReactClass from "create-react-class";
   import ReactDOM from "react-dom";
   import * as UU5 from "uu5g04";
-  // import * as UuDocKit from "uu_dockitg01-bricks";
   import "uu5g04-bricks";
   import CodeKit from "uu5codekitg01";
   import { MarkdownRenderer } from "uu5codekitg01-markdown";
-  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters, UuAppDesignKitConverters, mdToUu5Plugin, UuDocKitToMarkdown, MarkdownToUuDocKit,desighKitMdToUu5Plugin} from "uu5-to-markdown";
+  import {UU5ToMarkdown, UUBookKitPlugin, UU5CodeKitConverters, UuAppDesignKitConverters, mdToUu5Plugin, UuBookKitToMarkdown, MarkdownToUuBookKit,desighKitMdToUu5Plugin} from "uu5-to-markdown";
 
   let md = `# {section} test
 Test section content
@@ -72,11 +71,11 @@ Next Line
         mdr.use(mdToUu5Plugin);
         mdr.use(desighKitMdToUu5Plugin, {markdownToUu5: mdr});
 
-        this._markdownToUuDocKit = new MarkdownToUuDocKit(mdr);
+        this._markdownToUuBookKit = new MarkdownToUuBookKit(mdr);
 
-        let uu5toMarkdown = new UU5ToMarkdown(new UU5CodeKitConverters(), new UUDockitPlugin(), new UuAppDesignKitConverters());
+        let uu5toMarkdown = new UU5ToMarkdown(new UU5CodeKitConverters(), new UUBookKitPlugin(), new UuAppDesignKitConverters());
 
-        this._uuDocKitToMarkdown = new UuDocKitToMarkdown(uu5toMarkdown);
+        this._uuBookKitToMarkdown = new UuBookKitToMarkdown(uu5toMarkdown);
 
         this.mdValue = md;
 
@@ -90,16 +89,16 @@ Next Line
         this.mdValue = text.value
       },
 
-      onChangeUuDocKit(text) {
-        console.log("onChangeUudocKit")
-        this.uuDocKitValue = text.value
+      onChangeUuBookKit(text) {
+        console.log("onChangeUuBookKit")
+        this.uuBookKitValue = text.value
       },
 
       _setMode(mode) {
         if (this.state.mode !== mode) {
-          if (mode === "md" && this.uuDocKitValue) {
-            this.mdValue = this._uuDocKitToMarkdown.toMarkdown(this.uuDocKitValue);
-            this.uuDocKitValue = null;
+          if (mode === "md" && this.uuBookKitValue) {
+            this.mdValue = this._uuBookKitToMarkdown.toMarkdown(this.uuBookKitValue);
+            this.uuBookKitValue = null;
           }
           this.setState({
             mode: mode
@@ -111,25 +110,25 @@ Next Line
         return this.state.mode === mode;
       },
 
-      _uuDockitToUU5(uuDocKitString) {
-        let uuDocKitObject = JSON.parse(uuDocKitString);
+      _uuBookKitToUU5(uuDocKitString) {
+        let uuBookKitObject = JSON.parse(uuDocKitString);
 
-        return '<uu5string/>' + uuDocKitObject.body.map(part => part.substring('<uu5string/>'.length)).join('\n');
+        return '<uu5string/>' + uuBookKitObject.body.map(part => part.substring('<uu5string/>'.length)).join('\n');
       },
 
       render() {
         let r = "";
         if (this.state.mode === "preview") {
-          if (this.uuDocKitValue) {
-            r = this._uuDockitToUU5(this.uuDocKitValue);
+          if (this.uuBookKitValue) {
+            r = this._uuBookKitToUU5(this.uuBookKitValue);
           } else {
-            r = this._markdownToUuDocKit.toUu5(this.mdValue);
+            r = this._markdownToUuBookKit.toUu5(this.mdValue);
           }
         } else if (this.state.mode === "uu5") {
-          if (this.uuDocKitValue) {
-            r = this.uuDocKitValue;
+          if (this.uuBookKitValue) {
+            r = this.uuBookKitValue;
           } else {
-            r = this._markdownToUuDocKit.toUuDocKit(this.mdValue);
+            r = this._markdownToUuBookKit.toUuDocKit(this.mdValue);
           }
         }
         return [
@@ -170,7 +169,7 @@ Next Line
               onProps={{
                 colorSchema: "success"
               }}>
-              uuDocKit
+              uuBookKit
             </UU5.Bricks.ButtonSwitch>
           </UU5.Bricks.Row>,
           <UU5.Bricks.Row>
@@ -188,7 +187,7 @@ Next Line
               <CodeKit.JsonEditor
                 value={r}
                 format="pretty"
-                onChange={this.onChangeUuDocKit}
+                onChange={this.onChangeUuBookKit}
               />
 
             </UU5.Bricks.Section>

@@ -2,9 +2,9 @@
 import { ElementsDefRepo } from "./element.js";
 import { ElementDef } from "./element";
 
-export default class UUDockitPlugin {
+export default class UuBookKitPlugin {
   constructor() {
-    let gotoPageLinkdockit = new ElementDef(
+    let gotoPageLinkBookkit = new ElementDef(
       "UuDocKit.Bricks.GoToPageLink",
       "page",
       "label"
@@ -41,7 +41,7 @@ export default class UUDockitPlugin {
       {
         filter: function(node) {
           return (
-            gotoPageLink.checkTag(node) || gotoPageLinkdockit.checkTag(node)
+            gotoPageLink.checkTag(node) || gotoPageLinkBookkit.checkTag(node)
           );
         },
         replacement: function(content, node) {

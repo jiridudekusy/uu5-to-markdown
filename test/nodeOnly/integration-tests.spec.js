@@ -1,7 +1,7 @@
 import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
 import UU5CodeKitConverters from "../../src/converters/uu5CodeKit-converters.js";
-import UUDockitPlugin from "../../src/converters/uuDockit-plugin.js";
+import UuBookKitPlugin from "../../src/converters/uuBookKit-plugin.js";
 
 chai.expect();
 
@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 let uu5ToMarkdown = new UU5ToMarkdown(
   new UU5CodeKitConverters(),
-  new UUDockitPlugin()
+  new UuBookKitPlugin()
 );
 
 function uu5FileTest(name, uu5stringFile, mdStringFile) {

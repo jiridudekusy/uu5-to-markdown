@@ -1,4 +1,4 @@
-export default class UuDocKitToMarkdown {
+export default class UuBookKitToMarkdown {
   constructor(uu5ToMarkdown) {
     this._uu5ToMarkdown = uu5ToMarkdown;
   }

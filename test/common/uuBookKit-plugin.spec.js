@@ -1,12 +1,12 @@
 import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
-import UUDockitPlugin from "../../src/converters/uuDockit-plugin.js";
+import UuBookKitPlugin from "../../src/converters/uuBookKit-plugin.js";
 
 chai.expect();
 
 const expect = chai.expect;
 
-let uu5ToMarkdown = new UU5ToMarkdown(new UUDockitPlugin());
+let uu5ToMarkdown = new UU5ToMarkdown(new UuBookKitPlugin());
 
 function uu5ToMdTest(name, uu5string, mdString) {
   it(name, () => {

@@ -1,5 +1,5 @@
 import chai from "chai";
-import MarkdownToUuDocKit from "../../src/markdown-to-uuDockit";
+import MarkdownToUuBookKit from "../../src/markdown-to-uuBookKit";
 
 const expect = chai.expect;
 
@@ -12,7 +12,7 @@ class TestMarkdownRenderer {
   }
 }
 
-let markdownToUuDocKit = new MarkdownToUuDocKit(new TestMarkdownRenderer());
+let markdownToUuDocKit = new MarkdownToUuBookKit(new TestMarkdownRenderer());
 
 function markdownToUuDocKitTest(name, mdString, uuDockitString) {
   it(name, () => {

@@ -51,7 +51,7 @@
   import "uu5g04-bricks";
   import CodeKit from "uu5codekitg01";
   import { MarkdownRenderer } from "uu5codekitg01-markdown";
-  import {UU5ToMarkdown, UUDockitPlugin, UU5CodeKitConverters, UuAppDesignKitConverters,mdToUu5Plugin, desighKitMdToUu5Plugin} from "uu5-to-markdown";
+  import {UU5ToMarkdown, UUBookKitPlugin, UU5CodeKitConverters, UuAppDesignKitConverters,mdToUu5Plugin, desighKitMdToUu5Plugin} from "uu5-to-markdown";
 
   let md = `# {section} test
 Test section content
@@ -71,7 +71,7 @@ Next Line
         this._mdr.use(mdToUu5Plugin);
         this._mdr.use(desighKitMdToUu5Plugin, {markdownToUu5: this._mdr});
         this.mdValue = md;
-        this._uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUDockitPlugin(), new UuAppDesignKitConverters());
+        this._uu5toMarkdown = new UU5ToMarkdown( new UU5CodeKitConverters(), new UUBookKitPlugin(), new UuAppDesignKitConverters());
         return {
           mode: "md"
         }

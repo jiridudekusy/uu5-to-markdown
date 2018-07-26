@@ -2,7 +2,7 @@ import UU5Pertifier from "./uu5-prettifyer";
 
 const PAGE_CODE_RE = /^\{uuDocKit-pageCode\} *([^\n]*)\n/;
 
-export default class MarkdownToUuDocKit {
+export default class MarkdownToUuBookKit {
   constructor(makrdownRenderer) {
     this._markDownRenderer = makrdownRenderer;
     this._uu5pertifier = new UU5Pertifier();
