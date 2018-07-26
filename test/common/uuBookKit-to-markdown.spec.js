@@ -22,30 +22,31 @@ describe("uuDockitToMarkdown", () => {
     `{
   "code": "BusinessModel",
   "body": [
-    "<uu5string/><UU5.Bricks.P>paragraph content</UU5.Bricks.P>",
-    "  <uu5string/>\\n  \\n    <UU5.Bricks.Section header=\\"Process Flow\\">\\n      Section content \\n    </UU5.Bricks.Section>    \\n      \\n\\n    \\n"
+    {     
+      "code":"abcd",
+      "sys" : {
+        "rev": 1
+      },
+      "content":"<uu5string/><UU5.Bricks.P>paragraph content</UU5.Bricks.P>"
+    },
+    {
+      "code":"efgh",
+      "sys" : {
+        "rev": 3
+      },
+      "content":"<uu5string/>\\n  \\n    <UU5.Bricks.Section header=\\"Process Flow\\">\\n      Section content \\n    </UU5.Bricks.Section>    \\n      \\n\\n    \\n"
+    }
   ]
 }`,
-    `{uuDocKit-pageCode} BusinessModel
+    `{uuBookKit-pageCode} BusinessModel
 
+{uuBookKit-part}{:"code":"abcd", "rev": 1}
 paragraph content
 
-{uuDocKit-partBreak}
-
+{uuBookKit-part}{:"code":"efgh", "rev": 3}
 # {section} Process Flow
 Section content
 
 {section}`
-  );
-
-  uuDockitToMdTest(
-    "pure string body",
-    `{
-  "code": "BusinessModel",
-  "body": "<uu5string/><UU5.Bricks.P>paragraph content</UU5.Bricks.P>"
-}`,
-    `{uuDocKit-pageCode} BusinessModel
-
-paragraph content`
   );
 });

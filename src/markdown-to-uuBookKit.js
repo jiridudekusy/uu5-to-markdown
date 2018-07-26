@@ -1,6 +1,8 @@
 import UU5Pertifier from "./uu5-prettifyer";
 
-const PAGE_CODE_RE = /^\{uuDocKit-pageCode\} *([^\n]*)\n/;
+const PAGE_CODE_RE = /^\{uuBookKit-pageCode\} *([^\n]*)\n/;
+
+const PART_MARKER = "{uuBookKit-part}";
 
 export default class MarkdownToUuBookKit {
   constructor(makrdownRenderer) {
@@ -15,9 +17,10 @@ export default class MarkdownToUuBookKit {
       markdownTmp = markdownTmp.replace(PAGE_CODE_RE, "");
     }
 
-    let dockitMdParts = markdownTmp.split("\n{uuDocKit-partBreak}\n");
-    let res = dockitMdParts
-      .map(mdPart => this._markDownRenderer.render(mdPart))
+    let parts = this._getParts(markdown);
+
+    let res = parts
+      .map(mdPart => this._markDownRenderer.render(mdPart.content))
       .map(part => part.substring("<uu5string/>".length))
       .map(part => (pretty ? this._uu5pertifier.prettify(part) : part))
       .join(
@@ -27,24 +30,82 @@ export default class MarkdownToUuBookKit {
     return "<uu5string/>" + res;
   }
 
+  _getParts(markdown) {
+    let parts = [];
+    let lines = markdown.split("\n");
+    let part;
+    for (let line of lines) {
+      if (line.startsWith(PART_MARKER)) {
+        line = line.replace(PART_MARKER, "").trim();
+        line = line.replace("{:", "{");
+        let params;
+        if (line.length > 0) {
+          params = JSON.parse(line);
+        }
+        if (part) {
+          parts.push(part);
+        }
+        if (params) {
+          part = {
+            code: params.code,
+            sys: {
+              rev: params.rev
+            },
+            lines: []
+          };
+        } else {
+          part = {
+            lines: []
+          };
+        }
+      } else if (part) {
+        part.lines.push(line);
+      }
+    }
+
+    if (part) {
+      parts.push(part);
+    }
+
+    parts = parts.map(part => {
+      return {
+        code: part.code,
+        sys: part.sys,
+        content: part.lines.join("\n")
+      };
+    });
+    return parts;
+  }
+
   toUuDocKit(markdown, pretty) {
-    let uuDockitObject = {
+    let uuBookKitObject = {
       code: "",
-      body: []
+      sectionList: []
     };
     let markdownTmp = markdown;
     let pageCodeSearch = PAGE_CODE_RE.exec(markdownTmp);
 
     if (pageCodeSearch) {
-      uuDockitObject.code = pageCodeSearch[1];
+      uuBookKitObject.code = pageCodeSearch[1];
       markdownTmp = markdownTmp.replace(PAGE_CODE_RE, "");
     }
 
-    let dockitMdParts = markdownTmp.split("\n{uuDocKit-partBreak}\n");
+    let parts = this._getParts(markdownTmp);
 
-    uuDockitObject.body = dockitMdParts
-      .map(mdPart => this._markDownRenderer.render(mdPart))
-      .map(part => (pretty ? this._uu5pertifier.prettify(part) : part));
-    return JSON.stringify(uuDockitObject, null, 2);
+    uuBookKitObject.sectionList = parts
+      .map(mdPart =>
+        Object.assign(mdPart, {
+          content: this._markDownRenderer.render(mdPart.content)
+        })
+      )
+      .map(
+        part =>
+          pretty
+            ? Object.assign(part, {
+              content: this._uu5pertifier.prettify(part).content
+              })
+            : part
+      );
+    return JSON.stringify(uuBookKitObject, null, 2);
   }
 }

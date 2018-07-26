@@ -26,21 +26,49 @@ describe("markdownToUuDocKit", () => {
   // tests currently use test MarkdownRenderer which just returns input markdown string
   markdownToUuDocKitTest(
     "default",
-    `{uuDocKit-pageCode} BusinessModel
+    `{uuBookKit-pageCode} BusinessModel
 
+{uuBookKit-part}{:"code":"abcd", "rev": 1}
 paragraph content
 
-{uuDocKit-partBreak}
-
+{uuBookKit-part}{:"code":"efgh", "rev": 3}
 # {section} Process Flow
 Section content
 
 {section}`,
     `{
   "code": "BusinessModel",
-  "body": [
-    "\\nparagraph content\\n",
-    "\\n# {section} Process Flow\\nSection content\\n\\n{section}"
+  "sectionList": [
+    {
+      "code": "abcd",
+      "sys": {
+        "rev": 1
+      },
+      "content": "paragraph content\\n"
+    },
+    {
+      "code": "efgh",
+      "sys": {
+        "rev": 3
+      },
+      "content": "# {section} Process Flow\\nSection content\\n\\n{section}"
+    }
+  ]
+}`
+  );
+  markdownToUuDocKitTest(
+    "new section",
+    `{uuBookKit-pageCode} BusinessModel
+
+{uuBookKit-part}
+paragraph content
+`,
+    `{
+  "code": "BusinessModel",
+  "sectionList": [
+    {
+      "content": "paragraph content\\n"
+    }
   ]
 }`
   );
