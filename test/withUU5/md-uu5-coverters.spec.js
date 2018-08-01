@@ -1,4 +1,3 @@
-import Setup from "./tools/setup";
 import chai from "chai";
 import CodeKit from "uu5codekitg01";
 import mdToUu5Plugin from "../../src/converters/md-uu5-plugin";
@@ -36,4 +35,27 @@ Some text
 </UU5.Bricks.Section>
 `
   );
+  describe("unknown uu5 element", () => {
+    mdToUu5Test(
+      "multiline - missing space at line end",
+      `<UuContentKit.Bricks.BasicInfo
+  data='<uu5json/>[
+    ["Název čaje", "Earl Grey"],
+    ["Druh čaje", "Černý čaj"],
+    ["Popis", "Směs převážně černého čaje s olejem z kůry bergamoty."]
+  ]'
+/>
+`,
+      `<uu5string/><UuContentKit.Bricks.BasicInfo
+  data='<uu5json/>[
+    ["Název čaje", "Earl Grey"],
+    ["Druh čaje", "Černý čaj"],
+    ["Popis", "Směs převážně černého čaje s olejem z kůry bergamoty."]
+  ]'
+/>
+`
+    );
+
+  });
+
 });
