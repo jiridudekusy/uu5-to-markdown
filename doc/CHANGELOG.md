@@ -1,3 +1,7 @@
+0.3.1
+-----
+* UU5Prettifyer has been exported so it can be used by other apps.
+
 0.3.0
 -----
 * Support uuBookKit 3.x (see [Changelog](https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-e3f5c648e85f4319bd8fc25ea5be6c2c/book/page?code=rn_3))

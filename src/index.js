@@ -7,6 +7,7 @@ import desighKitMdToUu5Plugin from "./converters/md2uu5/designKit/designKit-md-u
 import MarkdownToUuBookKit from "./markdown-to-uuBookKit";
 import UuBookKitToMarkdown from "./uuBookKit-to-markdown";
 import bookKitMdToUu5Plugin from "./converters/md2uu5/bookKit/bookkit-md-uu5-plugin";
+import UU5Prettifyer from "./uu5-prettifyer";
 
 export {
   UU5ToMarkdown,
@@ -17,5 +18,6 @@ export {
   desighKitMdToUu5Plugin,
   UuBookKitToMarkdown,
   MarkdownToUuBookKit,
-  bookKitMdToUu5Plugin
+  bookKitMdToUu5Plugin,
+  UU5Prettifyer
 };
