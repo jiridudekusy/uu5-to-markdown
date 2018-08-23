@@ -211,8 +211,8 @@ export default class UU5Converters {
             let index = Array.prototype.filter
               .call(parent.childNodes, n => n.nodeName === uu5BricksLi.name)
               .indexOf(node);
-
-            prefix = index + 1 + ".  ";
+             prefix = index + 1 + ".  ";
+             prefix = prefix.slice(0,4);
           }
 
           return prefix + content;

@@ -474,6 +474,62 @@ describe("Lists", () => {
         "2.  Suspendisse id sem consectetuer libero luctus adipiscing."
       ].join("\n")
     );
+    uu5ToMdTest(
+      "ol with 10+ items",
+      [
+        "<UU5.Bricks.Ol>",
+        "  <UU5.Bricks.Li>Item1</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item2</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item3</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item4</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item5</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item6</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item7</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item8</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item9</UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item10",
+        "    <UU5.Bricks.Ol>",
+        "      <UU5.Bricks.Li>nested Item1</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item2</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item3</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item4</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item5</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item6</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item7</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item8</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item9</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item10</UU5.Bricks.Li>",
+        "      <UU5.Bricks.Li>nested Item11</UU5.Bricks.Li>",
+        "    </UU5.Bricks.Ol>",
+        "  </UU5.Bricks.Li>",
+        "  <UU5.Bricks.Li>Item11</UU5.Bricks.Li>",
+        "</UU5.Bricks.Ol>"
+      ].join("\n"),
+      [
+        "1.  Item1",
+        "2.  Item2",
+        "3.  Item3",
+        "4.  Item4",
+        "5.  Item5",
+        "6.  Item6",
+        "7.  Item7",
+        "8.  Item8",
+        "9.  Item9",
+        "10. Item10",
+        "    1.  nested Item1",
+        "    2.  nested Item2",
+        "    3.  nested Item3",
+        "    4.  nested Item4",
+        "    5.  nested Item5",
+        "    6.  nested Item6",
+        "    7.  nested Item7",
+        "    8.  nested Item8",
+        "    9.  nested Item9",
+        "    10. nested Item10",
+        "    11. nested Item11",
+        "11. Item11",
+      ].join("\n")
+    );
   });
 });
 
