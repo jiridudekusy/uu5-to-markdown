@@ -2,6 +2,12 @@ class ElementDef {
   constructor(name, ...attributes) {
     this.name = name;
     this.attributes = attributes;
+    //support "contentEdiable attribute at all components.
+    if(!this.attributes){
+      this.attributes = ["contentEditable"];
+    }else{
+      this.attributes.push("contentEditable");
+    }
     this._anyAttributes = false;
     this.caseSensitive(true);
     this.leaf(true);
