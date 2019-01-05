@@ -13,6 +13,29 @@ function cell(content, node) {
   return prefix + content + " |";
 }
 
+function isSingleLsi(node, uu5BricksLsi, uu5BricksLsiItem) {
+    let valid = uu5BricksLsi.checkTag(node);
+    if(!valid){
+      return false;
+    }
+    let lsiItemCount = 0;
+    for (let i = 0; i < node.childNodes.length; i++) {
+      let child = node.childNodes[i];
+      if (child.nodeType === 3) {
+        // text nodes are not cells
+        continue;
+      }
+      if(!uu5BricksLsiItem.checkTag(child)){
+        return false;
+      }
+      lsiItemCount++;
+    }
+    if(lsiItemCount > 1){
+      return false;
+    }
+    return true;
+}
+
 export default class UU5Converters {
   constructor() {
     let uu5string = new ElementDef("uu5string").void();
@@ -55,6 +78,9 @@ export default class UU5Converters {
       .skipTextNodes();
     let uu5BricksTableTh = new ElementDef("UU5.Bricks.Table.Th").leaf();
     let uu5BricksTableTd = new ElementDef("UU5.Bricks.Table.Td").leaf();
+    let uu5BricksLsi = new ElementDef("UU5.Bricks.Lsi").leaf().skipTextNodes();
+    let uu5BricksLsiItem = new ElementDef("UU5.Bricks.Lsi.Item", "language").leaf().skipTextNodes();
+
 
     this._elementDefsRepo = new ElementsDefRepo(
       uu5string,
@@ -78,7 +104,9 @@ export default class UU5Converters {
       uu5BricksTableTFoot,
       uu5BricksTableTr,
       uu5BricksTableTh,
-      uu5BricksTableTd
+      uu5BricksTableTd,
+      uu5BricksLsi,
+      uu5BricksLsiItem
     );
 
     this._converters = [
@@ -282,9 +310,30 @@ export default class UU5Converters {
         replacement: function(content) {
           return content;
         }
-      }
+      },
+
+      {
+        filter: function(node) {
+          return isSingleLsi(node, uu5BricksLsi,uu5BricksLsiItem);
+        },
+        replacement: function(content) {
+          return content;
+        }
+      },
+      {
+        filter: function(node) {
+          return uu5BricksLsiItem.checkTag(node) && isSingleLsi(node.parentNode, uu5BricksLsi, uu5BricksLsiItem);
+        },
+        replacement: function(content) {
+          return content;
+        }
+      },
+
     ];
   }
+
+
+
 
   get elementDefsRepo() {
     return this._elementDefsRepo;

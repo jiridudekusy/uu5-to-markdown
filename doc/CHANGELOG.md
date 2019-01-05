@@ -1,3 +1,11 @@
+0.4.0
+-----
+* Basic support for dcc(Dynamic Component Content). If fact it means support for Lsi tags. The current support is limited only to single UU5.Bricks.Lsi.Item inside UU5.Bricks.Lsi. In the realization the Lsi items are just simply filtered out. If there are multiple Lsi.Item they are put as plain uu5 string to the result.
+
+0.3.2
+-----
+* Fix bug https://github.com/jiridudekusy/uuDockitHelper/issues/3. Up to 99 items in list are supported.
+
 0.3.1
 -----
 * UU5Prettifyer has been exported so it can be used by other apps.

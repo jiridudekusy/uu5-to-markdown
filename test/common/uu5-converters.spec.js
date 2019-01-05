@@ -588,3 +588,41 @@ describe("Whitespaces", () => {
     ["## Header", "", "<UUS.Unknown>Some Text</UUS.Unknown>"].join("\n")
   );
 });
+
+describe("Uu5.Bricks.Lsi", () => {
+  uu5ToMdTest(
+    "single Lsi item test",
+    `
+<UU5.Bricks.Lsi>
+  <UU5.Bricks.Lsi.Item language="en">
+    <UU5.Bricks.P>Lorem ipsum</UU5.Bricks.P>
+  </UU5.Bricks.Lsi.Item>
+</UU5.Bricks.Lsi>`,
+    "Lorem ipsum"
+  );
+  uu5ToMdTest(
+    "multiple Lsi items test",
+    `
+<UU5.Bricks.Lsi>
+  <UU5.Bricks.Lsi.Item language="en">
+    <UU5.Bricks.P>Lorem ipsum</UU5.Bricks.P>
+  </UU5.Bricks.Lsi.Item>
+  <UU5.Bricks.Lsi.Item language="cs">
+    <UU5.Bricks.P>Lorem ipsum</UU5.Bricks.P>
+  </UU5.Bricks.Lsi.Item>
+</UU5.Bricks.Lsi>`,
+    `<UU5.Bricks.Lsi>
+  <UU5.Bricks.Lsi.Item language="en">
+    <UU5.Bricks.P>Lorem ipsum</UU5.Bricks.P>
+  </UU5.Bricks.Lsi.Item>
+  <UU5.Bricks.Lsi.Item language="cs">
+    <UU5.Bricks.P>Lorem ipsum</UU5.Bricks.P>
+  </UU5.Bricks.Lsi.Item>
+</UU5.Bricks.Lsi>`
+  );
+  uu5ToMdTest(
+    "multiple Paragraphs test",
+    "<UU5.Bricks.P>Lorem</UU5.Bricks.P><UU5.Bricks.P>ipsum</UU5.Bricks.P>",
+    "Lorem\n\nipsum"
+  );
+});
