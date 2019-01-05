@@ -38,7 +38,8 @@ function isSingleLsi(node, uu5BricksLsi, uu5BricksLsiItem) {
 
 export default class UU5Converters {
   constructor() {
-    let uu5string = new ElementDef("uu5string").void();
+    let root = new ElementDef("root").void().skipTextNodes();
+    let uu5string = new ElementDef("uu5string").void().skipTextNodes();
     let uu5BricksP = new ElementDef("UU5.Bricks.P").block();
     let uu5BricksStrong = new ElementDef("UU5.Bricks.Strong").leaf();
     let uu5BricksEm = new ElementDef("UU5.Bricks.Em").leaf();
@@ -51,7 +52,7 @@ export default class UU5Converters {
     let uu5BricksHeader = new ElementDef("UU5.Bricks.Header", "level").block();
     let uu5BricksSection = new ElementDef(
       "UU5.Bricks.Section",
-      "header"
+      "header", "footer"
     ).block();
     let uu5stringPre = new ElementDef("uu5string.pre").block();
     let uu5BricksPre = new ElementDef("UU5.Bricks.Pre").block();
@@ -78,8 +79,8 @@ export default class UU5Converters {
       .skipTextNodes();
     let uu5BricksTableTh = new ElementDef("UU5.Bricks.Table.Th").leaf();
     let uu5BricksTableTd = new ElementDef("UU5.Bricks.Table.Td").leaf();
-    let uu5BricksLsi = new ElementDef("UU5.Bricks.Lsi").leaf().skipTextNodes();
-    let uu5BricksLsiItem = new ElementDef("UU5.Bricks.Lsi.Item", "language").leaf().skipTextNodes();
+    let uu5BricksLsi = new ElementDef("UU5.Bricks.Lsi").block().skipTextNodes();
+    let uu5BricksLsiItem = new ElementDef("UU5.Bricks.Lsi.Item", "language").block().skipTextNodes();
 
 
     this._elementDefsRepo = new ElementsDefRepo(
@@ -111,12 +112,13 @@ export default class UU5Converters {
 
     this._converters = [
       {
-        filter: "root",
+        filter: root,
         replacement: function() {
           return "";
         }
       },
       {
+        elementDef: uu5string,
         filter: uu5string,
         replacement: function() {
           return "";
@@ -145,7 +147,16 @@ export default class UU5Converters {
         }
       },
       {
-        filter: uu5BricksSection,
+        filter: function(node) {
+          let valid = uu5BricksSection.checkTag(node);
+          if(valid){
+            //footer is put by default by uuDcc,however this library supports only empty footer
+            if(node.hasAttribute("footer")){
+              return node.getAttribute("footer")==="";
+            }
+          }
+          return valid;
+        },
         replacement: function(content, node) {
           let header = node.getAttribute("header");
 

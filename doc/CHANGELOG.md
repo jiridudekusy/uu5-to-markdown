@@ -1,3 +1,8 @@
+0.4.1
+-----
+* Supports empty footer attribute at `UU5.Bricks.Section` component, because uuDcc adds it.
+* Add support for "UuAppObjectStoreInfo" and "UuAppBinaryStoreInfo" 
+ 
 0.4.0
 -----
 * Basic support for dcc(Dynamic Component Content). If fact it means support for Lsi tags. The current support is limited only to single UU5.Bricks.Lsi.Item inside UU5.Bricks.Lsi. In the realization the Lsi items are just simply filtered out. If there are multiple Lsi.Item they are put as plain uu5 string to the result. By default "contentEdiatble" attribute is accepted at all components but it is put to none (it expect that default behavior of uuDcc is sufficient).

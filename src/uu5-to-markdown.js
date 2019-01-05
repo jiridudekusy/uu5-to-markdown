@@ -77,16 +77,22 @@ export default class UU5ToMarkdown {
     var rawContent = this.getRawContent(node);
 
     // Remove blank nodes
-    // if (!isVoid(node) && !/A|TH|TD/.test(node.nodeName) && /^\s*$/i.test(
-    //     content)) {
-    //   node._replacement = ''
-    //   return
-    // }
+/*    if (!node.isVoid(node)) {
+       node._replacement = ''
+       return
+    }*/
 
     for (let i = 0; i < this._converters.length; i++) {
       let converter = this._converters[i];
 
       if (this._canConvert(node, converter.filter)) {
+/*        if(converter.elementDef){
+          if(converter.elementDef.isVoid){
+            node._rawContent = "";
+            node._replacement = "";
+            return;
+          }
+        }*/
         if (typeof converter.replacement !== "function") {
           throw new TypeError(
             "`replacement` needs to be a function that returns a string"

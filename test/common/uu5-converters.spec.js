@@ -235,6 +235,18 @@ describe("UU5.Bricks.Section", () => {
       "{section}"
     ].join("\n")
   );
+
+  uu5ToMdTest(
+    "single section with emtpry footer",
+    '<UU5.Bricks.Section header="Section title" footer="">Section content</UU5.Bricks.Section>',
+    ["# {section} Section title", "Section content", "", "{section}"].join("\n")
+  );
+
+  uu5ToMdTest(
+    "single section without emtpry footer",
+    '<UU5.Bricks.Section header="Section title" footer="Footer content">Section content</UU5.Bricks.Section>',
+    "<UU5.Bricks.Section header=\"Section title\" footer=\"Footer content\">Section content</UU5.Bricks.Section>"
+  );
 });
 
 describe("Uu5.Bricks.Link", () => {
@@ -621,8 +633,16 @@ describe("Uu5.Bricks.Lsi", () => {
 </UU5.Bricks.Lsi>`
   );
   uu5ToMdTest(
-    "multiple Paragraphs test",
-    "<UU5.Bricks.P>Lorem</UU5.Bricks.P><UU5.Bricks.P>ipsum</UU5.Bricks.P>",
-    "Lorem\n\nipsum"
+    "lsi with section test",
+    `<uu5string/>   
+<UU5.Bricks.Lsi>  
+  <UU5.Bricks.Lsi.Item language="en">   
+    <UU5.Bricks.Section header="Test Header" footer="" contentEditable>Lorem ipsum</UU5.Bricks.Section>
+  </UU5.Bricks.Lsi.Item>
+</UU5.Bricks.Lsi>`,
+    `# {section} Test Header
+Lorem ipsum
+
+{section}`
   );
 });

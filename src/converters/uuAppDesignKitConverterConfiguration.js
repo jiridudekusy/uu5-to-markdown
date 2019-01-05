@@ -183,9 +183,25 @@ export default [
     columns: [{ name: "Index" }, { indent: 1, name: "Description" }]
   },
   {
+    marker: "{UuAppObjectStoreInfo}",
+    tagName: "UuApp.DesignKit.UuAppObjectStoreInfo",
+    items: [
+      { name: "Name" },
+      { name: "Description" }
+    ]
+  },
+  {
     marker: "{UuAppObjectStoreSchemaDaoMethodList}",
     tagName: "UuApp.DesignKit.UuAppObjectStoreSchemaDaoMethodList",
     columns: [{ name: "Method" }, { indent: 1, name: "Description" }]
+  },
+  {
+    marker: "{UuAppBinaryStoreInfo}",
+    tagName: "UuApp.DesignKit.UuAppBinaryStoreInfo",
+    items: [
+      { name: "Name" },
+      { name: "Description" }
+    ]
   },
   {
     marker: "{UuAppBinaryStoreSchemaDaoMethodList}",
