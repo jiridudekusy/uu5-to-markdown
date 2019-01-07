@@ -17,7 +17,16 @@ export default class UU5Utils {
       jsonStr = jsonStr.trim().substring(UU5JSON.length);
     }
 
-    return JSON.parse(jsonStr);
+    let res;
+    try{
+      res =JSON.parse(jsonStr);
+    }catch(e){
+      //FIXME: Hotfix due to the https://github.com/jiridudekusy/uuDockitHelper/issues/6 .
+      jsonStr = jsonStr.replace(/\\\\/g,"\\");
+      res =JSON.parse(jsonStr);
+    }
+
+    return res;
   }
 
   static toUU5Json(obj) {

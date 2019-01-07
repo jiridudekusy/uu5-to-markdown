@@ -1,3 +1,9 @@
+0.4.2
+-----
+
+Bug fixes:
+* Hotfix for [https://github.com/jiridudekusy/uuDockitHelper/issues/6](https://github.com/jiridudekusy/uuDockitHelper/issues/6) - if JSON cannot be parsed, try to remove double /  escaping. 
+
 0.4.1
 -----
 * Supports empty footer attribute at `UU5.Bricks.Section` component, because uuDcc adds it.
