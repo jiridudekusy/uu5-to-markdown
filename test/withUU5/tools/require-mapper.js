@@ -1,4 +1,5 @@
 import requireHacker from "require-hacker";
+import Path from "path";
 
 let mappings = {};
 
@@ -13,7 +14,7 @@ requireHacker.hook("less", () => 'module.exports = ""');
 
 requireHacker.resolver((path, module) => {
   if(path === "!style-loader?transform=src/core/common/normalize-css.js!css-loader!less-loader!./normalize.less"){
-    return '/Users/jdk/work/uuDockit-helpers/uu5-to-markdown/test/withUU5/tools/empty.js';
+    return Path.join(__dirname, "empty.js");
   }
   if (!mappings[path]) {
     return undefined;
