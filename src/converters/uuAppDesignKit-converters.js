@@ -33,6 +33,23 @@ export default class UuAppDesignKitConverters {
         }
       });
     });
+    // let scenarioDef = new ElementDef(
+    //   "UuApp.DesignKit.Scenario",
+    //   "data",
+    //   "header",
+    //   "footer"
+    // )
+    //   .block()
+    //   .skipTextNodes();
+    // this._elementDefsRepo.addElementDef(scenarioDef);
+    // this._converters.push({
+    //   filter: scenarioDef,
+    //   replacement: function(content, node) {
+    //     let jsonString = node.getAttribute("data");
+    //     console.log(jsonString);
+    //     return "";
+    //   }
+    // });
   }
 
   _tableJsonToListDesignKitContent(content, node, uu5ToMd, transformation) {

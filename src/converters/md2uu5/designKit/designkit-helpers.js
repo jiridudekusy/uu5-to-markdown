@@ -2,8 +2,6 @@ import UU5Parser from "../../../parser/uu5parser";
 import UU5Utils from "../../../tools/uu5utils";
 import ParserUtils from "../../../parser/parserUtils";
 
-let uu5Parser = new UU5Parser();
-
 export default class DesignKitHelpers {
   static _transformLink(node) {
     let res;
@@ -102,7 +100,9 @@ export default class DesignKitHelpers {
       let uu5content = opts.markdownToUu5.render(content);
 
       // parse uu5 content
+      let uu5Parser = new UU5Parser(opts);
       let dom = uu5Parser.parse(uu5content);
+      dom = dom.documentElement;
 
       let attributes = processCallback(dom);
 
@@ -125,14 +125,13 @@ export default class DesignKitHelpers {
       opts,
       dom => {
         let res = {};
-
-        if (dom.childNodes.length === 1) {
+        if (dom.childNodes.length === 0) {
           res["data"] = UU5Utils.toUU5Json([]);
           return res;
         }
         // TODO add check that dom.childNodes[1] is list
         // get uu5json data rows, skip first tag (<uu5string/>)
-        let uu5Rows = ParserUtils.getChildNodes(dom.childNodes[1]);
+        let uu5Rows = ParserUtils.getChildNodes(dom.firstChild);
         let uu5jsonRes = [];
 
         if (cfg.columns) {

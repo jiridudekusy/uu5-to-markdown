@@ -1,12 +1,15 @@
 import Setup from "./tools/setup";
+Setup()
 import chai from "chai";
 import UU5Prettifyer from "../../src/uu5-prettifyer";
+import Core from "uu5g04-core";
+const opts = {uu5Core: Core};
 
 chai.expect();
 
 const expect = chai.expect;
 
-const uu5prettifyer = new UU5Prettifyer();
+const uu5prettifyer = new UU5Prettifyer(opts);
 
 function prettyPrintTest(name, input, expectedOutput) {
   it(name, () => {
@@ -69,12 +72,12 @@ describe("UU5PrettyPrint", () => {
     `<uu5string/>
 <UU5.Bricks.Section header="Basic Information">
   <UuApp.DesignKit.UuCmdInfo data='<uu5json/>[
-      "uuCMD createArea",
-      "This command will create new Area.",
-      "post",
-      "https://{gateway}/{vendor}-{uuApp}-{uuSubApp}/{tid}-{awid}/createArea",
-      "Executives"
-    ]'/>
+  "uuCMD createArea",
+  "This command will create new Area.",
+  "post",
+  "https://{gateway}/{vendor}-{uuApp}-{uuSubApp}/{tid}-{awid}/createArea",
+  "Executives"
+]'/>
 </UU5.Bricks.Section>`
   );
   prettyPrintTest("DesignKitCodeJSON",
@@ -149,12 +152,12 @@ describe("UU5PrettyPrint", () => {
     `<uu5string/>
 <UU5.Bricks.Section header="Error list">
   <UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[
-    ["xmlParseError","Error","An exception occurred during verification of XML.","cause: {…SAXException}"],
-    ["validationError","Error","The document contains invalid content.","\\"validationErrors\\":{…}"],
-    ["mappingError","Error","Could not map the document.","cause: {…RuntimeException}"],
-    ["remoteCallFailed","Error","An error occurred during remote system call.","\\"cause\\":{…RuntimeException}"],
-    ["persistenceError","Error","A persistence error occurred.","<uu5string/>\\"dbObject\\":{…},<br/>\\n\\"cause\\": {…DatastoreRuntimeException}"]
-  ]'/>
+  ["xmlParseError","Error","An exception occurred during verification of XML.","cause: {…SAXException}"],
+  ["validationError","Error","The document contains invalid content.","\\"validationErrors\\":{…}"],
+  ["mappingError","Error","Could not map the document.","cause: {…RuntimeException}"],
+  ["remoteCallFailed","Error","An error occurred during remote system call.","\\"cause\\":{…RuntimeException}"],
+  ["persistenceError","Error","A persistence error occurred.","<uu5string/>\\"dbObject\\":{…},<br/>\\n\\"cause\\": {…DatastoreRuntimeException}"]
+]'/>
 </UU5.Bricks.Section>`
   );
   prettyPrintTest("inilineTags",

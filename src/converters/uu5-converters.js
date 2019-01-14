@@ -14,26 +14,26 @@ function cell(content, node) {
 }
 
 function isSingleLsi(node, uu5BricksLsi, uu5BricksLsiItem) {
-    let valid = uu5BricksLsi.checkTag(node);
-    if(!valid){
+  let valid = uu5BricksLsi.checkTag(node);
+  if (!valid) {
+    return false;
+  }
+  let lsiItemCount = 0;
+  for (let i = 0; i < node.childNodes.length; i++) {
+    let child = node.childNodes[i];
+    if (child.nodeType === 3) {
+      // text nodes are not cells
+      continue;
+    }
+    if (!uu5BricksLsiItem.checkTag(child)) {
       return false;
     }
-    let lsiItemCount = 0;
-    for (let i = 0; i < node.childNodes.length; i++) {
-      let child = node.childNodes[i];
-      if (child.nodeType === 3) {
-        // text nodes are not cells
-        continue;
-      }
-      if(!uu5BricksLsiItem.checkTag(child)){
-        return false;
-      }
-      lsiItemCount++;
-    }
-    if(lsiItemCount > 1){
-      return false;
-    }
-    return true;
+    lsiItemCount++;
+  }
+  if (lsiItemCount > 1) {
+    return false;
+  }
+  return true;
 }
 
 export default class UU5Converters {
@@ -52,7 +52,8 @@ export default class UU5Converters {
     let uu5BricksHeader = new ElementDef("UU5.Bricks.Header", "level").block();
     let uu5BricksSection = new ElementDef(
       "UU5.Bricks.Section",
-      "header", "footer"
+      "header",
+      "footer"
     ).block();
     let uu5stringPre = new ElementDef("uu5string.pre").block();
     let uu5BricksPre = new ElementDef("UU5.Bricks.Pre").block();
@@ -80,8 +81,9 @@ export default class UU5Converters {
     let uu5BricksTableTh = new ElementDef("UU5.Bricks.Table.Th").leaf();
     let uu5BricksTableTd = new ElementDef("UU5.Bricks.Table.Td").leaf();
     let uu5BricksLsi = new ElementDef("UU5.Bricks.Lsi").block().skipTextNodes();
-    let uu5BricksLsiItem = new ElementDef("UU5.Bricks.Lsi.Item", "language").block().skipTextNodes();
-
+    let uu5BricksLsiItem = new ElementDef("UU5.Bricks.Lsi.Item", "language")
+      .block()
+      .skipTextNodes();
 
     this._elementDefsRepo = new ElementsDefRepo(
       uu5string,
@@ -149,10 +151,10 @@ export default class UU5Converters {
       {
         filter: function(node) {
           let valid = uu5BricksSection.checkTag(node);
-          if(valid){
+          if (valid) {
             //footer is put by default by uuDcc,however this library supports only empty footer
-            if(node.hasAttribute("footer")){
-              return node.getAttribute("footer")==="";
+            if (node.hasAttribute("footer")) {
+              return node.getAttribute("footer") === "";
             }
           }
           return valid;
@@ -250,8 +252,8 @@ export default class UU5Converters {
             let index = Array.prototype.filter
               .call(parent.childNodes, n => n.nodeName === uu5BricksLi.name)
               .indexOf(node);
-             prefix = index + 1 + ".  ";
-             prefix = prefix.slice(0,4);
+            prefix = index + 1 + ".  ";
+            prefix = prefix.slice(0, 4);
           }
 
           return prefix + content;
@@ -325,7 +327,7 @@ export default class UU5Converters {
 
       {
         filter: function(node) {
-          return isSingleLsi(node, uu5BricksLsi,uu5BricksLsiItem);
+          return isSingleLsi(node, uu5BricksLsi, uu5BricksLsiItem);
         },
         replacement: function(content) {
           return content;
@@ -333,18 +335,17 @@ export default class UU5Converters {
       },
       {
         filter: function(node) {
-          return uu5BricksLsiItem.checkTag(node) && isSingleLsi(node.parentNode, uu5BricksLsi, uu5BricksLsiItem);
+          return (
+            uu5BricksLsiItem.checkTag(node) &&
+            isSingleLsi(node.parentNode, uu5BricksLsi, uu5BricksLsiItem)
+          );
         },
         replacement: function(content) {
           return content;
         }
-      },
-
+      }
     ];
   }
-
-
-
 
   get elementDefsRepo() {
     return this._elementDefsRepo;

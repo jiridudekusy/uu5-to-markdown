@@ -1,11 +1,15 @@
+import Setup from "../withUU5/tools/setup";
+Setup()
 import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
+import Core from "uu5g04-core";
+const opts = {uu5Core: Core};
 
 chai.expect();
 
 const expect = chai.expect;
 
-let uu5ToMarkdown = new UU5ToMarkdown();
+let uu5ToMarkdown = new UU5ToMarkdown(opts);
 
 function uu5ToMdTest(name, uu5string, mdString) {
   it(name, () => {
@@ -54,10 +58,10 @@ describe("Unknown tags", () => {
         ["name3", "value3"]
       ]'/>`,
     `<UU5.Unknown data='<uu5json/>[
-        ["name1", "value1"],
-        ["name2", "value2"],
-        ["name3", "value3"]
-      ]'/>`
+  ["name1","value1"],
+  ["name2","value2"],
+  ["name3","value3"]
+]'/>`
   );
   uu5ToMdTest(
     "Known tag with unknown attribute",
@@ -126,7 +130,7 @@ describe("Uu5.Bricks.Code", () => {
     "code block",
     [
       "<UU5.Bricks.Pre><UU5.Bricks.Code>def hello_world",
-      "  # 42 &lt; 9001",
+      "  # 42 < 9001",
       '  "Hello world!"',
       "end</UU5.Bricks.Code></UU5.Bricks.Pre>"
     ].join("\n"),
@@ -142,12 +146,12 @@ describe("Uu5.Bricks.Code", () => {
     "multiple code blocks",
     [
       "<UU5.Bricks.Pre><UU5.Bricks.Code>def foo",
-      "  # 42 &lt; 9001",
+      "  # 42 < 9001",
       "  'Hello world!'",
       "end</UU5.Bricks.Code></UU5.Bricks.Pre>",
       "<UU5.Bricks.P>next:</UU5.Bricks.P>",
       "<UU5.Bricks.Pre><UU5.Bricks.Code>def bar",
-      "  # 42 &lt; 9001",
+      "  # 42 < 9001",
       "  'Hello world!'",
       "end</UU5.Bricks.Code></UU5.Bricks.Pre>"
     ].join("\n"),

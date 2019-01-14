@@ -3,9 +3,9 @@ class ElementDef {
     this.name = name;
     this.attributes = attributes;
     //support "contentEdiable attribute at all components.
-    if(!this.attributes){
+    if (!this.attributes) {
       this.attributes = ["contentEditable"];
-    }else{
+    } else {
       this.attributes.push("contentEditable");
     }
     this._anyAttributes = false;

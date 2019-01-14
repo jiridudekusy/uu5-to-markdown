@@ -1,38 +1,24 @@
 {
-  "id": "5acb19771cc4320005fb13f8",
-  "code": "libraDataFlowGwCmdReceiveMessage",
+  "code": "mockerMiddlewareMockProxy",
   "name": {
-    "en": "uuCmd - receiveMessage",
-    "cs": "uuCmd - receiveMessage"
+    "en": "MockProxy middleware"
   },
   "desc": {
-    "content": "<uu5string/><UU5.Bricks.Lsi><UU5.Bricks.Lsi.Item language=\"en\"><UU5.RichText.Block uu5string=\"<uu5string/><UU5.Bricks.Div><uu5string /> Standard documentation of the <UU5.Bricks.Code>receiveMessage</UU5.Bricks.Code> command (uuCommand).</UU5.Bricks.Div>\"/></UU5.Bricks.Lsi.Item><UU5.Bricks.Lsi.Item language=\"cs\"></UU5.Bricks.Lsi.Item></UU5.Bricks.Lsi>",
-    "code": "af753ae5a8b4e263942cd4e717dbf8d4",
-    "lock": null,
+    "content": "<uu5string/>\n<UU5.Bricks.Lsi>\n<UU5.Bricks.Lsi.Item language='en'>\n</UU5.Bricks.Lsi.Item>\n</UU5.Bricks.Lsi>",
     "sys": {
       "rev": 0
     }
   },
-  "state": "active",
-  "uu5DataMap": null,
-  "awid": "b1c00e607db54b67af37ef060027664a",
-  "sys": {
-    "cts": "2018-04-09T07:42:47.598Z",
-    "mts": "2018-12-14T20:39:38.364Z",
-    "rev": 307
-  },
-  "sectionCount": 12,
+  "previous": "mockerMiddleware",
+  "next": "uuCompList",
   "body": [
     {
-      "content": "<uu5string/>\n<UU5.Bricks.Lsi>\n<UU5.Bricks.Lsi.Item language='en'><UU5.Bricks.Section header=\"Error list\">\n<UU5.Bricks.P>Error format: usy-librag01-dataflowgw/receiveMessage/{errorCode}</UU5.Bricks.P>\n<UuApp.DesignKit.UuCmdErrorList data='<uu5json/>[\n  [\n    \"invalidDtoIn\",\n    \"Error\",\n    \"DtoIn is not valid.\",\n    \"\\\\\"invalidTypeKeyMap\\\\\":{…}\\\\n\\\\\"invalidValueKeyMap\\\\\":{…}\\\\n\\\\\"missingKeyMap\\\\\":{…}\"\n  ]\n]'/>\n</UU5.Bricks.Section>\n</UU5.Bricks.Lsi.Item>\n</UU5.Bricks.Lsi>",
-      "code": "e3d16d4a75d6cf7dd416a78432615666",
+      "content": "<uu5string/>\n<UU5.Bricks.Lsi>\n<UU5.Bricks.Lsi.Item language='en'><UuApp.DesignKit.Scenario data=\"<uu5json/>[\n  {\n    \\\"content\\\": \\\"Check if mock is configured for uri.\\\",\n    \\\"itemList\\\": [\n      {\n        \\\"content\\\": \\\"Check if there exists one following files : [uuMocker_mocks_dir]/[product]/[command].json, [uuMocker_mocks_dir]/[product]/[command].conf.json\\\",\n        \\\"itemList\\\": [\n          {\n            \\\"content\\\": \\\"No mock configuration file exists\\\",\n            \\\"itemList\\\": [\n              {\n                \\\"content\\\": \\\"Load file [uuMocker_mocks_dir]/mocks.json.\\\",\n                \\\"itemList\\\": [\n                  {\n                    \\\"content\\\": \\\"File mocks.json does not exists\\\",\n                    \\\"itemList\\\": [\n                      {\n                        \\\"content\\\": \\\"Throws the noTargetUri exception.\\\",\n                        \\\"itemList\\\": [],\n                        \\\"type\\\": \\\"alternative\\\",\n                        \\\"id\\\": \\\"665c2f1caca8945bbaf0b0dec91798e5\\\",\n                        \\\"numbering\\\": \\\"1.\\\",\n                        \\\"number\\\": \\\"1.\\\",\n                        \\\"mainParent\\\": {\n                          \\\"type\\\": \\\"alternativeTitle\\\",\n                          \\\"numbering\\\": \\\"A2\\\"\n                        },\n                        \\\"expanded\\\": true\n                      },\n                      {\n                        \\\"content\\\": \\\"Scenario immediatelly ends.\\\",\n                        \\\"itemList\\\": [],\n                        \\\"type\\\": \\\"alternative\\\",\n                        \\\"id\\\": \\\"858fff78a72ab47ec8b08faf52a5db44\\\",\n                        \\\"numbering\\\": \\\"2.\\\",\n                        \\\"number\\\": \\\"2.\\\",\n                        \\\"mainParent\\\": {\n                          \\\"type\\\": \\\"alternativeTitle\\\",\n                          \\\"numbering\\\": \\\"A2\\\"\n                        },\n                        \\\"expanded\\\": true\n                      }\n                    ],\n                    \\\"type\\\": \\\"alternativeTitle\\\",\n                    \\\"id\\\": \\\"e0600dbba51944446b0c002ad6a2d7ab\\\",\n                    \\\"numbering\\\": \\\"A2\\\",\n                    \\\"expanded\\\": true\n                  }\n                ],\n                \\\"type\\\": \\\"alternative\\\",\n                \\\"id\\\": \\\"625c0c75912894d5296fb7f2692f5955\\\",\n                \\\"numbering\\\": \\\"1.\\\",\n                \\\"number\\\": \\\"1.\\\",\n                \\\"mainParent\\\": {\n                  \\\"type\\\": \\\"alternativeTitle\\\",\n                  \\\"numbering\\\": \\\"A1\\\"\n                },\n                \\\"expanded\\\": true\n              },\n              {\n                \\\"content\\\": \\\"Additional step\\\",\n                \\\"itemList\\\": [],\n                \\\"type\\\": \\\"alternative\\\",\n                \\\"id\\\": \\\"f9e553bf78653429f9f98a3cb45a8934\\\",\n                \\\"numbering\\\": \\\"2.\\\",\n                \\\"number\\\": \\\"2.\\\",\n                \\\"mainParent\\\": {\n                  \\\"type\\\": \\\"alternativeTitle\\\",\n                  \\\"numbering\\\": \\\"A1\\\"\n                },\n                \\\"expanded\\\": true\n              }\n            ],\n            \\\"type\\\": \\\"alternativeTitle\\\",\n            \\\"id\\\": \\\"b68c0341fcccf4bbd8fba9338cfa8a11\\\",\n            \\\"numbering\\\": \\\"A1\\\",\n            \\\"expanded\\\": true\n          }\n        ],\n        \\\"type\\\": \\\"happyDay\\\",\n        \\\"id\\\": \\\"71bed0bde819048cbb88bcd593b0d245\\\",\n        \\\"numbering\\\": \\\"HDS 1.1.\\\",\n        \\\"number\\\": \\\"1.1.\\\",\n        \\\"expanded\\\": true\n      }\n    ],\n    \\\"type\\\": \\\"happyDay\\\",\n    \\\"id\\\": \\\"c88747d64259a4b5284b5dcd375fc1c7\\\",\n    \\\"numbering\\\": \\\"HDS 1.\\\",\n    \\\"number\\\": \\\"1.\\\",\n    \\\"expanded\\\": true\n  },\n  {\n    \\\"content\\\": \\\"Another HDS step\\\",\n    \\\"itemList\\\": [],\n    \\\"type\\\": \\\"happyDay\\\",\n    \\\"id\\\": \\\"5433e0cf60685455fa612b3237b881fb\\\",\n    \\\"numbering\\\": \\\"HDS 2.\\\",\n    \\\"number\\\": \\\"2.\\\",\n    \\\"expanded\\\": true\n  },\n  {\n    \\\"content\\\": \\\"Calls next middleware\\\",\n    \\\"itemList\\\": [],\n    \\\"type\\\": \\\"happyDay\\\",\n    \\\"id\\\": \\\"2c2460f5acac54ed0ac54fb73c5f4674\\\",\n    \\\"numbering\\\": \\\"HDS 3.\\\",\n    \\\"number\\\": \\\"3.\\\",\n    \\\"expanded\\\": true\n  }\n]\" header=\"\"/>\n</UU5.Bricks.Lsi.Item>\n</UU5.Bricks.Lsi>",
+      "code": "c1db3f5e49c3fc0d528aaed973f842d1",
       "lock": null,
       "sys": {
-        "rev": 265
+        "rev": 4
       }
     }
-  ],
-  "previous": "uuCmdProcessAckFinished",
-  "next": "uuCmdsendAck",
-  "uuAppErrorMap": {}
+  ]
 }

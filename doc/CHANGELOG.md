@@ -1,3 +1,7 @@
+2.0.0
+-----
+* Parser has been from `xmldom-uu5` to UU5String (official uu5string parser which is part of uu5g04)
+
 0.4.2
 -----
 

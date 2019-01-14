@@ -5,9 +5,9 @@ const PAGE_CODE_RE = /^\{uuBookKit-pageCode\} *([^\n]*)\n/;
 const PART_MARKER = "{uuBookKit-part}";
 
 export default class MarkdownToUuBookKit {
-  constructor(makrdownRenderer) {
+  constructor(makrdownRenderer, options) {
     this._markDownRenderer = makrdownRenderer;
-    this._uu5pertifier = new UU5Pertifier();
+    this._uu5pertifier = new UU5Pertifier(options);
   }
 
   toUu5(markdown, pretty) {

@@ -1,12 +1,15 @@
+import Setup from "../withUU5/tools/setup";
+Setup()
 import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
 import UuDockitToMarkdown from "../../src/uuBookKit-to-markdown";
-
+import Core from "uu5g04-core";
+const opts = {uu5Core: Core};
 chai.expect();
 
 const expect = chai.expect;
 
-let uu5ToMarkdown = new UU5ToMarkdown();
+let uu5ToMarkdown = new UU5ToMarkdown(opts);
 let uuDockitToMarkdown = new UuDockitToMarkdown(uu5ToMarkdown);
 
 function uuDockitToMdTest(name, uuDockitString, mdString) {

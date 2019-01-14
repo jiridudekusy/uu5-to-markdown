@@ -1,5 +1,9 @@
+import Setup from "../withUU5/tools/setup";
+Setup()
 import chai from "chai";
 import MarkdownToUuBookKit from "../../src/markdown-to-uuBookKit";
+import Core from "uu5g04-core";
+const opts = {uu5Core: Core};
 
 const expect = chai.expect;
 
@@ -12,7 +16,7 @@ class TestMarkdownRenderer {
   }
 }
 
-let markdownToUuDocKit = new MarkdownToUuBookKit(new TestMarkdownRenderer());
+let markdownToUuDocKit = new MarkdownToUuBookKit(new TestMarkdownRenderer(), opts);
 
 function markdownToUuDocKitTest(name, mdString, uuDockitString) {
   it(name, () => {

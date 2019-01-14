@@ -185,10 +185,7 @@ export default [
   {
     marker: "{UuAppObjectStoreInfo}",
     tagName: "UuApp.DesignKit.UuAppObjectStoreInfo",
-    items: [
-      { name: "Name" },
-      { name: "Description" }
-    ]
+    items: [{ name: "Name" }, { name: "Description" }]
   },
   {
     marker: "{UuAppObjectStoreSchemaDaoMethodList}",
@@ -198,10 +195,7 @@ export default [
   {
     marker: "{UuAppBinaryStoreInfo}",
     tagName: "UuApp.DesignKit.UuAppBinaryStoreInfo",
-    items: [
-      { name: "Name" },
-      { name: "Description" }
-    ]
+    items: [{ name: "Name" }, { name: "Description" }]
   },
   {
     marker: "{UuAppBinaryStoreSchemaDaoMethodList}",

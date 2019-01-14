@@ -1,12 +1,15 @@
+import Setup from "../withUU5/tools/setup";
+Setup()
 import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
 import UuBookKitPlugin from "../../src/converters/uuBookKit-plugin.js";
-
+import Core from "uu5g04-core";
+const opts = {uu5Core: Core};
 chai.expect();
 
 const expect = chai.expect;
 
-let uu5ToMarkdown = new UU5ToMarkdown(new UuBookKitPlugin());
+let uu5ToMarkdown = new UU5ToMarkdown(opts, new UuBookKitPlugin());
 
 function uu5ToMdTest(name, uu5string, mdString) {
   it(name, () => {

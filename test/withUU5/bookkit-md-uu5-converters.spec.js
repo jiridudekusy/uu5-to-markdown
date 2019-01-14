@@ -1,15 +1,16 @@
 import Setup from "./tools/setup";
+Setup();
 import chai from "chai";
-import CodeKit from "uu5codekitg01";
+import {MarkdownRenderer} from "uu5codekitg01";
 import mdToUu5Plugin from "../../src/converters/md-uu5-plugin";
 import BookKitMdToUu5Plugin from "../../src/converters/md2uu5/bookKit/bookkit-md-uu5-plugin";
+import Core from "uu5g04-core";
 
-Setup();
 chai.expect();
 
 const expect = chai.expect;
 
-let markdownToUu5 = new CodeKit.MarkdownRenderer("full", {
+let markdownToUu5 = new MarkdownRenderer("full", {
   html: true,
   xhtmlOut: true,
   typographer: true,
@@ -17,7 +18,7 @@ let markdownToUu5 = new CodeKit.MarkdownRenderer("full", {
   headerLevel: 2
 });
 markdownToUu5.use(mdToUu5Plugin);
-markdownToUu5.use(BookKitMdToUu5Plugin, { markdownToUu5: markdownToUu5 });
+markdownToUu5.use(BookKitMdToUu5Plugin, { markdownToUu5: markdownToUu5 , uu5Core: Core});
 
 function mdToUu5Test(name, mdString, uu5String) {
   it(name, () => {

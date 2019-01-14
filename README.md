@@ -72,12 +72,14 @@ The components that are not supported are copied to markdown as is.
 
 ## How to use it
 
-// TODO
+!!!!!!WARNING : How to use it is not correct and myst be updated for version >=2.0.0 !!!!
+
+// TODO 
 Include library into package.json :
 ```json
 {
   "dependencies": {
-    "uu5-to-markdown": "^0.2.0"
+    "uu5-to-markdown": "^2.0.0"    
   }
 }
 ```

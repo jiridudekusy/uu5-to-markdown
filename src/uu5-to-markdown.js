@@ -3,8 +3,8 @@ import mdConverters from "./converters/md-converters.js";
 import UU5Converters from "./converters/uu5-converters.js";
 
 export default class UU5ToMarkdown {
-  constructor(...plugins) {
-    this._parser = new UU5Parser();
+  constructor(opts,...plugins) {
+    this._parser = new UU5Parser(opts);
     this._converters = mdConverters.slice(0);
     let uu5Plugin = new UU5Converters();
 
@@ -18,18 +18,18 @@ export default class UU5ToMarkdown {
   }
 
   toMarkdown(source) {
-    source = this._replaceAll(
-      source,
-      "<uu5string.pre>",
-      "<uu5string.pre><![CDATA["
-    );
-    source = this._replaceAll(
-      source,
-      "</uu5string.pre>",
-      "]]></uu5string.pre>"
-    );
-
-    source = "<root>" + source + "</root>";
+    // source = this._replaceAll(
+    //     //   source,
+    //     //   "<uu5string.pre>",
+    //     //   "<uu5string.pre><![CDATA["
+    //     // );
+    //     // source = this._replaceAll(
+    //     //   source,
+    //     //   "</uu5string.pre>",
+    //     //   "]]></uu5string.pre>"
+    //     // );
+    //     //
+    //     // source = "<root>" + source + "</root>";
     let dom = this._parser.parse(source);
     let nodes = this._bfsOrder(dom.documentElement);
 
@@ -77,7 +77,7 @@ export default class UU5ToMarkdown {
     var rawContent = this.getRawContent(node);
 
     // Remove blank nodes
-/*    if (!node.isVoid(node)) {
+    /*    if (!node.isVoid(node)) {
        node._replacement = ''
        return
     }*/
@@ -86,7 +86,7 @@ export default class UU5ToMarkdown {
       let converter = this._converters[i];
 
       if (this._canConvert(node, converter.filter)) {
-/*        if(converter.elementDef){
+        /*        if(converter.elementDef){
           if(converter.elementDef.isVoid){
             node._rawContent = "";
             node._replacement = "";

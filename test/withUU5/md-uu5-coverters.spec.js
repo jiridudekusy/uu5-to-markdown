@@ -1,13 +1,14 @@
 import Setup from "./tools/setup";
+Setup()
 import chai from "chai";
-import CodeKit from "uu5codekitg01";
+import {MarkdownRenderer} from "uu5codekitg01";
 import mdToUu5Plugin from "../../src/converters/md-uu5-plugin";
 
 chai.expect();
 
 const expect = chai.expect;
 
-let markdownToUu5 = new CodeKit.MarkdownRenderer("full", {
+let markdownToUu5 = new MarkdownRenderer("full", {
   html: true,
   xhtmlOut: true,
   typographer: true,

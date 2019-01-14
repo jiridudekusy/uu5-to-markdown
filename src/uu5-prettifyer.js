@@ -2,7 +2,7 @@ import UU5Parser from "./parser/uu5parser.js";
 
 export default class UU5Prettifyer {
   constructor(options) {
-    this._parser = new UU5Parser();
+    this._parser = new UU5Parser(options);
     this._options = Object.assign(
       {
         indentPreformated: false
@@ -15,18 +15,18 @@ export default class UU5Prettifyer {
     let result;
     try {
       let sourceTmp = source;
-      sourceTmp = this._replaceAll(
-        sourceTmp,
-        "<uu5string.pre>",
-        "<uu5string.pre><![CDATA["
-      );
-      sourceTmp = this._replaceAll(
-        sourceTmp,
-        "</uu5string.pre>",
-        "]]></uu5string.pre>"
-      );
-
-      sourceTmp = "<root>" + sourceTmp + "</root>";
+      // sourceTmp = this._replaceAll(
+      //   sourceTmp,
+      //   "<uu5string.pre>",
+      //   "<uu5string.pre><![CDATA["
+      // );
+      // sourceTmp = this._replaceAll(
+      //   sourceTmp,
+      //   "</uu5string.pre>",
+      //   "]]></uu5string.pre>"
+      // );
+      //
+      // sourceTmp = "<root>" + sourceTmp + "</root>";
       let dom = this._parser.parse(sourceTmp);
       result = Array.prototype.filter
         .call(dom.documentElement.childNodes, node => node.nodeType === 1)
