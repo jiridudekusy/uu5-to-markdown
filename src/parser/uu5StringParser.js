@@ -1,9 +1,9 @@
 import UU5Utils from "../tools/uu5utils";
-import { replaceEntities } from "../tools/markdownRenderer/mdRendererUtils";
+import {replaceEntities} from "../tools/markdownRenderer/mdRendererUtils";
 
 export default class UU5StringParser {
-  constructor(opts){
-    if(!opts || !opts.uu5Core){
+  constructor(opts) {
+    if (!opts || !opts.uu5Core) {
       throw "options for UU5StringParser must contains UU5.Core  set to property uu5Core";
     }
     this.Core = opts.uu5Core;
@@ -21,7 +21,7 @@ export default class UU5StringParser {
     node.setChildren(
       uu5stringObject.content.map(UU5StringParser._uu5ComponentToNode)
     );
-    return { documentElement: node };
+    return {documentElement: node};
   }
 
   static _uu5ComponentToNode(uu5stringObject) {
@@ -59,23 +59,28 @@ class Node {
     //TODO convert attributes
     //{name, value, noValue}
     if (attributes) {
-      this.attributes = attributes.map(a => {
-        return {
-          name: a.name,
-          value: this._transformAttributeValue(a),
-          noValue: a.value === true
-        };
-      });
+      this.attributes = attributes.map(this._transformAttribute).filter(a => a);
     }
   }
 
-  _transformAttributeValue(attr) {
+  _transformAttribute(attr) {
+    let res = {
+      name: attr.name
+    };
     if (attr.valueType === "uu5json") {
-      return UU5Utils.toUU5Json(attr.value);
+      res.value = UU5Utils.toUU5Json(attr.value);
     } else if (typeof attr.value === "string" || attr.value instanceof String) {
-      return replaceEntities(attr.value);
+      res.value = replaceEntities(attr.value);
+    } else if (attr.value === true) {
+      res.noValue = true;
+    } else if (attr.value === false) {
+      return null;
+    } else if (attr.value != null && attr.value != undefined) {
+      res.value = attr.value.toString();
+    } else {
+      res.value = attr.value;
     }
-    return attr.value;
+    return res;
   }
 
   setTextAttributes(text) {

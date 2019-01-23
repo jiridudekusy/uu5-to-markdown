@@ -1,3 +1,8 @@
+2.0.1
+-----
+Bug fixes:
+ - Tag attributes with boolean values like contentEditable=false are now working.
+ 
 2.0.0
 -----
 * Parser has been from `xmldom-uu5` to UU5String (official uu5string parser which is part of uu5g04)
