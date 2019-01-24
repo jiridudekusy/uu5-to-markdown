@@ -168,12 +168,18 @@ export default class UU5Converters {
       {
         filter: uu5BricksEm,
         replacement: function(content) {
+          if(!content){
+            return " ";
+          }
           return "*" + content + "*";
         }
       },
       {
         filter: uu5BricksStrong,
         replacement: function(content) {
+          if(!content){
+            return " ";
+          }
           return "**" + content + "**";
         }
       },

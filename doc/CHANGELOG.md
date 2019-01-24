@@ -1,3 +1,8 @@
+2.1.2
+-----
+Bug fixes:
+ - empty <strong>, <em>, <UU5.Bricks.Strong> and <UU5.Bricks.Em> are replaced by single space.
+
 2.1.1
 -----
 Bug fixes:

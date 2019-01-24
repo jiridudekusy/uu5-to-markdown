@@ -21,7 +21,7 @@ export default class UU5RichTextKitConverters {
           mdCnt = this.toMarkdown(cnt);
           let res = "{richtext}\n";
           res += mdCnt;
-          res += "\n\n{/richtext}";
+          res += "\n\n{/richtext}\n";
           return res;
         }
       }

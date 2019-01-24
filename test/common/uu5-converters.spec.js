@@ -101,6 +101,24 @@ describe("Uu5.Bricks.Strong", () => {
   );
 });
 
+describe("strong", () => {
+  uu5ToMdTest(
+    "single strong test",
+    "<strong>Hello world</strong>",
+    "**Hello world**"
+  );
+  uu5ToMdTest(
+    "multiple strong test",
+    "<strong>Hello</strong> <strong>world</strong>",
+    "**Hello** **world**"
+  );
+  uu5ToMdTest(
+    "strong with space test",
+    "<strong> </strong>",
+    ""
+  );
+});
+
 describe("Uu5.Bricks.Em", () => {
   uu5ToMdTest(
     "single Em test",

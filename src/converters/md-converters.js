@@ -38,6 +38,9 @@ module.exports = [
   {
     filter: ["em", "i"],
     replacement: function(content) {
+      if(!content){
+        return " ";
+      }
       return "_" + content + "_";
     }
   },
@@ -45,6 +48,9 @@ module.exports = [
   {
     filter: ["strong", "b"],
     replacement: function(content) {
+      if(!content){
+        return " ";
+      }
       return "**" + content + "**";
     }
   },
