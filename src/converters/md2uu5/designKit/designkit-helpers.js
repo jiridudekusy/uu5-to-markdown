@@ -216,11 +216,10 @@ export default class DesignKitHelpers {
     let quotChar = "'";
     let attributesString = supportedAttributes
       .filter(attribute => attributes[attribute] !== undefined)
-      .map(
-        attribute =>
-          attributes[attribute] != null
-            ? `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`
-            : attribute
+      .map(attribute =>
+        attributes[attribute] != null
+          ? `${attribute}=${quotChar}${attributes[attribute]}${quotChar}`
+          : attribute
       )
       .join(" ");
 

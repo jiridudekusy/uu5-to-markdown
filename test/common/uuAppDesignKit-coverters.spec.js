@@ -151,4 +151,18 @@ describe("UuApp.DesignKit", () => {
     *   row 1.3`
     );
   });
+  uu5ToMdTest(
+    "with boolean attributes with false value",
+    `<uu5string/><UuApp.DesignKit.Table rowHeader=false colHeader=false transpose=false data='<uu5json/>[
+          ["header1", "header2", "header3"],
+          ["row 1.1", "row 1.2", "row 1.3"]      
+        ]'/>`,
+    `{Table}
+*   header1
+    *   header2
+    *   header3
+*   row 1.1
+    *   row 1.2
+    *   row 1.3`
+  );
 });

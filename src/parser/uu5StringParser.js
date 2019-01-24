@@ -1,5 +1,5 @@
 import UU5Utils from "../tools/uu5utils";
-import {replaceEntities} from "../tools/markdownRenderer/mdRendererUtils";
+import { replaceEntities } from "../tools/markdownRenderer/mdRendererUtils";
 
 export default class UU5StringParser {
   constructor(opts) {
@@ -21,7 +21,7 @@ export default class UU5StringParser {
     node.setChildren(
       uu5stringObject.content.map(UU5StringParser._uu5ComponentToNode)
     );
-    return {documentElement: node};
+    return { documentElement: node };
   }
 
   static _uu5ComponentToNode(uu5stringObject) {
@@ -75,6 +75,8 @@ class Node {
       res.noValue = true;
     } else if (attr.value === false) {
       return null;
+    } else if (attr.valueType === "uu5string") {
+      res.value = attr.value.join("");
     } else if (attr.value != null && attr.value != undefined) {
       res.value = attr.value.toString();
     } else {

@@ -3,7 +3,7 @@ import mdConverters from "./converters/md-converters.js";
 import UU5Converters from "./converters/uu5-converters.js";
 
 export default class UU5ToMarkdown {
-  constructor(opts,...plugins) {
+  constructor(opts, ...plugins) {
     this._parser = new UU5Parser(opts);
     this._converters = mdConverters.slice(0);
     let uu5Plugin = new UU5Converters();
@@ -264,8 +264,8 @@ export default class UU5ToMarkdown {
   }
 
   /*
- * Contructs a Markdown string of replacement text for a given node
- */
+   * Contructs a Markdown string of replacement text for a given node
+   */
   getRawContent(node) {
     var text = "";
 

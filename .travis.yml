@@ -6,7 +6,8 @@ deploy:
   provider: npm
   skip_cleanup: true
   email: jiri.dudek@unicornsystems.eu
-  branch: master
-  tags: true
+  on:
+    branch: master
+    tags: true
   api_key:
     secure: cvZbvt/Y6CV8sgOMUBMPbXwX1ISuQx37rRmvrNgeys9aasJKk7FrzYMY8d8fENeCRniTDy9nTdPT6E4rPsJh2HszLBbywSxC6dF2R7CkEvj6hZTlkkByfe8YSHNZ+r3W7beAAj2oOkUy8fZvhdJ932JbP9pitikmPYza6z1KZ0sUhHUGeiPlqVK5aUZQxevY0oghz2qskUsoEkViPwoEhSFwtn/RabQpAG4RNTg83IQP7P2AUc3nn6HNIVvNR8AcntqLZKOojWDBiMa2/ZFPgsUXcXFD5DKzX0pUiCjje+lfnbR4hhaObpuB6fwZcNWIlujiCQC30b1/FvlJZkE53UNNLSz+ZNySwdr6PngHKcBxf1br040l1koN9G/2qzVaYpk6KYN3urw+by+ilzKDSDRjBCvMK3kIe6HaehPSv70E+N1lrxk6sWo1gjuIepOHdJd1Q6q2mL+VFD5OV/FIEu4zx3VFxOpknO4VGXxAGN3lek7JdvpPk2gGBLQYnr5NKfN+Akk/Lftl6JSMK2tkKV0DsoH1YwSj0F4UDskvw4U1u6zoDHACgCncWmDHaWkPj4q1ozGnEEFxh5VEy/0zwAatSlN0MnI1FHN59i1wopTHjLmWjSTPeOZjwHpgRA0PKWbc2aSg2DtZf5PXQRyZmXCeFWBrA5YSISQJSWZnd00=

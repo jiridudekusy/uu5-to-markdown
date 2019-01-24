@@ -67,6 +67,9 @@ Following UU5 components are suppported:
   - UuApp.DesignKit.UU5ComponentMixins
   - UuApp.DesignKit.UU5ComponentList
   - UuApp.DesignKit.Table
+  
+- uuRichTextPlugin
+  - UU5.RichText.Block
 
 The components that are not supported are copied to markdown as is.
 

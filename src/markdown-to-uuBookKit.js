@@ -98,13 +98,10 @@ export default class MarkdownToUuBookKit {
           content: this._markDownRenderer.render(mdPart.content)
         })
       )
-      .map(
-        part =>
-          pretty
-            ? Object.assign(part, {
-              content: this._uu5pertifier.prettify(part).content
-              })
-            : part
+      .map(part =>
+        pretty?Object.assign(part, {
+            content: this._uu5pertifier.prettify(part).content
+          }):part
       );
     return JSON.stringify(uuBookKitObject, null, 2);
   }

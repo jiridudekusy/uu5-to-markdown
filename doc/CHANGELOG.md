@@ -1,3 +1,7 @@
+2.1.0
+-----
+- support for `UU5.RichText.Block`
+
 2.0.1
 -----
 Bug fixes:
