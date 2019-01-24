@@ -10,7 +10,7 @@ export default class MarkdownToUuBookKit {
     this._uu5pertifier = new UU5Pertifier(options);
   }
 
-  toUu5(markdown, pretty) {
+  toUu5(markdown, pretty, env) {
     let markdownTmp = markdown;
     let pageCodeSearch = PAGE_CODE_RE.exec(markdownTmp);
     if (pageCodeSearch) {
@@ -20,7 +20,7 @@ export default class MarkdownToUuBookKit {
     let parts = this._getParts(markdown);
 
     let res = parts
-      .map(mdPart => this._markDownRenderer.render(mdPart.content))
+      .map(mdPart => this._markDownRenderer.render(mdPart.content, env))
       .map(part => part.substring("<uu5string/>".length))
       .map(part => (pretty ? this._uu5pertifier.prettify(part) : part))
       .join(
@@ -77,7 +77,7 @@ export default class MarkdownToUuBookKit {
     return parts;
   }
 
-  toUuDocKit(markdown, pretty) {
+  toUuDocKit(markdown, pretty, env) {
     let uuBookKitObject = {
       code: "",
       sectionList: []
@@ -95,7 +95,7 @@ export default class MarkdownToUuBookKit {
     uuBookKitObject.sectionList = parts
       .map(mdPart =>
         Object.assign(mdPart, {
-          content: this._markDownRenderer.render(mdPart.content)
+          content: this._markDownRenderer.render(mdPart.content, env)
         })
       )
       .map(part =>

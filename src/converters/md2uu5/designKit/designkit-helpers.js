@@ -97,7 +97,7 @@ export default class DesignKitHelpers {
       state.line = contentEndLine + 1;
 
       // convert md subcontent to uu5string for easier processing
-      let uu5content = opts.markdownToUu5.render(content);
+      let uu5content = opts.markdownToUu5.render(content, state.env);
 
       // parse uu5 content
       let uu5Parser = new UU5Parser(opts);

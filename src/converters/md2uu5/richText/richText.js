@@ -52,7 +52,7 @@ function richtext(state, startLine, endLine, silent, opts) {
   state.line = contentEndLine + 2;
 
   // convert md subcontent to uu5string
-  let uu5content = opts.markdownToUu5.render(content);
+  let uu5content = opts.markdownToUu5.render(content, state.env);
 
   state.tokens.push({
     type: "UU5.RichText.Block",
