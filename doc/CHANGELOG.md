@@ -1,3 +1,9 @@
+2.1.1
+-----
+Bug fixes:
+ - export `UU5.RichText.Block` plugin
+
+
 2.1.0
 -----
 - support for `UU5.RichText.Block`

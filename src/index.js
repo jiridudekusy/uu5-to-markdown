@@ -8,6 +8,8 @@ import MarkdownToUuBookKit from "./markdown-to-uuBookKit";
 import UuBookKitToMarkdown from "./uuBookKit-to-markdown";
 import bookKitMdToUu5Plugin from "./converters/md2uu5/bookKit/bookkit-md-uu5-plugin";
 import UU5Prettifyer from "./uu5-prettifyer";
+import UU5RichTextKitConverters from "./converters/uu5RichText-converters";
+import richTextMdToUu5Plugin from "./converters/md2uu5/richText/uu5RichText-md-uu5-plugin";
 
 export {
   UU5ToMarkdown,
@@ -19,5 +21,7 @@ export {
   UuBookKitToMarkdown,
   MarkdownToUuBookKit,
   bookKitMdToUu5Plugin,
-  UU5Prettifyer
+  UU5Prettifyer,
+  UU5RichTextKitConverters,
+  richTextMdToUu5Plugin
 };
