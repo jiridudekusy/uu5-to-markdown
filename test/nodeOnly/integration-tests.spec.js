@@ -2,8 +2,9 @@ import Setup from "../withUU5/tools/setup";
 Setup()
 import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
-import UU5CodeKitConverters from "../../src/converters/uu5CodeKit-converters.js";
-import UuBookKitPlugin from "../../src/converters/uuBookKit-plugin.js";
+import UuBookKitPlugin from "../../src/plugin/uuBookKit/uuBookKit-plugin";
+import Uu5BricksPlugin from "../../src/plugin/uu5Bricks/uu5Bricks-plugin";
+import Uu5CodeKitPlugin from "../../src/plugin/uu5CodeKit/uu5CodeKit-plugin";
 import Core from "uu5g04-core";
 const opts = {uu5Core: Core};
 
@@ -11,11 +12,13 @@ chai.expect();
 
 const expect = chai.expect;
 
-let uu5ToMarkdown = new UU5ToMarkdown(
-  opts,
-  new UU5CodeKitConverters(),
-  new UuBookKitPlugin()
-);
+let uu5ToMarkdown = new UU5ToMarkdown(opts);
+let uu5BricksPlugin = new Uu5BricksPlugin();
+uu5BricksPlugin.applyUu5Plugin(uu5ToMarkdown);
+let uuBookKitPlugin = new UuBookKitPlugin();
+uuBookKitPlugin.applyUu5Plugin(uu5ToMarkdown);
+let uu5CodeKitPlugin = new Uu5CodeKitPlugin();
+uu5CodeKitPlugin.applyUu5Plugin(uu5ToMarkdown);
 
 function uu5FileTest(name, uu5stringFile, mdStringFile) {
   let fs = require("fs");

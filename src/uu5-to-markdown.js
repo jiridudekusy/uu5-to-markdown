@@ -1,20 +1,22 @@
 import UU5Parser from "./parser/uu5parser.js";
-import mdConverters from "./converters/md-converters.js";
-import UU5Converters from "./converters/uu5-converters.js";
+import mdConverters from "./converters/uu5-converters/html-converters";
+import { ElementsDefRepo } from "./converters/element";
 
 export default class UU5ToMarkdown {
   constructor(opts, ...plugins) {
     this._parser = new UU5Parser(opts);
     this._converters = mdConverters.slice(0);
-    let uu5Plugin = new UU5Converters();
-
-    this._converters = uu5Plugin.converters.concat(this._converters);
-    this._repository = uu5Plugin.elementDefsRepo;
+    this._repository = new ElementsDefRepo();
 
     plugins.forEach(plugin => {
       this._converters = plugin.converters.concat(this._converters);
       this._repository = plugin.elementDefsRepo.concat(this._repository);
     });
+  }
+
+  registerPlugin(plugin) {
+    this._converters = plugin.converters.concat(this._converters);
+    this._repository = plugin.elementDefsRepo.concat(this._repository);
   }
 
   toMarkdown(source) {

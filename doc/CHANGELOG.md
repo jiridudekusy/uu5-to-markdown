@@ -1,3 +1,10 @@
+3.0.0
+-----
+ - Refactor richtext plugin structure.
+ - Refactor designkit plugin structure.
+ - Refactor codeKit plugin structure.
+ - Refactor rest of the plugins structure.
+
 2.1.3
 -----
 Bug fixes:

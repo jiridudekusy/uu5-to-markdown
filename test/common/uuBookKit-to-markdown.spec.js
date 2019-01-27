@@ -4,12 +4,15 @@ import chai from "chai";
 import UU5ToMarkdown from "../../src/uu5-to-markdown.js";
 import UuDockitToMarkdown from "../../src/uuBookKit-to-markdown";
 import Core from "uu5g04-core";
+import Uu5BricksPlugin from "../../src/plugin/uu5Bricks/uu5Bricks-plugin";
 const opts = {uu5Core: Core};
 chai.expect();
 
 const expect = chai.expect;
 
 let uu5ToMarkdown = new UU5ToMarkdown(opts);
+let uu5BricksPlugin = new Uu5BricksPlugin();
+uu5BricksPlugin.applyUu5Plugin(uu5ToMarkdown);
 let uuDockitToMarkdown = new UuDockitToMarkdown(uu5ToMarkdown);
 
 function uuDockitToMdTest(name, uuDockitString, mdString) {

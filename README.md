@@ -82,7 +82,7 @@ Include library into package.json :
 ```json
 {
   "dependencies": {
-    "uu5-to-markdown": "^2.0.0"    
+    "uu5-to-markdown": "^3.0.0"    
   }
 }
 ```

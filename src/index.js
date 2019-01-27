@@ -1,27 +1,24 @@
 import UU5ToMarkdown from "./uu5-to-markdown.js";
-import UuBookKitPlugin from "./converters/uuBookKit-plugin";
-import UU5CodeKitConverters from "./converters/uu5CodeKit-converters";
-import UuAppDesignKitConverters from "./converters/uuAppDesignKit-converters";
-import mdToUu5Plugin from "./converters/md-uu5-plugin";
-import desighKitMdToUu5Plugin from "./converters/md2uu5/designKit/designKit-md-uu5-plugin";
+
 import MarkdownToUuBookKit from "./markdown-to-uuBookKit";
 import UuBookKitToMarkdown from "./uuBookKit-to-markdown";
-import bookKitMdToUu5Plugin from "./converters/md2uu5/bookKit/bookkit-md-uu5-plugin";
 import UU5Prettifyer from "./uu5-prettifyer";
-import UU5RichTextKitConverters from "./converters/uu5RichText-converters";
-import richTextMdToUu5Plugin from "./converters/md2uu5/richText/uu5RichText-md-uu5-plugin";
+
+import Uu5BricksPlugin from "./plugin/uu5Bricks/uu5Bricks-plugin";
+import Uu5RichTextPlugin from "./plugin/uu5RichText/uu5RichText-plugin";
+import UuAppDesignKitPlugin from "./plugin/uuAppDesignKit/uuAppDesignKit-plugin";
+import Uu5CodeKitPlugin from "./plugin/uu5CodeKit/uu5CodeKit-plugin";
+import UuBookKitPlugin from "./plugin/uuBookKit/uuBookKit-plugin";
 
 export {
   UU5ToMarkdown,
-  UuBookKitPlugin,
-  UU5CodeKitConverters,
-  UuAppDesignKitConverters,
-  mdToUu5Plugin,
-  desighKitMdToUu5Plugin,
   UuBookKitToMarkdown,
   MarkdownToUuBookKit,
-  bookKitMdToUu5Plugin,
   UU5Prettifyer,
-  UU5RichTextKitConverters,
-  richTextMdToUu5Plugin
+  //plugins
+  Uu5BricksPlugin,
+  UuAppDesignKitPlugin,
+  Uu5RichTextPlugin,
+  Uu5CodeKitPlugin,
+  UuBookKitPlugin
 };

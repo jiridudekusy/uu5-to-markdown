@@ -99,9 +99,11 @@ export default class MarkdownToUuBookKit {
         })
       )
       .map(part =>
-        pretty?Object.assign(part, {
+        pretty
+          ? Object.assign(part, {
             content: this._uu5pertifier.prettify(part).content
-          }):part
+          })
+          : part
       );
     return JSON.stringify(uuBookKitObject, null, 2);
   }
