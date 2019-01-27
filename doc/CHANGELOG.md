@@ -1,3 +1,9 @@
+2.1.3
+-----
+Bug fixes:
+ - `UU5.RichText.Block` is now placed on new line
+ 
+ __
 2.1.2
 -----
 Bug fixes:

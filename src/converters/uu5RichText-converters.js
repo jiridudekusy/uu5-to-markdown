@@ -19,7 +19,7 @@ export default class UU5RichTextKitConverters {
           cnt = cnt.replace(/<\/UU5.Bricks.Div>/g, "</UU5.Bricks.P>");
           let mdCnt;
           mdCnt = this.toMarkdown(cnt);
-          let res = "{richtext}\n";
+          let res = "\n\n{richtext}\n";
           res += mdCnt;
           res += "\n\n{/richtext}\n";
           return res;
