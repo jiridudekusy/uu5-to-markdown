@@ -1,5 +1,6 @@
 import UuAppDesignKitConverters from "./uu5-plugin/uuAppDesignKit-converters";
 import designKitMdPlugin from "./md-plugin/designKit-md-uu5-plugin";
+import UUAppDesignKitAlgorithmConverter from  "./uu5-plugin/uuAppDesignKit-algorithm-converter";
 
 export default class UuAppDesignKitPlugin {
   constructor(opts) {
@@ -8,6 +9,7 @@ export default class UuAppDesignKitPlugin {
 
   applyUu5Plugin(uu5ToMarkdown) {
     uu5ToMarkdown.registerPlugin(new UuAppDesignKitConverters());
+    uu5ToMarkdown.registerPlugin(new UUAppDesignKitAlgorithmConverter());
   }
 
   applyMarkdownPlugin(markdownRenderer) {
