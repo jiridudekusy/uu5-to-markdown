@@ -39,3 +39,19 @@ Some text
 `
   );
 });
+
+describe("UU5.Bricks.Ol - type A", () => {
+  mdToUu5Test(
+    "default",
+    `
+A.  Item 1
+B.  Item 2
+C.  Item 3`,
+    `<uu5string/><UU5.Bricks.Ol type="A">
+<UU5.Bricks.Li>Item 1</UU5.Bricks.Li>
+<UU5.Bricks.Li>Item 2</UU5.Bricks.Li>
+<UU5.Bricks.Li>Item 3</UU5.Bricks.Li>
+</UU5.Bricks.Ol>
+`
+  );
+});

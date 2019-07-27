@@ -12,10 +12,17 @@ function getLabel(label) {
   return label.match(/.*\.?([a-zA-Z0-9]+\.)/)[1];
 }
 
-function toMarkdown(uu5String, that){
-  uu5String = uu5String.replace(/<UU5.Bricks.Div>/g, "<UU5.Bricks.P>");
+function toMarkdown(uu5String, that) {
+  uu5String = uu5String.replace(/<UU5.Bricks.Div.*?>/g, "<UU5.Bricks.P>");
   uu5String = uu5String.replace(/<\/UU5.Bricks.Div>/g, "</UU5.Bricks.P>");
   return that.toMarkdown(uu5String);
+}
+
+function indentLines(string, indent, startLine) {
+  if (startLine == undefined) {
+    startLine = 0;
+  }
+  return string.split("\n").filter(line => line.trim()!="").map((line, i) => i >= startLine ? "".padEnd(indent," ")+line : line).join("  \n");
 }
 
 function covertStatement(statement, that, offset) {
@@ -23,11 +30,19 @@ function covertStatement(statement, that, offset) {
     offset = 0;
   }
   let lineOffset = offset + levelOffset;
-  let res = `${"".padEnd(offset, " ")}${getLabel(statement.label).padEnd(levelOffset, " ")}${capitalize(statement.type)}: //${statement.comment}\n`;
+  let res = `${"".padEnd(offset, " ")}${getLabel(statement.label).padEnd(levelOffset, " ")}${capitalize(statement.type)}: //${statement.comment}  \n`;
   if (["if", "elseIf"].indexOf(statement.type) > -1) {
-    res += `${" ".padEnd(lineOffset, " ")}Condition: ${toMarkdown(statement.condition, that)}\n`
+    res += `${" ".padEnd(lineOffset, " ")}Condition: ${indentLines(toMarkdown(statement.condition, that), lineOffset, 1)}  \n`
   }
-  res += `${" ".padEnd(lineOffset, " ")}${toMarkdown(statement.desc, that)}\n`;
+  res += `${indentLines(toMarkdown(statement.desc, that), lineOffset)}  \n`;
+  if (["error", "warning"].indexOf(statement.type) > -1) {
+    res += `${" ".padEnd(lineOffset, " ")}Code: ${statement.code}  \n`
+    res += `${" ".padEnd(lineOffset, " ")}Message: ${statement.message}  \n`
+    if (statement.type === "error") {
+      res += `${" ".padEnd(lineOffset, " ")}Throw exception: ${statement.exception}  \n`
+    }
+    res += `${" ".padEnd(lineOffset, " ")}Params: ${indentLines(statement.params, lineOffset, 1)}  \n`
+  }
   if (statement.statementList) {
     for (let innerStatement of statement.statementList) {
       res += covertStatement(innerStatement, that, offset + levelOffset);
@@ -61,7 +76,7 @@ export default class UUAppDesignKitAlgorithmConverter {
 
           let res = "\n\n{algorithm}\n";
           res += `*   Name: ${data.name}\n`;
-          res += `*   Description: ${toMarkdown(data.desc, this)}\n`;
+          res += `*   Description: ${indentLines(toMarkdown(data.desc, this), levelOffset, 1)}\n`;
           res += `*   Error Prefix: ${data.errorPrefix}\n`;
           res += `\n`;
 
