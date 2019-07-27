@@ -1,6 +1,6 @@
 import UuAppDesignKitConverters from "./uu5-plugin/uuAppDesignKit-converters";
 import designKitMdPlugin from "./md-plugin/designKit-md-uu5-plugin";
-import UUAppDesignKitAlgorithmConverter from  "./uu5-plugin/uuAppDesignKit-algorithm-converter";
+import UUAppDesignKitAlgorithmConverter from "./uu5-plugin/uuAppDesignKit-algorithm-converter";
 
 export default class UuAppDesignKitPlugin {
   constructor(opts) {

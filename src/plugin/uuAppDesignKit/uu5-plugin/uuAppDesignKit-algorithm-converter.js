@@ -1,5 +1,5 @@
 "use strict";
-import {ElementDef, ElementsDefRepo} from "../../../converters/element.js";
+import { ElementDef, ElementsDefRepo } from "../../../converters/element.js";
 import UU5Utils from "../../../tools/uu5utils";
 
 let levelOffset = 4;
@@ -22,7 +22,11 @@ function indentLines(string, indent, startLine) {
   if (startLine == undefined) {
     startLine = 0;
   }
-  return string.split("\n").filter(line => line.trim()!="").map((line, i) => i >= startLine ? "".padEnd(indent," ")+line : line).join("  \n");
+  return string
+    .split("\n")
+    .filter(line => line.trim() != "")
+    .map((line, i) => (i >= startLine ? "".padEnd(indent, " ") + line : line))
+    .join("  \n");
 }
 
 function covertStatement(statement, that, offset) {
@@ -30,18 +34,31 @@ function covertStatement(statement, that, offset) {
     offset = 0;
   }
   let lineOffset = offset + levelOffset;
-  let res = `${"".padEnd(offset, " ")}${getLabel(statement.label).padEnd(levelOffset, " ")}${capitalize(statement.type)}: //${statement.comment}  \n`;
+  let res = `${"".padEnd(offset, " ")}${getLabel(statement.label).padEnd(
+    levelOffset,
+    " "
+  )}${capitalize(statement.type)}: //${statement.comment}  \n`;
   if (["if", "elseIf"].indexOf(statement.type) > -1) {
-    res += `${" ".padEnd(lineOffset, " ")}Condition: ${indentLines(toMarkdown(statement.condition, that), lineOffset, 1)}  \n`
+    res += `${" ".padEnd(lineOffset, " ")}Condition: ${indentLines(
+      toMarkdown(statement.condition, that),
+      lineOffset,
+      1
+    )}  \n`;
   }
   res += `${indentLines(toMarkdown(statement.desc, that), lineOffset)}  \n`;
   if (["error", "warning"].indexOf(statement.type) > -1) {
-    res += `${" ".padEnd(lineOffset, " ")}Code: ${statement.code}  \n`
-    res += `${" ".padEnd(lineOffset, " ")}Message: ${statement.message}  \n`
+    res += `${" ".padEnd(lineOffset, " ")}Code: ${statement.code}  \n`;
+    res += `${" ".padEnd(lineOffset, " ")}Message: ${statement.message}  \n`;
     if (statement.type === "error") {
-      res += `${" ".padEnd(lineOffset, " ")}Throw exception: ${statement.exception}  \n`
+      res += `${" ".padEnd(lineOffset, " ")}Throw exception: ${
+        statement.exception
+      }  \n`;
     }
-    res += `${" ".padEnd(lineOffset, " ")}Params: ${indentLines(statement.params, lineOffset, 1)}  \n`
+    res += `${" ".padEnd(lineOffset, " ")}Params: ${indentLines(
+      statement.params,
+      lineOffset,
+      1
+    )}  \n`;
   }
   if (statement.statementList) {
     for (let innerStatement of statement.statementList) {
@@ -53,17 +70,14 @@ function covertStatement(statement, that, offset) {
 
 export default class UUAppDesignKitAlgorithmConverter {
   constructor() {
-    let algorithm = new ElementDef(
-      "UuApp.DesignKit.Algorithm",
-      "data"
-    ).block();
+    let algorithm = new ElementDef("UuApp.DesignKit.Algorithm", "data").block();
 
     this._elementDefsRepo = new ElementsDefRepo(algorithm);
 
     this._converters = [
       {
         filter: algorithm,
-        replacement: function (content, node) {
+        replacement: function(content, node) {
           let jsonString = node.getAttribute("data");
 
           if (!UU5Utils.isUU5Json(jsonString)) {
@@ -76,7 +90,11 @@ export default class UUAppDesignKitAlgorithmConverter {
 
           let res = "\n\n{algorithm}\n";
           res += `*   Name: ${data.name}\n`;
-          res += `*   Description: ${indentLines(toMarkdown(data.desc, this), levelOffset, 1)}\n`;
+          res += `*   Description: ${indentLines(
+            toMarkdown(data.desc, this),
+            levelOffset,
+            1
+          )}\n`;
           res += `*   Error Prefix: ${data.errorPrefix}\n`;
           res += `\n`;
 
