@@ -119,8 +119,38 @@ function joinContent(contentNodes) {
       transformedNodes.push(node);
     }
   }
-
-  return "<uu5string />" + transformedNodes.map(node => getNodeUU5conent(node)).join(("\n"));
+  // let previousNode;
+  // let isPreviousNodeParagraph = false;
+  // let mergedNodes = [];
+  // for (let node of transformedNodes) {
+  //   if (node.nodeType == 1 && node.localName != "UU5.Bricks.P") {
+  //     previousNode = null;
+  //     isPreviousNodeParagraph = false;
+  //     mergedNodes.push(node);
+  //   } else if (node.nodeType === 3) {
+  //     if (isPreviousNodeParagraph) {
+  //       previousNode.childNodes.push(node);
+  //     } else {
+  //       previousNode = {
+  //         localName: "UU5.Bricks.P",
+  //         childNodes: [node],
+  //         nodeType: 1,
+  //         attributes: []
+  //       };
+  //       isPreviousNodeParagraph = true;
+  //       mergedNodes.push(previousNode);
+  //     }
+  //   } else {
+  //     if (isPreviousNodeParagraph) {
+  //       previousNode.childNodes.concat(node.childNodes);
+  //     } else {
+  //       previousNode = node;
+  //       isPreviousNodeParagraph = true;
+  //       mergedNodes.push(node);
+  //     }
+  //   }
+  // }
+  return "<uu5string />" + mergedNodes.map(node => getNodeUU5conent(node)).map(uu5 => uu5.replace(/UU5\.Bricks\.P/g, "UU5.Bricks.Div")).join(("\n"));
 }
 
 function parseStementParts(flattenStatementChildNodes, supportedParts) {
@@ -153,7 +183,6 @@ const MESSAGE_PART = "Message";
 const PARAMS_PART = "Params";
 const THROW_EXCEPTION_PART = "Throw exception";
 
-
 function processStandardstetmentParts(statementParts, statement) {
   if (statementParts[DESCRIPTION_PART]) {
     statement.desc = joinContent(statementParts[DESCRIPTION_PART].content);
@@ -183,7 +212,7 @@ function processSelectionIf(flattenStatementChildNodes, statement) {
 function processIf(flattenStatementChildNodes, statement) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART, CONDITION_PART]);
   processStandardstetmentParts(statementParts, statement);
-  if(statementParts[CONDITION_PART]){
+  if (statementParts[CONDITION_PART]) {
     statement.condition = joinContent(statementParts[CONDITION_PART].content);
   }
 }
@@ -191,7 +220,7 @@ function processIf(flattenStatementChildNodes, statement) {
 function processElseIf(flattenStatementChildNodes, statement) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART, CONDITION_PART]);
   processStandardstetmentParts(statementParts, statement);
-  if(statementParts[CONDITION_PART]){
+  if (statementParts[CONDITION_PART]) {
     statement.condition = joinContent(statementParts[CONDITION_PART].content);
   }
 }
@@ -201,11 +230,10 @@ function processElse(flattenStatementChildNodes, statement) {
   processStandardstetmentParts(statementParts, statement);
 }
 
-
 function processIteration(flattenStatementChildNodes, statement) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART, CONDITION_PART]);
   processStandardstetmentParts(statementParts, statement);
-  if(statementParts[CONDITION_PART]){
+  if (statementParts[CONDITION_PART]) {
     statement.condition = joinContent(statementParts[CONDITION_PART].content);
   }
 }
@@ -213,13 +241,13 @@ function processIteration(flattenStatementChildNodes, statement) {
 function processWarning(flattenStatementChildNodes, statement) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, CODE_PART, MESSAGE_PART, PARAMS_PART]);
   processStandardstetmentParts(statementParts, statement);
-  if(statementParts[CODE_PART]){
+  if (statementParts[CODE_PART]) {
     statement.code = joinContent(statementParts[CODE_PART].content);
   }
-  if(statementParts[MESSAGE_PART]){
+  if (statementParts[MESSAGE_PART]) {
     statement.message = joinContent(statementParts[MESSAGE_PART].content);
   }
-  if(statementParts[PARAMS_PART]){
+  if (statementParts[PARAMS_PART]) {
     statement.params = joinContent(statementParts[PARAMS_PART].content);
   }
 }
@@ -227,16 +255,16 @@ function processWarning(flattenStatementChildNodes, statement) {
 function processError(flattenStatementChildNodes, statement) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, CODE_PART, MESSAGE_PART, PARAMS_PART, THROW_EXCEPTION_PART]);
   processStandardstetmentParts(statementParts, statement);
-  if(statementParts[CODE_PART]){
+  if (statementParts[CODE_PART]) {
     statement.code = joinContent(statementParts[CODE_PART].content);
   }
-  if(statementParts[MESSAGE_PART]){
+  if (statementParts[MESSAGE_PART]) {
     statement.message = joinContent(statementParts[MESSAGE_PART].content);
   }
-  if(statementParts[PARAMS_PART]){
+  if (statementParts[PARAMS_PART]) {
     statement.params = joinContent(statementParts[PARAMS_PART].content);
   }
-  if(statementParts[THROW_EXCEPTION_PART]){
+  if (statementParts[THROW_EXCEPTION_PART]) {
     //TODO implement logic to decide true/false
   }
 }

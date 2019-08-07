@@ -1,10 +1,11 @@
 import Setup from "../../withUU5/tools/setup";
-Setup();
 import chai from "chai";
 import {MarkdownRenderer} from "uu5codekitg01";
 import UuAppDesignKitPlugin from "../../../src/plugin/uuAppDesignKit/uuAppDesignKit-plugin"
 import Core from "uu5g04-core";
 import Uu5BricksPlugin from "../../../src/plugin/uu5Bricks/uu5Bricks-plugin";
+
+Setup();
 
 chai.expect();
 
@@ -23,12 +24,13 @@ let markdownToUu5 = new MarkdownRenderer("full", {
 uuAppDesignKitPlugin.applyMarkdownPlugin(markdownToUu5);
 uu5BricksPlugin.applyMarkdownPlugin(markdownToUu5);
 
-
 function mdToUu5Test(name, mdString, uu5String, ignore) {
   it(name, () => {
     let parsed = markdownToUu5.render(mdString);
-    if(!ignore) {
+    if (!ignore) {
       expect(parsed).to.be.equal(uu5String);
+    } else {
+      console.log(parsed);
     }
   });
 }
