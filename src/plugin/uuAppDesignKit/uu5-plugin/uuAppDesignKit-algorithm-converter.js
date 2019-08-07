@@ -22,11 +22,16 @@ function indentLines(string, indent, startLine) {
   if (startLine == undefined) {
     startLine = 0;
   }
-  return string
+  let indentedLines = string
     .split("\n")
-    .filter(line => line.trim() != "")
-    .map((line, i) => (i >= startLine ? "".padEnd(indent, " ") + line : line))
-    .join("  \n");
+    // removing of \r keeps there lines with \r\n which will be otherwised cleared out
+    .map( line => line.replace(/\r/g,""))
+    .map((line, i) => (i >= startLine ? "".padEnd(indent, " ") + line : line));
+  let res = indentedLines.join("  \n");
+  if(indentedLines.length > 1){
+    res += "\n";
+  }
+  return res;
 }
 
 function covertStatement(statement, that, offset) {
@@ -37,7 +42,7 @@ function covertStatement(statement, that, offset) {
   let res = `${"".padEnd(offset, " ")}${getLabel(statement.label).padEnd(
     levelOffset,
     " "
-  )}${capitalize(statement.type)}: //${statement.comment}  \n`;
+  )}${capitalize(statement.type)}: //${statement.comment||""}  \n`;
   if (["if", "elseIf"].indexOf(statement.type) > -1) {
     res += `${" ".padEnd(lineOffset, " ")}Condition: ${indentLines(
       toMarkdown(statement.condition, that),
@@ -45,7 +50,8 @@ function covertStatement(statement, that, offset) {
       1
     )}  \n`;
   }
-  res += `${indentLines(toMarkdown(statement.desc, that), lineOffset)}  \n`;
+
+  res += `${" ".padEnd(lineOffset, " ")}Description: ${indentLines(toMarkdown(statement.desc, that), lineOffset, 1)}  \n`;
   if (["error", "warning"].indexOf(statement.type) > -1) {
     res += `${" ".padEnd(lineOffset, " ")}Code: ${statement.code}  \n`;
     res += `${" ".padEnd(lineOffset, " ")}Message: ${statement.message}  \n`;
@@ -60,7 +66,8 @@ function covertStatement(statement, that, offset) {
       1
     )}  \n`;
   }
-  if (statement.statementList) {
+  if (statement.statementList && statement.statementList.length > 0) {
+    res += `${" ".padEnd(lineOffset, " ")}Statements:  \n`;
     for (let innerStatement of statement.statementList) {
       res += covertStatement(innerStatement, that, offset + levelOffset);
     }

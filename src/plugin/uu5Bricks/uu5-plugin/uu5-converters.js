@@ -58,7 +58,7 @@ export default class UU5Converters {
     let uu5stringPre = new ElementDef("uu5string.pre").block();
     let uu5BricksPre = new ElementDef("UU5.Bricks.Pre").block();
     let uu5BricksCodeViewer = new ElementDef("UU5.CodeKit.CodeViewer").block();
-    let uu5BricksCode = new ElementDef("UU5.Bricks.Code").leaf();
+    let uu5BricksCode = new ElementDef("UU5.Bricks.Code", "id").leaf();
     let uu5BricksBlockquote = new ElementDef("UU5.Bricks.Blockquote").block();
     let uu5BricksOl = new ElementDef("UU5.Bricks.Ol").block().skipTextNodes();
     let uu5BricksUl = new ElementDef("UU5.Bricks.Ul").block().skipTextNodes();

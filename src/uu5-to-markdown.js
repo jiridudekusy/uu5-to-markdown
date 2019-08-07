@@ -1,6 +1,6 @@
 import UU5Parser from "./parser/uu5parser.js";
 import mdConverters from "./converters/uu5-converters/html-converters";
-import { ElementsDefRepo } from "./converters/element";
+import {ElementsDefRepo} from "./converters/element";
 
 export default class UU5ToMarkdown {
   constructor(opts, ...plugins) {
@@ -41,9 +41,9 @@ export default class UU5ToMarkdown {
     let output = this.getContent(dom.documentElement);
 
     return output
-      .replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, "")
-      .replace(/\n\s+\n/g, "\n\n")
-      .replace(/\n{3,}/g, "\n\n");
+    .replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, "")
+    .replace(/\n\s+\n/g, "\n\n")
+    .replace(/\n{3,}/g, "\n\n");
   }
 
   /*
@@ -160,7 +160,7 @@ export default class UU5ToMarkdown {
       }
     }
 
-    return { leading: leading, trailing: trailing };
+    return {leading: leading, trailing: trailing};
   }
 
   isBlock(node) {
@@ -293,7 +293,7 @@ export default class UU5ToMarkdown {
     for (let i = 0; i < node.attributes.length; i++) {
       let attribute = node.attributes[i];
 
-      if (!attribute.noValue) {
+      if (!attribute.noValue && attribute.value != undefined) {
         let quotChar = '"';
 
         if (attribute.value.indexOf('"') > -1) {
@@ -301,7 +301,7 @@ export default class UU5ToMarkdown {
             console.error(
               `Attribute "{attribute.name}" with value "${
                 attribute.value
-              }"of element ${node.localName} contains ' and ".`
+                }"of element ${node.localName} contains ' and ".`
             );
           } else {
             quotChar = "'";

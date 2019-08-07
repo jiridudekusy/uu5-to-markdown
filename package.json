@@ -51,6 +51,7 @@
     "prettier-eslint": "^8.8.1"
   },
   "dependencies": {
-    "collapse-whitespace": "1.1.6"
+    "collapse-whitespace": "1.1.6",
+    "uuid": "^3.3.2"
   }
 }
