@@ -1,5 +1,5 @@
 "use strict";
-import { ElementDef, ElementsDefRepo } from "../../../converters/element.js";
+import {ElementDef, ElementsDefRepo} from "../../../converters/element.js";
 import UU5Utils from "../../../tools/uu5utils";
 
 let levelOffset = 4;
@@ -19,16 +19,19 @@ function toMarkdown(uu5String, that) {
 }
 
 function indentLines(string, indent, startLine) {
+  if (!string) {
+    return "";
+  }
   if (startLine == undefined) {
     startLine = 0;
   }
   let indentedLines = string
-    .split("\n")
-    // removing of \r keeps there lines with \r\n which will be otherwised cleared out
-    .map( line => line.replace(/\r/g,""))
-    .map((line, i) => (i >= startLine ? "".padEnd(indent, " ") + line : line));
-  let res = indentedLines.join("  \n");
-  if(indentedLines.length > 1){
+  .split("\n")
+  // removing of \r keeps there lines with \r\n which will be otherwised cleared out
+  .map(line => line.replace(/\r/g, ""))
+  .map((line, i) => (i >= startLine ? "".padEnd(indent, " ") + line : line));
+  let res = indentedLines.join("\n");
+  if (indentedLines.length > 1) {
     res += "\n";
   }
   return res;
@@ -42,7 +45,7 @@ function covertStatement(statement, that, offset) {
   let res = `${"".padEnd(offset, " ")}${getLabel(statement.label).padEnd(
     levelOffset,
     " "
-  )}${capitalize(statement.type)}: //${statement.comment||""}  \n`;
+  )}${capitalize(statement.type)}: //${statement.comment || ""}  \n`;
   if (["if", "elseIf"].indexOf(statement.type) > -1) {
     res += `${" ".padEnd(lineOffset, " ")}Condition: ${indentLines(
       toMarkdown(statement.condition, that),
@@ -58,7 +61,7 @@ function covertStatement(statement, that, offset) {
     if (statement.type === "error") {
       res += `${" ".padEnd(lineOffset, " ")}Throw exception: ${
         statement.exception
-      }  \n`;
+        }  \n`;
     }
     res += `${" ".padEnd(lineOffset, " ")}Params: ${indentLines(
       statement.params,
@@ -84,7 +87,7 @@ export default class UUAppDesignKitAlgorithmConverter {
     this._converters = [
       {
         filter: algorithm,
-        replacement: function(content, node) {
+        replacement: function (content, node) {
           let jsonString = node.getAttribute("data");
 
           if (!UU5Utils.isUU5Json(jsonString)) {

@@ -100,6 +100,12 @@ function joinContent(contentNodes) {
   let transformedNodes = [];
   let paragraphId;
   let paragraph;
+  if (contentNodes.length === 0) {
+    return "";
+  }
+  if (contentNodes[contentNodes.length - 1].localName === "br") {
+    contentNodes.pop();
+  }
   for (let node of contentNodes) {
     if (node.inParagraph) {
       if (paragraphId != node.paragraphId) {
@@ -119,38 +125,14 @@ function joinContent(contentNodes) {
       transformedNodes.push(node);
     }
   }
-  // let previousNode;
-  // let isPreviousNodeParagraph = false;
-  // let mergedNodes = [];
-  // for (let node of transformedNodes) {
-  //   if (node.nodeType == 1 && node.localName != "UU5.Bricks.P") {
-  //     previousNode = null;
-  //     isPreviousNodeParagraph = false;
-  //     mergedNodes.push(node);
-  //   } else if (node.nodeType === 3) {
-  //     if (isPreviousNodeParagraph) {
-  //       previousNode.childNodes.push(node);
-  //     } else {
-  //       previousNode = {
-  //         localName: "UU5.Bricks.P",
-  //         childNodes: [node],
-  //         nodeType: 1,
-  //         attributes: []
-  //       };
-  //       isPreviousNodeParagraph = true;
-  //       mergedNodes.push(previousNode);
-  //     }
-  //   } else {
-  //     if (isPreviousNodeParagraph) {
-  //       previousNode.childNodes.concat(node.childNodes);
-  //     } else {
-  //       previousNode = node;
-  //       isPreviousNodeParagraph = true;
-  //       mergedNodes.push(node);
-  //     }
-  //   }
-  // }
-  return "<uu5string />" + mergedNodes.map(node => getNodeUU5conent(node)).map(uu5 => uu5.replace(/UU5\.Bricks\.P/g, "UU5.Bricks.Div")).join(("\n"));
+  if (transformedNodes.length === 1 && transformedNodes[0].localName === "UU5.Bricks.P") {
+    transformedNodes = transformedNodes[0].childNodes;
+  }
+  let res = "";
+  if (transformedNodes.filter(node => node.nodeType === 1).length != 0) {
+    res += "<uu5string />";
+  }
+  return res + transformedNodes.map(node => getNodeUU5conent(node)).map(uu5 => uu5.replace(/UU5\.Bricks\.P/g, "UU5.Bricks.Div")).join(("\n"));
 }
 
 function parseStementParts(flattenStatementChildNodes, supportedParts) {
