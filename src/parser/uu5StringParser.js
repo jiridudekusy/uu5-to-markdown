@@ -76,7 +76,7 @@ class Node {
     } else if (attr.value === false) {
       return null;
     } else if (attr.valueType === "uu5string") {
-      res.value = attr.value.join("");
+      res.value = UU5Utils.toUU5String(attr.value);
     } else if (attr.value != null && attr.value != undefined) {
       res.value = attr.value.toString();
     } else {

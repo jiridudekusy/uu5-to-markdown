@@ -38,6 +38,21 @@ export default class UU5Utils {
     } else {
       jsonString = JSON.stringify(obj);
     }
-    return UU5JSON + jsonString;
+    return UU5JSON + UU5Utils.escapeUu5Json(jsonString);
+  }
+
+
+  static toUU5String(content) {
+    let res = content.join("");
+    return UU5STRING + UU5Utils.escapeUu5String(res);
+  }
+
+  static escapeUu5String(uu5string) {
+    return UU5Utils.escapeUu5Json(uu5string)
+  }
+
+  static escapeUu5Json(jsonString) {
+    jsonString = jsonString.replace(/(['\\])/g, "\\$1");
+    return jsonString;
   }
 }
