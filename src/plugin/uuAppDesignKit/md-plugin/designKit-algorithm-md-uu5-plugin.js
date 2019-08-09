@@ -7,6 +7,8 @@ const marker = "{algorithm}";
 const endMarker = "{/algorithm}";
 const tagName = "UuApp.DesignKit.Algorithm";
 
+//TODO both list must be made optional !!!
+
 function generateId() {
   return uuidv4().replace(/-/g, "");
 }
@@ -165,64 +167,72 @@ const MESSAGE_PART = "Message";
 const PARAMS_PART = "Params";
 const THROW_EXCEPTION_PART = "Throw exception";
 
-function processStandardstetmentParts(statementParts, statement) {
+function increaseLabel(label) {
+  if (typeof label == "number") {
+    return ++label;
+  }
+  return String.fromCharCode(label.charCodeAt(0) + 1);
+}
+
+function processStandardstetmentParts(statementParts, statement, labelPath, labelType) {
   if (statementParts[DESCRIPTION_PART]) {
     statement.desc = joinContent(statementParts[DESCRIPTION_PART].content);
   }
   if (statementParts[STATEMENTS_PART]) {
     //TODO find staement list correctly and validate
     let statementList = statementParts[STATEMENTS_PART].content.filter(i => i.nodeType === 1)[0];
-    parseStatementList(statementList, statement);
+    parseStatementList(statementList, statement, labelPath, labelType);
   }
+  statement.label = labelPath.join(".") + ".";
 }
 
-function processStep(flattenStatementChildNodes, statement) {
+function processStep(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath);
 }
 
-function processSequence(flattenStatementChildNodes, statement) {
+function processSequence(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
 }
 
-function processSelectionIf(flattenStatementChildNodes, statement) {
+function processSelectionIf(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "terrers");
 }
 
-function processIf(flattenStatementChildNodes, statement) {
+function processIf(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART, CONDITION_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
   if (statementParts[CONDITION_PART]) {
     statement.condition = joinContent(statementParts[CONDITION_PART].content);
   }
 }
 
-function processElseIf(flattenStatementChildNodes, statement) {
+function processElseIf(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART, CONDITION_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
   if (statementParts[CONDITION_PART]) {
     statement.condition = joinContent(statementParts[CONDITION_PART].content);
   }
 }
 
-function processElse(flattenStatementChildNodes, statement) {
+function processElse(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
 }
 
-function processIteration(flattenStatementChildNodes, statement) {
+function processIteration(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, STATEMENTS_PART, CONDITION_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
   if (statementParts[CONDITION_PART]) {
     statement.condition = joinContent(statementParts[CONDITION_PART].content);
   }
 }
 
-function processWarning(flattenStatementChildNodes, statement) {
+function processWarning(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, CODE_PART, MESSAGE_PART, PARAMS_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
   if (statementParts[CODE_PART]) {
     statement.code = joinContent(statementParts[CODE_PART].content);
   }
@@ -234,9 +244,9 @@ function processWarning(flattenStatementChildNodes, statement) {
   }
 }
 
-function processError(flattenStatementChildNodes, statement) {
+function processError(flattenStatementChildNodes, statement, labelPath) {
   let statementParts = parseStementParts(flattenStatementChildNodes, [DESCRIPTION_PART, CODE_PART, MESSAGE_PART, PARAMS_PART, THROW_EXCEPTION_PART]);
-  processStandardstetmentParts(statementParts, statement);
+  processStandardstetmentParts(statementParts, statement, labelPath, "numbers");
   if (statementParts[CODE_PART]) {
     statement.code = joinContent(statementParts[CODE_PART].content);
   }
@@ -247,12 +257,31 @@ function processError(flattenStatementChildNodes, statement) {
     statement.params = joinContent(statementParts[PARAMS_PART].content);
   }
   if (statementParts[THROW_EXCEPTION_PART]) {
-    //TODO implement logic to decide true/false
+    let throwExStr = joinContent(statementParts[THROW_EXCEPTION_PART].content);
+    let throwEx;
+    switch (throwExStr.trim()) {
+      case "true":
+      case "yes":
+        throwEx = true;
+        break;
+      case "false":
+      case "no":
+        throwEx = false;
+    }
+    if(throwEx != undefined){
+      statement.exception = throwEx;
+    }
   }
 }
 
-function parseStatementList(bodyList, parentStatement) {
+function parseStatementList(bodyList, parentStatement, labelPath, labelType) {
   let bodyItems = ParserUtils.getChildNodes(bodyList);
+  let label;
+  if (labelType == "numbers") {
+    label = 1
+  } else {
+    label = "A"
+  }
   parentStatement.statementList = [];
   for (let item of bodyItems) {
     //skip text nodes
@@ -272,7 +301,7 @@ function parseStatementList(bodyList, parentStatement) {
       throw `Invalid algorithm structure. Each statement of algorithm content must begin with text "[statement type]: //[statement comment]". This begining text must be without any formatting.`;
     }
     //TODO name all types
-    let statementBasicInfoMatcher = statementBasicInfo.data.match(/^(.+?):\s*\/\/(.*)$/);
+    let statementBasicInfoMatcher = statementBasicInfo.data.match(/^(.+?):(?:\s*\/\/(.*))?$/);
     if (!statementBasicInfoMatcher) {
       throw `Invalid algorithm structure. Each statement of algorithm content must begin with text "[statement type]: //[statement comment]". This begining text must be without any formatting.`;
     }
@@ -291,38 +320,39 @@ function parseStatementList(bodyList, parentStatement) {
     if (flattenStatementChildNodes[0].nodeType === 1 && flattenStatementChildNodes[0].localName == "br") {
       flattenStatementChildNodes.shift();
     }
-    //let statementParts = parseStementParts(flattenStatementChildNodes);
+    let newLabelPath = [...labelPath, label];
     switch (statement.type) {
       case "step":
-        processStep(flattenStatementChildNodes, statement);
+        processStep(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "sequence":
-        processSequence(flattenStatementChildNodes, statement);
+        processSequence(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "selectionIf":
-        processSelectionIf(flattenStatementChildNodes, statement);
+        processSelectionIf(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "if":
-        processIf(flattenStatementChildNodes, statement);
+        processIf(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "elseIf":
-        processElseIf(flattenStatementChildNodes, statement);
+        processElseIf(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "else":
-        processElse(flattenStatementChildNodes, statement);
+        processElse(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "iteration":
-        processIteration(flattenStatementChildNodes, statement);
+        processIteration(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "warning":
-        processWarning(flattenStatementChildNodes, statement);
+        processWarning(flattenStatementChildNodes, statement, newLabelPath);
         break;
       case "error":
-        processError(flattenStatementChildNodes, statement);
+        processError(flattenStatementChildNodes, statement, newLabelPath);
         break;
       default:
         throw `Invalid algorithm structure. Type "${statement.type}" is not supported.`
     }
+    label = increaseLabel(label);
   }
 }
 
@@ -353,7 +383,7 @@ function processAlgorithmCallback(dom) {
   if (!bodyList) {
     throw "Invalid algorithm structure. Second child of algorithm must be ordered list with algorithm content.";
   }
-  parseStatementList(bodyList, algorithm);
+  parseStatementList(bodyList, algorithm, [], "numbers");
   console.log(JSON.stringify(algorithm, null, 2));
   res["data"] = UU5Utils.toUU5Json(algorithm);
   return res;

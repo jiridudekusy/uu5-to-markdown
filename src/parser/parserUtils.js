@@ -1,5 +1,8 @@
 export default class ParserUtils {
   static getChildNodes(node) {
+    if(!node || !node.childNodes){
+      return [];
+    }
     return Array.prototype.filter.call(
       node.childNodes,
       item => item.nodeType === 1

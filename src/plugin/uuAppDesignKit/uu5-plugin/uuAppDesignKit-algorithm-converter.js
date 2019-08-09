@@ -9,10 +9,20 @@ function capitalize(string) {
 }
 
 function getLabel(label) {
-  return label.match(/.*\.?([a-zA-Z0-9]+\.)/)[1];
+  if (!label) {
+    return "1."
+  }
+  let matcher = label.match(/.*\.?([a-zA-Z0-9]+\.)/);
+  if (!matcher) {
+    return "1."
+  }
+  return matcher[1];
 }
 
 function toMarkdown(uu5String, that) {
+  if(!uu5String){
+    return "";
+  }
   uu5String = uu5String.replace(/<UU5.Bricks.Div.*?>/g, "<UU5.Bricks.P>");
   uu5String = uu5String.replace(/<\/UU5.Bricks.Div>/g, "</UU5.Bricks.P>");
   return that.toMarkdown(uu5String);
@@ -46,7 +56,7 @@ function covertStatement(statement, that, offset) {
     levelOffset,
     " "
   )}${capitalize(statement.type)}: //${statement.comment || ""}  \n`;
-  if (["if", "elseIf"].indexOf(statement.type) > -1) {
+  if (["if", "elseIf", "iteration"].indexOf(statement.type) > -1) {
     res += `${" ".padEnd(lineOffset, " ")}Condition: ${indentLines(
       toMarkdown(statement.condition, that),
       lineOffset,
@@ -56,11 +66,11 @@ function covertStatement(statement, that, offset) {
 
   res += `${" ".padEnd(lineOffset, " ")}Description: ${indentLines(toMarkdown(statement.desc, that), lineOffset, 1)}  \n`;
   if (["error", "warning"].indexOf(statement.type) > -1) {
-    res += `${" ".padEnd(lineOffset, " ")}Code: ${statement.code}  \n`;
-    res += `${" ".padEnd(lineOffset, " ")}Message: ${statement.message}  \n`;
+    res += `${" ".padEnd(lineOffset, " ")}Code: ${statement.code || ""}  \n`;
+    res += `${" ".padEnd(lineOffset, " ")}Message: ${statement.message || ""}  \n`;
     if (statement.type === "error") {
       res += `${" ".padEnd(lineOffset, " ")}Throw exception: ${
-        statement.exception
+        statement.exception || ""
         }  \n`;
     }
     res += `${" ".padEnd(lineOffset, " ")}Params: ${indentLines(
