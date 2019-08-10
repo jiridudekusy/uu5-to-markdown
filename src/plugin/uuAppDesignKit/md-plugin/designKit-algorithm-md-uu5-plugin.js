@@ -268,7 +268,7 @@ function processError(flattenStatementChildNodes, statement, labelPath) {
       case "no":
         throwEx = false;
     }
-    if(throwEx != undefined){
+    if (throwEx != undefined) {
       statement.exception = throwEx;
     }
   }
@@ -300,7 +300,6 @@ function parseStatementList(bodyList, parentStatement, labelPath, labelType) {
     if (statementBasicInfo.nodeType != 3) {
       throw `Invalid algorithm structure. Each statement of algorithm content must begin with text "[statement type]: //[statement comment]". This begining text must be without any formatting.`;
     }
-    //TODO name all types
     let statementBasicInfoMatcher = statementBasicInfo.data.match(/^(.+?):(?:\s*\/\/(.*))?$/);
     if (!statementBasicInfoMatcher) {
       throw `Invalid algorithm structure. Each statement of algorithm content must begin with text "[statement type]: //[statement comment]". This begining text must be without any formatting.`;
@@ -365,25 +364,45 @@ function processAlgorithmCallback(dom) {
     id: generateId()
   };
 
-  let overviewList = dom.firstChild;
-  if (overviewList.localName != "UU5.Bricks.Ul") {
-    throw "Invalid algorithm structure. First child of algorithm must be bullet list with algorithm overview.";
+  let elementNodes = dom.childNodes.filter(node => node.nodeType === 1);
+  if (elementNodes.length > 2) {
+    throw "Invalid algorithm structure. First (optional) child of algorithm must be bullet list with algorithm overview. Second (optional) child of algorithm must be ordered list with algorithm content.";
   }
-  parseAlgorithmOverview(overviewList, algorithm);
-
-  let bodyList = overviewList;
-  while (bodyList = bodyList.nextSibling) {
-    if (bodyList.nodeType === 1) {
-      if (bodyList.localName != "UU5.Bricks.Ol") {
-        throw "Invalid algorithm structure. Second child of algorithm must be ordered list with algorithm content.";
-      }
-      break;
+  let overviewList;
+  let bodyList;
+  if (elementNodes.length === 2) {
+    overviewList = elementNodes[0];
+    bodyList = elementNodes[1];
+  } else {
+    if (elementNodes[0].localName === "UUS.Bricks.Ul") {
+      overviewList = elementNodes[0];
+    } else {
+      bodyList = elementNodes[0];
     }
   }
-  if (!bodyList) {
-    throw "Invalid algorithm structure. Second child of algorithm must be ordered list with algorithm content.";
+
+  if (overviewList) {
+    if (overviewList.localName != "UU5.Bricks.Ul") {
+      throw "Invalid algorithm structure. First child of algorithm must be bullet list with algorithm overview.";
+    }
+    parseAlgorithmOverview(overviewList, algorithm);
   }
-  parseStatementList(bodyList, algorithm, [], "numbers");
+
+  if (bodyList) {
+    let bodyList = overviewList;
+    while (bodyList = bodyList.nextSibling) {
+      if (bodyList.nodeType === 1) {
+        if (bodyList.localName != "UU5.Bricks.Ol") {
+          throw "Invalid algorithm structure. Second child of algorithm must be ordered list with algorithm content.";
+        }
+        break;
+      }
+    }
+    if (!bodyList) {
+      throw "Invalid algorithm structure. Second child of algorithm must be ordered list with algorithm content.";
+    }
+    parseStatementList(bodyList, algorithm, [], "numbers");
+  }
   console.log(JSON.stringify(algorithm, null, 2));
   res["data"] = UU5Utils.toUU5Json(algorithm);
   return res;

@@ -49,7 +49,7 @@ export default class DesignKitHelpers {
   static parseAttributes(line, marker) {
     let attributes = {};
 
-    if (line === marker) {
+    if (line.trimEnd() === marker) {
       return attributes;
     }
 
